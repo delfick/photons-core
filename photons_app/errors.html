@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Photons Error Classes &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="photons_app" href="index.html"/>
+        <link rel="next" title="The Executor" href="executor.html"/>
+        <link rel="prev" title="The Collector" href="collector.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">photons_app</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="defining_actions.html">Defining Photons Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collector.html">The Collector</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Photons Error Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html">The Executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Photons App Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registers.html">Functionality Registers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special.html">Special References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">photons_app</a> &raquo;</li>
+        
+      <li>Photons Error Classes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/photons_app/errors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-photons_app.errors">
+<span id="photons-error-classes"></span><span id="photons-app-errors"></span><h1>Photons Error Classes<a class="headerlink" href="#module-photons_app.errors" title="Permalink to this headline">¶</a></h1>
+<p>Photons makes heavy use of <a class="reference external" href="https://delfick-error.readthedocs.io">delfick errors</a>
+and so should you!</p>
+<p>Just base your error classes on <code class="docutils literal"><span class="pre">PhotonsAppError</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_app.errors</span> <span class="kn">import</span> <span class="n">PhotonsAppError</span>
+
+<span class="k">class</span> <span class="nc">MyAmazingError</span><span class="p">(</span><span class="n">PhotonsAppError</span><span class="p">):</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;Something terrible has happened&quot;</span>
+
+<span class="k">raise</span> <span class="n">MyAmazingError</span><span class="p">(</span><span class="s2">&quot;The world exploded&quot;</span><span class="p">,</span> <span class="n">info_one</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">info_two</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://delfick-app.readthedocs.io">delfick_app</a> integration will catch
+these errors and display them relatively nicely.</p>
+<dl class="class">
+<dt id="photons_app.errors.BadConfiguration">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadConfiguration</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad configuration</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadConnection">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadConnection</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection deemed invalid</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadOption">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadOption</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad Option</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadOptionFormat">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadOptionFormat</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadOptionFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad option format</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadRun">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadRun</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad Run</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadRunWithResults">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadRunWithResults</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadRunWithResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad Run</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadTarget">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadTarget</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad target</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadTask">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadTask</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad task</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.BadYaml">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadYaml</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadYaml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid yaml file</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.DevicesNotFound">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">DevicesNotFound</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.DevicesNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Failed to find some devices</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.FoundNoDevices">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">FoundNoDevices</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.FoundNoDevices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Didn’t find any devices</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.KilledConnection">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">KilledConnection</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.KilledConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The connection was killed</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.NoSuchKey">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">NoSuchKey</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.NoSuchKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Couldn’t find key</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.ResolverNotFound">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">ResolverNotFound</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.ResolverNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unknown resolver</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.RunErrors">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">RunErrors</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.RunErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad Run</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.TargetNotFound">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">TargetNotFound</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.TargetNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unknown target</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.errors.TimedOut">
+<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">TimedOut</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.TimedOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timed out</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="executor.html" class="btn btn-neutral float-right" title="The Executor" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="collector.html" class="btn btn-neutral" title="The Collector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

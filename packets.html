@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Packets &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Known Issues" href="known_issues.html"/>
+        <link rel="prev" title="Finding Serials" href="finding_serials.html"/>
+   
+	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Packets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/packets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="packets">
+<span id="id1"></span><h1>Packets<a class="headerlink" href="#packets" title="Permalink to this headline">¶</a></h1>
+<p>LIFX devices speak a binary protocol of packets and photons provides the ability
+to pack and unpack these packets via <code class="docutils literal"><span class="pre">photons_protocol</span></code>.</p>
+<p>The information that is used to understand the different messages is kept in the
+<code class="docutils literal"><span class="pre">protocol_register</span></code> object, which is an instance of
+<code class="docutils literal"><span class="pre">photons_app.registers.ProtocolRegister</span></code>.</p>
+<p>If you use the module system of photons then one of these will be available and
+filled out via <code class="docutils literal"><span class="pre">collector.configuration[&quot;protocol_register&quot;]</span></code>.</p>
+<p>Otherwise you have to create it yourself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_socket.messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span>
+<span class="kn">from</span> <span class="nn">photons_protocol.frame</span> <span class="kn">import</span> <span class="n">LIFXPacket</span>
+<span class="kn">from</span> <span class="nn">photons_colour</span> <span class="kn">import</span> <span class="n">ColourMessages</span>
+
+<span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">LIFXPacket</span><span class="p">)</span>
+<span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ColourMessages</span><span class="p">)</span>
+<span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">DiscoveryMessages</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you manually create a target and pass in a protocol register,
+you must register a Messages class that implements message 45 (the acknowledgement
+packet) for the target to be able to tell the difference between acks and replies.</p>
+<p class="last"><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages</span></code> is an example of a class that
+defines the Acknowledgement message.</p>
+</div>
+<p>And then you can use the protocol_register to unpack messages you receive from
+the bulb.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;580000541cf7e30cd073d514e73300004c4946585632000128cc694f8bdee2146b000000aa2affffcc4cac0d0000000073747269700000000000000000000000000000000000000000000000000000000000000000000000&quot;</span>
+<span class="n">pkt</span> <span class="o">=</span> <span class="n">Messages</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">protocol_register</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">ColourMessages</span><span class="o">.</span><span class="n">LightState</span>
+<span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
+      <span class="s2">&quot;frame_address&quot;</span><span class="p">:</span>
+      <span class="p">{</span> <span class="s2">&quot;ack_required&quot;</span><span class="p">:</span> <span class="n">false</span>
+      <span class="p">,</span> <span class="s2">&quot;res_required&quot;</span><span class="p">:</span> <span class="n">false</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved2&quot;</span><span class="p">:</span> <span class="s2">&quot;4c4946585632&quot;</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved3&quot;</span><span class="p">:</span> <span class="s2">&quot;00&quot;</span>
+      <span class="p">,</span> <span class="s2">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;d073d514e7330000&quot;</span>
+      <span class="p">}</span>
+    <span class="p">,</span> <span class="s2">&quot;frame_header&quot;</span><span class="p">:</span>
+      <span class="p">{</span> <span class="s2">&quot;addressable&quot;</span><span class="p">:</span> <span class="n">true</span>
+      <span class="p">,</span> <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="mi">1024</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved1&quot;</span><span class="p">:</span> <span class="s2">&quot;01&quot;</span>
+      <span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">88</span>
+      <span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="mi">216266524</span>
+      <span class="p">,</span> <span class="s2">&quot;tagged&quot;</span><span class="p">:</span> <span class="n">false</span>
+      <span class="p">}</span>
+    <span class="p">,</span> <span class="s2">&quot;payload&quot;</span><span class="p">:</span>
+      <span class="p">{</span> <span class="s2">&quot;brightness&quot;</span><span class="p">:</span> <span class="mf">0.29999237048905164</span>
+      <span class="p">,</span> <span class="s2">&quot;hue&quot;</span><span class="p">:</span> <span class="mf">59.997253376058595</span>
+      <span class="p">,</span> <span class="s2">&quot;kelvin&quot;</span><span class="p">:</span> <span class="mi">3500</span>
+      <span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;strip&quot;</span>
+      <span class="p">,</span> <span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">,</span> <span class="s2">&quot;saturation&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
+      <span class="p">,</span> <span class="s2">&quot;state_reserved1&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">,</span> <span class="s2">&quot;state_reserved2&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">}</span>
+    <span class="p">,</span> <span class="s2">&quot;protocol_header&quot;</span><span class="p">:</span>
+      <span class="p">{</span> <span class="s2">&quot;pkt_type&quot;</span><span class="p">:</span> <span class="mi">107</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved4&quot;</span><span class="p">:</span> <span class="mi">1505009915409321000</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved5&quot;</span><span class="p">:</span> <span class="s2">&quot;0000&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>You can then access these groups off the packet or the individual parts directly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">frame_address</span> <span class="o">==</span> <span class="p">{</span>
+      <span class="s2">&quot;ack_required&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">,</span> <span class="s2">&quot;res_required&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">,</span> <span class="s2">&quot;reserved2&quot;</span><span class="p">:</span> <span class="s2">&quot;4c4946585632&quot;</span>
+    <span class="p">,</span> <span class="s2">&quot;reserved3&quot;</span><span class="p">:</span> <span class="s2">&quot;00&quot;</span>
+    <span class="p">,</span> <span class="s2">&quot;sequence&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;d073d514e7330000&quot;</span>
+    <span class="p">}</span>
+
+<span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">kelvin</span> <span class="o">==</span> <span class="mi">3500</span>
+</pre></div>
+</div>
+<p>Note that the definition of the <code class="docutils literal"><span class="pre">LightState</span></code> message in <code class="docutils literal"><span class="pre">photons_colour</span></code>
+includes transformations for some values in the payload.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">hue</span> <span class="o">==</span> <span class="mf">59.997253376058595</span>
+<span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;hue&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10922</span>
+</pre></div>
+</div>
+<p>Here accessing the variable returns the transformed value, whereas the <code class="docutils literal"><span class="pre">actual</span></code>
+function returns us the actual value in the packet.</p>
+<p>Another example of a packet with transformed values is <code class="docutils literal"><span class="pre">DeviceMessages.SetLightPower</span></code>.
+In this packet, the duration is transformed into seconds whereas the packet
+defines it in milliseconds:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+
+<span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+<p>Note that when creating a packet from user input it’s better to use the <code class="docutils literal"><span class="pre">normalise</span></code>
+functionality on the class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="c1"># Or</span>
+
+<span class="kn">from</span> <span class="nn">input_algorithms.meta</span> <span class="kn">import</span> <span class="n">Meta</span>
+<span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">normalise</span><span class="p">(</span><span class="n">Meta</span><span class="o">.</span><span class="n">empty</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Doing this will mean that the values are checked at the instantiation of the
+packet and extra options are ignored.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="known_issues.html" class="btn btn-neutral float-right" title="Known Issues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="finding_serials.html" class="btn btn-neutral" title="Finding Serials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

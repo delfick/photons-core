@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_device_messages &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_docs" href="photons_docs.html"/>
+        <link rel="prev" title="photons_device_finder" href="photons_device_finder.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_device_messages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#devicemessages">DeviceMessages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gethostinfo">12 - GetHostInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statehostinfo">13 - StateHostInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gethostfirmware">14 - GetHostFirmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statehostfirmware">15 - StateHostFirmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getwifiinfo">16 - GetWifiInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statewifiinfo">17 - StateWifiInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getwififirmware">18 - GetWifiFirmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statewififirmware">19 - StateWifiFirmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getpower">20 - GetPower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setpower">21 - SetPower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statepower">22 - StatePower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getlabel">23 - GetLabel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setlabel">24 - SetLabel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statelabel">25 - StateLabel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getversion">32 - GetVersion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stateversion">33 - StateVersion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getinfo">34 - GetInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stateinfo">35 - StateInfo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getlocation">48 - GetLocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setlocation">49 - SetLocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statelocation">50 - StateLocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getgroup">51 - GetGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setgroup">52 - SetGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stategroup">53 - StateGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#echorequest">58 - EchoRequest</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#echoresponse">59 - EchoResponse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getlightpower">116 - GetLightPower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setlightpower">117 - SetLightPower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statelightpower">118 - StateLightPower</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getinfrared">120 - GetInfrared</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stateinfrared">121 - StateInfrared</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setinfrared">122 - SetInfrared</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_device_messages</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_device_messages.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-device-messages">
+<span id="id1"></span><h1>photons_device_messages<a class="headerlink" href="#photons-device-messages" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_device_messages"></span><div class="section" id="devicemessages">
+<h2>DeviceMessages<a class="headerlink" href="#devicemessages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gethostinfo">
+<h3>12 - GetHostInfo<a class="headerlink" href="#gethostinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetHostInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetHostInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statehostinfo">
+<h3>13 - StateHostInfo<a class="headerlink" href="#statehostinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateHostInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateHostInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">13</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gethostfirmware">
+<h3>14 - GetHostFirmware<a class="headerlink" href="#gethostfirmware" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetHostFirmware</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetHostFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statehostfirmware">
+<h3>15 - StateHostFirmware<a class="headerlink" href="#statehostfirmware" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateHostFirmware</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateHostFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">15</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;{0}.{1:02d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mh">0x10</span><span class="p">,</span> <span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">))</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getwifiinfo">
+<h3>16 - GetWifiInfo<a class="headerlink" href="#getwifiinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetWifiInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetWifiInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statewifiinfo">
+<h3>17 - StateWifiInfo<a class="headerlink" href="#statewifiinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateWifiInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateWifiInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">17</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getwififirmware">
+<h3>18 - GetWifiFirmware<a class="headerlink" href="#getwififirmware" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetWifiFirmware</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetWifiFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statewififirmware">
+<h3>19 - StateWifiFirmware<a class="headerlink" href="#statewififirmware" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateWifiFirmware</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateWifiFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">19</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+          <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;{0}.{1:02d}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mh">0x10</span><span class="p">,</span> <span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">))</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getpower">
+<h3>20 - GetPower<a class="headerlink" href="#getpower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetPower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setpower">
+<h3>21 - SetPower<a class="headerlink" href="#setpower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetPower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">21</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statepower">
+<h3>22 - StatePower<a class="headerlink" href="#statepower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StatePower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StatePower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">22</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getlabel">
+<h3>23 - GetLabel<a class="headerlink" href="#getlabel" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLabel</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLabel</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setlabel">
+<h3>24 - SetLabel<a class="headerlink" href="#setlabel" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLabel</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLabel</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">24</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statelabel">
+<h3>25 - StateLabel<a class="headerlink" href="#statelabel" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLabel</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLabel</span> <span class="o">=</span> <span class="n">SetLabel</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getversion">
+<h3>32 - GetVersion<a class="headerlink" href="#getversion" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetVersion</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetVersion</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stateversion">
+<h3>33 - StateVersion<a class="headerlink" href="#stateversion" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateVersion</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateVersion</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">33</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;vendor&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;product&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getinfo">
+<h3>34 - GetInfo<a class="headerlink" href="#getinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">34</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stateinfo">
+<h3>35 - StateInfo<a class="headerlink" href="#stateinfo" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateInfo</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">35</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;uptime&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">*</span> <span class="mf">1e9</span>
+        <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mf">1e9</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+      <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;downtime&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">*</span> <span class="mf">1e9</span>
+        <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mf">1e9</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getlocation">
+<h3>48 - GetLocation<a class="headerlink" href="#getlocation" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLocation</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setlocation">
+<h3>49 - SetLocation<a class="headerlink" href="#setlocation" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLocation</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">49</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statelocation">
+<h3>50 - StateLocation<a class="headerlink" href="#statelocation" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLocation</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">50</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getgroup">
+<h3>51 - GetGroup<a class="headerlink" href="#getgroup" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetGroup</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">51</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setgroup">
+<h3>52 - SetGroup<a class="headerlink" href="#setgroup" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetGroup</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">52</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stategroup">
+<h3>53 - StateGroup<a class="headerlink" href="#stategroup" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateGroup</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">53</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="echorequest">
+<h3>58 - EchoRequest<a class="headerlink" href="#echorequest" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.EchoRequest</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EchoRequest</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">58</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;echoing&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="echoresponse">
+<h3>59 - EchoResponse<a class="headerlink" href="#echoresponse" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.EchoResponse</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EchoResponse</span> <span class="o">=</span> <span class="n">EchoRequest</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">59</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getlightpower">
+<h3>116 - GetLightPower<a class="headerlink" href="#getlightpower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLightPower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setlightpower">
+<h3>117 - SetLightPower<a class="headerlink" href="#setlightpower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLightPower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">117</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statelightpower">
+<h3>118 - StateLightPower<a class="headerlink" href="#statelightpower" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLightPower</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">118</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getinfrared">
+<h3>120 - GetInfrared<a class="headerlink" href="#getinfrared" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetInfrared</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetInfrared</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stateinfrared">
+<h3>121 - StateInfrared<a class="headerlink" href="#stateinfrared" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateInfrared</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateInfrared</span> <span class="o">=</span> <span class="n">SetInfrared</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setinfrared">
+<h3>122 - SetInfrared<a class="headerlink" href="#setinfrared" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetInfrared</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetInfrared</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">122</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_docs.html" class="btn btn-neutral float-right" title="photons_docs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="photons_device_finder.html" class="btn btn-neutral" title="photons_device_finder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

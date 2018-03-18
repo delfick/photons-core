@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Defining Photons Actions &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="photons_app" href="index.html"/>
+        <link rel="next" title="The Collector" href="collector.html"/>
+        <link rel="prev" title="photons_app" href="index.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">photons_app</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Defining Photons Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collector.html">The Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Photons Error Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html">The Executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Photons App Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registers.html">Functionality Registers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special.html">Special References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">photons_app</a> &raquo;</li>
+        
+      <li>Defining Photons Actions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/photons_app/defining_actions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-photons_app.actions">
+<span id="defining-photons-actions"></span><span id="photons-app-defining-actions"></span><h1>Defining Photons Actions<a class="headerlink" href="#module-photons_app.actions" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-action">action</dt>
+<dd><p class="first">A python callable that defines some specific functionality. It takes in
+<code class="docutils literal"><span class="pre">(collector,</span> <span class="pre">loop,</span> <span class="pre">target,</span> <span class="pre">reference,</span> <span class="pre">artifact,</span> <span class="pre">tasks,</span> <span class="pre">**kwargs)</span></code>.</p>
+<dl class="last docutils">
+<dt>loop</dt>
+<dd>asycnio event loop instance</dd>
+<dt>target</dt>
+<dd>The target instance as referenced by the user on the commandline.</dd>
+<dt>reference</dt>
+<dd>The reference string from the commandline</dd>
+<dt>artifact</dt>
+<dd>The artifact string from the commandline</dd>
+<dt>tasks</dt>
+<dd>A dictionary of all the tasks that have been defined</dd>
+</dl>
+</dd>
+</dl>
+<p>We define actions by using the <code class="docutils literal"><span class="pre">an_action</span></code> decorator.</p>
+<dl class="class">
+<dt id="photons_app.actions.an_action">
+<em class="property">class </em><code class="descclassname">photons_app.actions.</code><code class="descname">an_action</code><span class="sig-paren">(</span><em>target=None</em>, <em>special_reference=False</em>, <em>needs_reference=False</em>, <em>needs_target=False</em>, <em>label='Project'</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.actions.an_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Records a task in the <code class="docutils literal"><span class="pre">available_actions</span></code> dictionary</p>
+<p>It takes in:</p>
+<dl class="docutils">
+<dt>target</dt>
+<dd>The <code class="docutils literal"><span class="pre">type</span></code> of the target that applies to this action. For example
+<code class="docutils literal"><span class="pre">lan</span></code> or <code class="docutils literal"><span class="pre">http</span></code>. This is so that you can have a different task with
+the same name registered for different targets</dd>
+<dt>needs_reference</dt>
+<dd>Specifies that a reference needs to be specified on the commandline</dd>
+<dt>special_reference</dt>
+<dd><p class="first">Allow us to provide more detailed reference to devices.</p>
+<p>Empty string or ‘_’ resolves to all serials found on the network</p>
+<p>comma seperated list of serials is split by comma.</p>
+<p class="last">Otherwise, we use <code class="docutils literal"><span class="pre">&lt;resolver&gt;:&lt;options&gt;</span></code> to resolve our reference to serials</p>
+</dd>
+<dt>needs_target</dt>
+<dd>Specifies that it needs the target type specified on the commandline</dd>
+<dt>label</dt>
+<dd>A string used by the help tasks to sort the actions into groups.</dd>
+</dl>
+</dd></dl>
+
+<p>The default photons cli interface takes in commands of the following format:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ lifx &lt;target&gt;:&lt;action&gt; &lt;reference&gt; &lt;artifact&gt; -- <span class="s1">&#39;&lt;extra&gt;&#39;</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ lifx lan:set_attr d073d5000000 color -- <span class="s1">&#39;{&quot;hue&quot;: 210, &quot;saturation&quot;: 0.4, &quot;brightness&quot;: 0.3, &quot;kelvin&quot;: 3500}&#39;</span>
+</pre></div>
+</div>
+<p>In this example we are invoking the <code class="docutils literal"><span class="pre">set_attr</span></code> action using the <code class="docutils literal"><span class="pre">lan</span></code> target
+(which would defined in configuration) and running it against the device
+<code class="docutils literal"><span class="pre">d073d5000000</span></code> and setting the <code class="docutils literal"><span class="pre">color</span></code> attribute with the options set after
+the <code class="docutils literal"><span class="pre">--</span></code>.</p>
+<p>It is equivalent to saying:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ lifx --target lan --task set_attr --reference d073d5000000 --artifact color -- <span class="s1">&#39;&lt;options&gt;&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="collector.html" class="btn btn-neutral float-right" title="The Collector" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="photons_app" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

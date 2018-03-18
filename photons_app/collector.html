@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Collector &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="photons_app" href="index.html"/>
+        <link rel="next" title="Photons Error Classes" href="errors.html"/>
+        <link rel="prev" title="Defining Photons Actions" href="defining_actions.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">photons_app</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="defining_actions.html">Defining Photons Actions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Photons Error Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html">The Executor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Photons App Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registers.html">Functionality Registers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special.html">Special References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">photons_app</a> &raquo;</li>
+        
+      <li>The Collector</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/photons_app/collector.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-photons_app.collector">
+<span id="the-collector"></span><span id="photons-app-collector"></span><h1>The Collector<a class="headerlink" href="#module-photons_app.collector" title="Permalink to this headline">¶</a></h1>
+<p>The collector is responsible for collecting configuration and photons_app
+modules.</p>
+<dl class="class">
+<dt id="photons_app.collector.Collector">
+<em class="property">class </em><code class="descclassname">photons_app.collector.</code><code class="descname">Collector</code><a class="headerlink" href="#photons_app.collector.Collector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is based off
+<a class="reference external" href="http://option-merge.readthedocs.io/en/latest/docs/api/collector.html">http://option-merge.readthedocs.io/en/latest/docs/api/collector.html</a></p>
+<p>It overrides the following:</p>
+<dl class="method">
+<dt id="photons_app.collector.Collector.extra_prepare">
+<code class="descname">extra_prepare</code><span class="sig-paren">(</span><em>configuration</em>, <em>args_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.extra_prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before the configuration.converters are activated</p>
+<p>Here we make sure that we have photons_app options from <code class="docutils literal"><span class="pre">args_dict</span></code> in
+the configuration.</p>
+<p>We also load in <code class="docutils literal"><span class="pre">__main__</span></code> as if it were a photons_module. This means
+scripts can use <code class="docutils literal"><span class="pre">option_merge_addon_hook</span></code> and that will be used.</p>
+<p>We then load all the photons_app modules as specified by the
+<code class="docutils literal"><span class="pre">photons_app.addons</span></code> setting.</p>
+<p>Finally we inject into the configuration:</p>
+<dl class="docutils">
+<dt>$&#64;</dt>
+<dd>The <code class="docutils literal"><span class="pre">photons_app.extra</span></code> setting</dd>
+<dt>collector</dt>
+<dd>This instance</dd>
+<dt>photons_app</dt>
+<dd>The photons_app settings</dd>
+<dt>final_future</dt>
+<dd><p class="first">A function that returns a future object representing the end of the
+the program. Users may call this function to get a future that is
+only resolved when the program is quitting.</p>
+<p>So to determine if the program is ending:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="n">final_fut</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;final_future&quot;</span><span class="p">]()</span>
+<span class="k">if</span> <span class="n">final_fut</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Program is ending&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.collector.Collector.extra_configuration_collection">
+<code class="descname">extra_configuration_collection</code><span class="sig-paren">(</span><em>configuration</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.extra_configuration_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to do any extra configuration collection or converter registration</p>
+<p>Here we register our base configuration converters:</p>
+<dl class="docutils">
+<dt>photons_app</dt>
+<dd><dl class="first last attribute">
+<dt id="photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.photons_app_spec">
+<code class="descclassname">PhotonsAppSpec.</code><code class="descname">photons_app_spec</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.photons_app_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get us an instance of PhotonsApp:</p>
+<dl class="class">
+<dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp">
+<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_fut_finder</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main photons_app object.</p>
+<dl class="docutils">
+<dt>artifact</dt>
+<dd>The artifact string from the commandline</dd>
+<dt>chosen_task</dt>
+<dd>The task that is being executed</dd>
+<dt>cleaners</dt>
+<dd>A list of functions to call when cleaning up at the end of the program</dd>
+<dt>config</dt>
+<dd>The root configuration file</dd>
+<dt>debug</dt>
+<dd>Whether we are in debug mode or not</dd>
+<dt>default_activate_all_modules</dt>
+<dd>The collector looks at this to determine if we should default to activating all photons modules</dd>
+<dt>extra</dt>
+<dd>The arguments after the <code class="docutils literal"><span class="pre">--</span></code> in the commandline</dd>
+<dt>extra_files</dt>
+<dd>Extra files to load</dd>
+<dt>final_fut_finder</dt>
+<dd>A function returning the future representing the end of the program</dd>
+<dt>own_ca</dt>
+<dd>A certificate to use for local https connections</dd>
+<dt>reference</dt>
+<dd>The device(s) to send commands to</dd>
+<dt>target</dt>
+<dd>The target to use when executing the task</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd>
+<dt>targets</dt>
+<dd><dl class="first last attribute">
+<dt id="photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.targets_spec">
+<code class="descclassname">PhotonsAppSpec.</code><code class="descname">targets_spec</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.targets_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get us a dictionary of target name to Target object</p>
+<dl class="class">
+<dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.Target">
+<em class="property">class </em><code class="descname">Target</code><span class="sig-paren">(</span><em>optional</em>, <em>options</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.Target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent the info required for specifying how to get messages to a device</p>
+<p>Note that this is just the options for the target, to get the target itself
+use the target_register instead.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;prod_api&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd>
+<dt>target_register</dt>
+<dd><dl class="first last attribute">
+<dt id="photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.target_register_spec">
+<code class="descclassname">PhotonsAppSpec.</code><code class="descname">target_register_spec</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.target_register_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a TargetRegister object</p>
+<dl class="class">
+<dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.TargetRegister">
+<em class="property">class </em><code class="descname">TargetRegister</code><span class="sig-paren">(</span><em>collector</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.TargetRegister" title="Permalink to this definition">¶</a></dt>
+<dd><p>A register of target types and concrete instances of those targets.</p>
+<p>Usage is typically in an addon’s option_merge hook:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+
+<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span>
+          <span class="s2">&quot;my_amazing_target&quot;</span>
+        <span class="p">,</span> <span class="n">my_target_creator_spec</span><span class="p">()</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>Note the <code class="docutils literal"><span class="pre">post_register=True</span></code>. This is required to be able to access the
+instantiated target_register.</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd>
+<dt>protocol_register</dt>
+<dd><dl class="first last attribute">
+<dt id="photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.protocol_register_spec">
+<code class="descclassname">PhotonsAppSpec.</code><code class="descname">protocol_register_spec</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.protocol_register_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a ProtocolRegister object</p>
+<dl class="class">
+<dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.ProtocolRegister">
+<em class="property">class </em><code class="descname">ProtocolRegister</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.ProtocolRegister" title="Permalink to this definition">¶</a></dt>
+<dd><p>A register for Photons Protocol Messages classes.</p>
+<p>These classes hold different message types for a particular protocol.</p>
+<p>Usage is typically in an addon’s option_merge hook.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+
+<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">..</span><span class="p">]</span>
+    <span class="n">prot_register</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span>
+    <span class="n">prot_register</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9001</span><span class="p">,</span> <span class="n">MyProtocolPacket</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.collector.Collector.extra_prepare_after_activation">
+<code class="descname">extra_prepare_after_activation</code><span class="sig-paren">(</span><em>configuration</em>, <em>args_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.extra_prepare_after_activation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the configuration.converters are activated</p>
+<p>We also put a <code class="docutils literal"><span class="pre">task_runner</span></code> in the configuration for running tasks.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">await</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;task_runner&quot;</span><span class="p">](</span><span class="s2">&quot;lan:find_devices&quot;</span><span class="p">,</span> <span class="s2">&quot;d073d500000&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will determine the target and artifact for you given the
+configuration in the collector.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.collector.Collector.add_configuration">
+<code class="descname">add_configuration</code><span class="sig-paren">(</span><em>configuration</em>, <em>collect_another_source</em>, <em>done</em>, <em>result</em>, <em>src</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.add_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to add a file to the configuration, result here is the yaml.load
+of the src.</p>
+<p>If the configuration we’re reading in has <code class="docutils literal"><span class="pre">photons_app.extra_files</span></code>
+then this is treated as a list of strings of other files to collect.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="errors.html" class="btn btn-neutral float-right" title="Photons Error Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="defining_actions.html" class="btn btn-neutral" title="Defining Photons Actions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

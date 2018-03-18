@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_device_finder &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_device_messages" href="photons_device_messages.html"/>
+        <link rel="prev" title="photons_core" href="photons_core.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_device_finder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#valid-filters">Valid Filters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_device_finder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_device_finder.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-device-finder">
+<span id="id1"></span><h1>photons_device_finder<a class="headerlink" href="#photons-device-finder" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_device_finder"></span><p>This module provides an object for finding devices based on filters, which can
+also act as a daemon collecting information in the background.</p>
+<dl class="docutils">
+<dt>TASK:: find_with_filter</dt>
+<dd><p class="first">Find serials that match the provided filter</p>
+<p><code class="docutils literal"><span class="pre">find_with_filter</span> <span class="pre">--</span> <span class="pre">'{&quot;label&quot;:</span> <span class="pre">[&quot;kitchen&quot;,</span> <span class="pre">&quot;loungeroom&quot;],</span> <span class="pre">&quot;product_identifier&quot;:</span> <span class="pre">&quot;lifx_z&quot;}'</span></code></p>
+<p class="last">Not providing options after the <code class="docutils literal"><span class="pre">--</span></code> will find all devices on the network.</p>
+</dd>
+</dl>
+<p>The idea is that you can query the device_finder for information.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>
+
+<span class="n">serials</span> <span class="o">=</span> <span class="n">await</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">serials</span><span class="p">()</span>
+<span class="c1"># serials will be of the form [&quot;d073d5000001&quot;, &quot;d073d5000002&quot;, &quot;d073d5000003&quot;]</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="n">await</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">info_for</span><span class="p">()</span>
+<span class="c1"># info will be of the form:</span>
+<span class="c1"># {</span>
+<span class="c1">#      &quot;d073d512c21d&quot;: {</span>
+<span class="c1">#          &quot;brightness&quot;: 0.29999237048905164,</span>
+<span class="c1">#          &quot;firmware_version&quot;: 1.21,</span>
+<span class="c1">#          &quot;group_id&quot;: &quot;925fb774c42c11e799e580e650080d3e&quot;,</span>
+<span class="c1">#          &quot;group_name&quot;: &quot;one&quot;,</span>
+<span class="c1">#          &quot;cap&quot;: [&quot;color&quot;, &quot;multizone&quot;, &quot;variable_color_temp&quot;]</span>
+<span class="c1">#          &quot;hue&quot;: 0.0,</span>
+<span class="c1">#          &quot;kelvin&quot;: 3500,</span>
+<span class="c1">#          &quot;label&quot;: &quot;cupboard&quot;,</span>
+<span class="c1">#          &quot;location_id&quot;: &quot;926647fec42c11e79fb080e650080d3e&quot;,</span>
+<span class="c1">#          &quot;location_name&quot;: &quot;two&quot;,</span>
+<span class="c1">#          &quot;power&quot;: &quot;off&quot;,</span>
+<span class="c1">#          &quot;product_id&quot;: 22,</span>
+<span class="c1">#          &quot;product_identifier&quot;: &quot;lifx_a19_color&quot;,</span>
+<span class="c1">#          &quot;saturation&quot;: 0.0</span>
+<span class="c1">#      },</span>
+<span class="c1">#      &quot;d073d514e733&quot;: {</span>
+<span class="c1">#          &quot;brightness&quot;: 0.29999237048905164,</span>
+<span class="c1">#          &quot;firmware_version&quot;: 1.2,</span>
+<span class="c1">#          &quot;group_id&quot;: &quot;925fb774c42c11e799e580e650080d3e&quot;,</span>
+<span class="c1">#          &quot;group_name&quot;: &quot;one&quot;,</span>
+<span class="c1">#          &quot;cap&quot;: [&quot;color&quot;, &quot;multizone&quot;, &quot;variable_color_temp&quot;]</span>
+<span class="c1">#          &quot;hue&quot;: 0.0,</span>
+<span class="c1">#          &quot;kelvin&quot;: 3500,</span>
+<span class="c1">#          &quot;label&quot;: &quot;tv&quot;,</span>
+<span class="c1">#          &quot;location_id&quot;: &quot;926647fec42c11e79fb080e650080d3e&quot;,</span>
+<span class="c1">#          &quot;location_name&quot;: &quot;two&quot;,</span>
+<span class="c1">#          &quot;power&quot;: &quot;off&quot;,</span>
+<span class="c1">#          &quot;product_id&quot;: 31,</span>
+<span class="c1">#          &quot;product_identifier&quot;: &quot;lifx_z&quot;,</span>
+<span class="c1">#          &quot;saturation&quot;: 0.0</span>
+<span class="c1">#      }</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+<p>Or you can use it as a reference in a run_with/run_with_all call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>
+
+<span class="n">reference</span> <span class="o">=</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+
+<span class="n">reference2</span> <span class="o">=</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;0-20&quot;</span><span class="p">,</span> <span class="n">product_identifier</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lifx_color_a19&quot;</span><span class="p">,</span> <span class="s2">&quot;lifx_color_br30&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetPower</span><span class="p">())</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">reference2</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">pkt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that if you want the device_finder to update it’s idea of what devices are
+on the network and what properties those devices have, then you must await on
+it’s <code class="docutils literal"><span class="pre">start</span></code> method before using it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c1"># Use the device_finder as much as you want</span>
+
+<span class="c1"># It&#39;s a good idea to finish it when you no longer want to use it</span>
+<span class="c1"># Note that it cannot be started again after this.</span>
+<span class="n">await</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">find</span></code>, <code class="docutils literal"><span class="pre">serials</span></code> and <code class="docutils literal"><span class="pre">info_for</span></code> methods on <code class="docutils literal"><span class="pre">DeviceFinder</span></code> all take
+in keyword arguments to fill out the filter, or it takes in a <code class="docutils literal"><span class="pre">filtr</span></code> keyword
+that specifies a filter. Not providing any keyword arguments implies a match all.</p>
+<p>Note that if you don’t call <code class="docutils literal"><span class="pre">start</span></code> on the device_finder is equivalent to always
+having <code class="docutils literal"><span class="pre">force_refresh=True</span></code> in your filter.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_finder</span> <span class="kn">import</span> <span class="n">Filter</span>
+
+<span class="c1"># The following four lines are equivalent</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_options</span><span class="p">({</span><span class="s2">&quot;hue&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;0-10&quot;</span><span class="p">,</span> <span class="s2">&quot;30-50&quot;</span><span class="p">],</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;one&quot;</span><span class="p">})</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_kwargs</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0-10&quot;</span><span class="p">,</span> <span class="s2">&quot;30-50&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">)</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_json_str</span><span class="p">(</span><span class="s1">&#39;{&quot;hue&quot;: [&quot;0-10&quot;, &quot;30-50&quot;], &quot;label&quot;: &quot;one&quot;}&#39;</span><span class="p">)</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_key_value_str</span><span class="p">(</span><span class="s1">&#39;hue=0-10,30-50 label=one&#39;</span><span class="p">)</span>
+
+<span class="c1"># And these two lines are equivalent</span>
+<span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">filtr</span><span class="o">=</span><span class="n">filtr</span><span class="p">)</span>
+<span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0-10&quot;</span><span class="p">,</span> <span class="s2">&quot;30-50&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you use DeviceFinder.find you are creating an instance of
+<code class="docutils literal"><span class="pre">photons_app.special.SpecialReference</span></code> which means it will cache the result
+of finding devices for future calls. If you want to re-use one and have it
+search again, call <code class="docutils literal"><span class="pre">reset</span></code> on it.</p>
+</div>
+<div class="section" id="valid-filters">
+<span id="finder-filters"></span><h2>Valid Filters<a class="headerlink" href="#valid-filters" title="Permalink to this headline">¶</a></h2>
+<p>The filter takes in:</p>
+<dl class="docutils">
+<dt>force_refresh:</dt>
+<dd><p class="first">Search for devices and their information. This will only refresh information
+required for the rest of the arguments to the Filter.</p>
+<p class="last">i.e. if the filter only matches against labels, then we will only refresh
+the labels on our devices.</p>
+</dd>
+<dt>label</dt>
+<dd>The label set on the device</dd>
+<dt>power</dt>
+<dd>Either “on” or “off” depending on whether the device is on or not.</dd>
+<dt>group_id</dt>
+<dd>The uuid of the group set on this device</dd>
+<dt>group_name</dt>
+<dd>The name of this group. Note that if you have several devices that have
+the same group, then this will be set to the label of the group
+with the newest updated_at option.</dd>
+<dt>location_id</dt>
+<dd>The uuid of the location set on this device</dd>
+<dt>location_name</dt>
+<dd>The name of this location. Note that if you have several devices that have
+the same location_id, then this will be set to the label of the location
+with the newest updated_at option.</dd>
+<dt>hue, saturation, brightness, kelvin</dt>
+<dd>The hsbk values of the device. You can specify a range by saying something
+like <code class="docutils literal"><span class="pre">10-30</span></code>, which would match any device with a hsbk value between 10
+and 30 (inclusive).</dd>
+<dt>firmware_version</dt>
+<dd>The version of the HostFirmware as a float.</dd>
+<dt>product_id</dt>
+<dd>The product id of the device as an integer. You can see the hex product id
+of each device type in the <code class="docutils literal"><span class="pre">photons_products_registry</span></code> module.</dd>
+<dt>product_identifier</dt>
+<dd>A string identifying the product type of the device. You can find these in
+the <code class="docutils literal"><span class="pre">photons_products_registry</span></code> module.</dd>
+<dt>cap</dt>
+<dd><p class="first">A list of strings of capabilities this device has.</p>
+<p class="last">Capabilities include <code class="docutils literal"><span class="pre">ir</span></code>, <code class="docutils literal"><span class="pre">color</span></code>, <code class="docutils literal"><span class="pre">chain</span></code>, <code class="docutils literal"><span class="pre">multizone</span></code>, <code class="docutils literal"><span class="pre">variable_color_temp</span></code>
+and <code class="docutils literal"><span class="pre">not_ir</span></code>, <code class="docutils literal"><span class="pre">not_color</span></code>, <code class="docutils literal"><span class="pre">not_chain</span></code>, <code class="docutils literal"><span class="pre">not_multizone</span></code>, <code class="docutils literal"><span class="pre">not_variable_color_temp</span></code></p>
+</dd>
+</dl>
+<p>When a property in the filter is an array, it will match any device that matches
+against any of the items in the array.</p>
+<p>And a filter with multiple properties will only match devices that match against
+all those properties.</p>
+<p>Label properties (“product_identifier”, “label”, “location_name”, “group_name”)
+are matched with globs. So if you have device1 with product_identifier of
+<code class="docutils literal"><span class="pre">lifx_a19_plus</span></code> and device2 with a product_identifier of <code class="docutils literal"><span class="pre">lifx_br30_plus</span></code>
+you can filter them both by saying
+<code class="docutils literal"><span class="pre">Filter.from_kwargs(product_identifier=&quot;*_plus&quot;)</span></code></p>
+<dl class="class">
+<dt id="photons_device_finder.Filter">
+<em class="property">class </em><code class="descclassname">photons_device_finder.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>brightness</em>, <em>cap</em>, <em>firmware_version</em>, <em>force_refresh</em>, <em>group_id</em>, <em>group_name</em>, <em>hue</em>, <em>kelvin</em>, <em>label</em>, <em>location_id</em>, <em>location_name</em>, <em>power</em>, <em>product_id</em>, <em>product_identifier</em>, <em>saturation</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The options for a filter. Usage looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">FieldSpec</span><span class="p">()</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="mf">1.22</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_json_str</span><span class="p">(</span><span class="s1">&#39;{&quot;force_refresh&quot;: true, &quot;firmware_version&quot;: 1.22}&#39;</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_options</span><span class="p">({</span><span class="s2">&quot;force_refresh&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s2">&quot;firmware_version&quot;</span><span class="p">:</span> <span class="mf">1.22</span><span class="p">})</span>
+
+<span class="c1"># or</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_kwargs</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="mf">1.22</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_key_value_str</span><span class="p">(</span><span class="s2">&quot;force_refresh=true firmware_version=1.22&quot;</span><span class="p">)</span>
+
+<span class="c1"># or</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_url_str</span><span class="p">(</span><span class="s2">&quot;force_refresh=true&amp;firmware_version=1.22&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="photons_device_finder.Filter.from_options">
+<em class="property">classmethod </em><code class="descname">from_options</code><span class="sig-paren">(</span><em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.from_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Filter based on the provided dictionary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.from_kwargs">
+<em class="property">classmethod </em><code class="descname">from_kwargs</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.from_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Filter based on the provided kwarg arguments</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><em>force_refresh=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty filter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.from_json_str">
+<em class="property">classmethod </em><code class="descname">from_json_str</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.from_json_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret s as a json string and use it to create a Filter using from_options</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.from_key_value_str">
+<em class="property">classmethod </em><code class="descname">from_key_value_str</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.from_key_value_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Filter based on the <code class="docutils literal"><span class="pre">key=value</span> <span class="pre">key2=value2</span></code> string provided.</p>
+<p>Each key=value pair is separated by a space and arrays are formed by
+separating values by a comma.</p>
+<p>Note that values may not have spaces in them because of how we split
+the key=value pairs. If you need values to have spaces use from_json_str
+or from_options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.from_url_str">
+<em class="property">classmethod </em><code class="descname">from_url_str</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.from_url_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Filter based on <code class="docutils literal"><span class="pre">key=value&amp;otherkey=value2</span></code> string provided</p>
+<p>Where the string is url encoded.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photons_device_finder.Filter.matches_all">
+<code class="descname">matches_all</code><a class="headerlink" href="#photons_device_finder.Filter.matches_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if this Filter matches against any device</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.matches">
+<code class="descname">matches</code><span class="sig-paren">(</span><em>field_name</em>, <em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.matches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Says whether this filter matches against provided filed_name/val pair</p>
+<ul class="simple">
+<li>Always say False for <code class="docutils literal"><span class="pre">force_refresh</span></code></li>
+<li>Say False if the value on the filter for field_name is NotSpecified</li>
+<li>Say True if a hsbk value and we are within the range specified in val</li>
+<li>Say True if value on the filter is a list, and val exists in that list</li>
+<li>Say True if value on the filter is not a list and matches val</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.Filter.has">
+<code class="descname">has</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter.has" title="Permalink to this definition">¶</a></dt>
+<dd><p>Say whether the filter has an opinion on this field</p>
+</dd></dl>
+
+<p>Finally, we have <code class="docutils literal"><span class="pre">has</span></code> which takes in a <code class="docutils literal"><span class="pre">field_name</span></code> and says whether</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_device_finder.DeviceFinder">
+<em class="property">class </em><code class="descclassname">photons_device_finder.</code><code class="descname">DeviceFinder</code><span class="sig-paren">(</span><em>target</em>, <em>service_search_interval=20</em>, <em>information_search_interval=30</em>, <em>repeat_spread=1</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by users to find devices based on filters.</p>
+<p>You can activate the daemon functionality by awaiting on <code class="docutils literal"><span class="pre">start</span></code>.
+Not doing this is equivalent to always using force_refresh with your filters.</p>
+<p>When you are finished with this object, await on it’s <code class="docutils literal"><span class="pre">finish</span></code> method.</p>
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.serials">
+<em class="property">await </em><code class="descname">serials</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.serials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of hexlified serials of the devices we can find that match
+the filter created from the passed in kwargs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.info_for">
+<em class="property">await </em><code class="descname">info_for</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.info_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary of {serial: information} of the devices we can find
+that match the filter created from the passed in kwargs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.find">
+<code class="descname">find</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a SpecialReference object that may be used with run_with/run_with_all</p>
+<p>It will tell the script to send messages to the devices it can find that
+match the filter we create from the passed in kwargs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.start">
+<em class="property">await </em><code class="descname">start</code><span class="sig-paren">(</span><em>quickstart=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put the DeviceFinder into daemon mode and start the background threads.</p>
+<p>By doing this, we will use cached information when using the device_finder
+unless the filter specifically sets force_refresh to True.</p>
+<p>If <code class="docutils literal"><span class="pre">quickstart</span></code> is provided as True then we will gather information
+from devices on the network without spreading out the messages. This will
+allow us to gather information quicker at the cost of much more network
+traffic.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.finish">
+<em class="property">await </em><code class="descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the background tasks</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_device_finder.DeviceFinder.args_for_run">
+<em class="property">await </em><code class="descname">args_for_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.DeviceFinder.args_for_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an args_for_run object from our target</p>
+<p>Multiple calls to this will return the same object</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_device_messages.html" class="btn btn-neutral float-right" title="photons_device_messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="photons_core.html" class="btn btn-neutral" title="photons_core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

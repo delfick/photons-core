@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_script &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_socket" href="photons_socket.html"/>
+        <link rel="prev" title="photons_protocol" href="photons_protocol.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_script</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scripts-with-functionality">Scripts with functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_script</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_script.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-script">
+<span id="id1"></span><h1>photons_script<a class="headerlink" href="#photons-script" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_script"></span><p>An interface for working with Photons targets.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_script.script</span> <span class="kn">import</span> <span class="n">ATarget</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">SomeMessage</span><span class="p">())</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="p">[</span><span class="n">reference</span><span class="p">],</span> <span class="n">afr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Targets use this module to create the response to the <code class="docutils literal"><span class="pre">script</span></code> method and
+implement <code class="docutils literal"><span class="pre">args_for_run</span></code> and <code class="docutils literal"><span class="pre">close_args_for_run</span></code> so that <code class="docutils literal"><span class="pre">ATarget</span></code> can
+create and properly close the <code class="docutils literal"><span class="pre">afr</span></code> object.</p>
+<p>The idea is that the script is able to take an object that can be simplified and
+we can then call <code class="docutils literal"><span class="pre">run_with</span></code> using the <code class="docutils literal"><span class="pre">loop</span></code>, some <code class="docutils literal"><span class="pre">references</span></code> and the
+<code class="docutils literal"><span class="pre">afr</span></code> to perform the action set out by the messages.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_script.script</span> <span class="kn">import</span> <span class="n">ScriptRunner</span><span class="p">,</span> <span class="n">Pipeline</span>
+
+<span class="k">class</span> <span class="nc">MyTarget</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ScriptRunner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">args_for_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">found</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create some object that performs the actual transportation&quot;&quot;&quot;</span>
+        <span class="n">afr</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="k">return</span> <span class="n">afr</span>
+
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">close_args_for_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close an args_for_run&quot;&quot;&quot;</span>
+        <span class="n">afr</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">simplify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From this message return an object with a ``run_with`` method&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;has_children&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">simplified</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simplify</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MyTargetItem</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyTargetItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part</span> <span class="o">=</span> <span class="n">part</span>
+
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">run_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="photons_script.script.ScriptRunner">
+<em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">ScriptRunner</code><span class="sig-paren">(</span><em>script</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.ScriptRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a runner for our script.</p>
+<p>The <code class="docutils literal"><span class="pre">script</span></code> is an object with a <code class="docutils literal"><span class="pre">run_with</span></code> method on it.</p>
+<p>This helper will create the <code class="docutils literal"><span class="pre">afr</span></code> if none is passed in and clean it up if
+we created it.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_script.script.ATarget">
+<em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">ATarget</code><span class="sig-paren">(</span><em>target</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.ATarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use and cleanup a target.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">afr</span> <span class="o">=</span> <span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">args_for_run</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">close_args_for_run</span><span class="p">(</span><span class="n">afr</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="scripts-with-functionality">
+<h2>Scripts with functionality<a class="headerlink" href="#scripts-with-functionality" title="Permalink to this headline">¶</a></h2>
+<p>When you do <code class="docutils literal"><span class="pre">target.script(...)</span></code> you may choose to send multiple messages at
+the same time or do something based on the reply from particular messages.</p>
+<p>To do this, <code class="docutils literal"><span class="pre">photons_script</span></code> provides two classes for achieving this.</p>
+<dl class="class">
+<dt id="photons_script.script.Pipeline">
+<em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>*children</em>, <em>spread=0</em>, <em>short_circuit_on_error=False</em>, <em>synchronized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will send and wait for multiple
+messages to each <code class="docutils literal"><span class="pre">reference</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
+<span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
+
+<span class="n">reference1</span> <span class="o">=</span> <span class="s2">&quot;d073d500000&quot;</span>
+<span class="n">reference2</span> <span class="o">=</span> <span class="s2">&quot;d073d500001&quot;</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">msg1</span><span class="p">,</span> <span class="n">msg2</span><span class="p">))</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">,</span> <span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">....</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg1</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg2</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg1</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg2</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>This also takes in the following keyword arguments:</p>
+<dl class="docutils">
+<dt>spread</dt>
+<dd>Specify how much wait (in seconds) between each message per device</dd>
+<dt>short_circuit_on_error</dt>
+<dd><p class="first">Stop trying to send messages to a device if we encounter an error.</p>
+<p class="last">This will only effect sending messages to the device that had an error</p>
+</dd>
+<dt>synchronized</dt>
+<dd><p class="first">If this is set to False then each bulb gets it’s own coroutine and so
+messages will go at different times depending on how slow/fast each bulb
+is.</p>
+<p class="last">If this is set to True then we wait on the slowest bulb before going to
+the next message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_script.script.Decider">
+<em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">Decider</code><span class="sig-paren">(</span><em>getter</em>, <em>decider</em>, <em>wanted</em>, <em>simplifier=None</em>, <em>get_timeout=1</em>, <em>send_timeout=1</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.Decider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This one is a complex beast used for determining what to do based on the
+response from a particular message.</p>
+<dl class="docutils">
+<dt>getter</dt>
+<dd>A list of messages that are sent to each <code class="docutils literal"><span class="pre">reference</span></code>.</dd>
+<dt>decider</dt>
+<dd>A function that takes in <code class="docutils literal"><span class="pre">(reference,</span> <span class="pre">received1,</span> <span class="pre">received2,</span> <span class="pre">...)</span></code> where
+each <code class="docutils literal"><span class="pre">received</span></code> is a reply from <code class="docutils literal"><span class="pre">getter</span></code> and yields messages to send
+to that reference.</dd>
+<dt>wanted</dt>
+<dd>A list of messages that we want to get back from the <code class="docutils literal"><span class="pre">getter</span></code>. Any
+reply that doesn’t match this message type is dropped before we call
+<code class="docutils literal"><span class="pre">decider</span></code></dd>
+</dl>
+<dl class="method">
+<dt id="photons_script.script.Decider.run_with">
+<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>references</em>, <em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.Decider.run_with" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each msg in <code class="docutils literal"><span class="pre">getter</span></code>, run it against all the references and
+collect all the reply packets per reference for all the packets that
+match the <code class="docutils literal"><span class="pre">wanted</span></code> message types.</p>
+<p>For each reference that has results from <code class="docutils literal"><span class="pre">getter</span></code>, call <code class="docutils literal"><span class="pre">decider</span></code> with
+the reference and the replies from <code class="docutils literal"><span class="pre">getter</span></code>. This function yields
+messages which we simplify and send.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The messages from decider must already have a target set on them</p>
+</div>
+<p>Any errors are collected and if they have a serial, will be returned
+with the results.</p>
+<p>We raise the errors we find that don’t have an associated serial.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_socket.html" class="btn btn-neutral float-right" title="photons_socket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="photons_protocol.html" class="btn btn-neutral" title="photons_protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Photons App Helpers &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="photons_app" href="index.html"/>
+        <link rel="next" title="Functionality Registers" href="registers.html"/>
+        <link rel="prev" title="The Executor" href="executor.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">photons_app</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="defining_actions.html">Defining Photons Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collector.html">The Collector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Photons Error Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html">The Executor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Photons App Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registers.html">Functionality Registers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special.html">Special References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">photons_app</a> &raquo;</li>
+        
+      <li>Photons App Helpers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/photons_app/helpers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-photons_app.helpers">
+<span id="id1"></span><span id="photons-app-helpers"></span><h1>Photons App Helpers<a class="headerlink" href="#module-photons_app.helpers" title="Permalink to this headline">¶</a></h1>
+<p>Some useful, common helper functionalities</p>
+<dl class="class">
+<dt id="photons_app.helpers.ChildOfFuture">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">ChildOfFuture</code><span class="sig-paren">(</span><em>original_fut</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ChildOfFuture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a future that is considered done/cancelled if it’s parent is
+done/cancelled</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.helpers.Nope">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">Nope</code><a class="headerlink" href="#photons_app.helpers.Nope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to say there was no value</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.helpers.ResettableFuture">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">ResettableFuture</code><span class="sig-paren">(</span><em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ResettableFuture" title="Permalink to this definition">¶</a></dt>
+<dd><p>A future object with a <code class="docutils literal"><span class="pre">reset()</span></code> function that resets it</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fut</span> <span class="o">=</span> <span class="n">ResettableFuture</span><span class="p">()</span>
+<span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">fut</span> <span class="o">==</span> <span class="bp">True</span>
+
+<span class="n">fut</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">fut</span> <span class="o">==</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>This also supports an <code class="docutils literal"><span class="pre">on_creation</span></code> store that holds functions to be called
+when a new result is set.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">fut</span> <span class="o">=</span> <span class="n">ResettableFuture</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="c1"># Note that this callback is _not_ async</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="n">fut</span><span class="o">.</span><span class="n">on_creation</span><span class="p">(</span><span class="n">do_something</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.helpers.ThreadToAsyncQueue">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">ThreadToAsyncQueue</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>num_threads</em>, <em>onerror</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Queue for requesting data from some thread:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyQueue</span><span class="p">(</span><span class="n">ThreadToAsyncQueue</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">start_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This is called for each thread that is started&#39;&#39;&#39;</span>
+        <span class="n">my_thread_thing</span> <span class="o">=</span> <span class="n">THING</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">my_thread_thing</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">onerror</span><span class="p">(</span><span class="n">exc</span><span class="p">):</span>
+    <span class="c1"># Some unexpected error, do something with it here</span>
+    <span class="c1"># Like talk to bugsnag or sentry</span>
+    <span class="c1"># The return value is discarded</span>
+    <span class="k">pass</span>
+
+<span class="c1"># If stop_fut is cancelled or has a result, then the queue will stop</span>
+<span class="c1"># But the thread will continue until queue.finish() is called</span>
+<span class="n">queue</span> <span class="o">=</span> <span class="n">ThreadToAsyncQueue</span><span class="p">(</span><span class="n">stop_fut</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">onerror</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">my_thread_thing</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This runs in one of the threads&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">my_thread_thing</span><span class="o">.</span><span class="n">stuff</span><span class="p">()</span>
+
+<span class="n">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.find_and_set_future">
+<code class="descname">find_and_set_future</code><span class="sig-paren">(</span><em>key</em>, <em>result</em>, <em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.find_and_set_future" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find and set future for this key to provided result or exception</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.finish">
+<em class="property">await </em><code class="descname">finish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal to the tasks to stop at the next available moment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.listener">
+<code class="descname">listener</code><span class="sig-paren">(</span><em>ready_fut</em>, <em>impl=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the thread!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.listener_impl">
+<code class="descname">listener_impl</code><span class="sig-paren">(</span><em>nxt</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.listener_impl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just call out to process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>key</em>, <em>proc</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a request and get back a future representing the result of that request</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.set_futures">
+<em class="property">await </em><code class="descname">set_futures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.set_futures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get results from the result_queue and set that result on the appropriate future</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for extra setup</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>impl=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start tasks to listen for requests made with the <code class="docutils literal"><span class="pre">request</span></code> method</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.start_thread">
+<code class="descname">start_thread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.start_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to return extra args to give to functions when the are requested</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.wrap_request">
+<code class="descname">wrap_request</code><span class="sig-paren">(</span><em>proc</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.wrap_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function that will perform the work</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.a_temp_file">
+<em class="property">with </em><code class="descclassname">photons_app.helpers.</code><code class="descname">a_temp_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.a_temp_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield the name of a temporary file and ensure it’s removed after use</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">hp</span><span class="o">.</span><span class="n">a_temp_file</span><span class="p">()</span> <span class="k">as</span> <span class="n">fle</span><span class="p">:</span>
+    <span class="n">fle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="n">fle</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;cat {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fle</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.async_as_background">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">async_as_background</code><span class="sig-paren">(</span><em>coroutine</em>, <em>silent=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_as_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a task with reporter as a done callback using provided loop and
+coroutine and return the new task.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">my_func</span><span class="p">():</span>
+    <span class="n">await</span> <span class="n">something</span><span class="p">()</span>
+
+<span class="c1"># Kick off the function in the background</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">async_as_background</span><span class="p">(</span><span class="n">my_func</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.async_as_normal">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">async_as_normal</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_as_normal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function that creates a task on the provided loop using the
+provided func and add reporter as a done callback</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Define my async function</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">await</span> <span class="n">something</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Create a callable that will start the async function in the background</span>
+<span class="n">func</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">async_as_normal</span><span class="p">(</span><span class="n">my_func</span><span class="p">)</span>
+
+<span class="c1"># start the async job</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.async_with_timeout">
+<em class="property">await </em><code class="descclassname">photons_app.helpers.</code><code class="descname">async_with_timeout</code><span class="sig-paren">(</span><em>coroutine</em>, <em>timeout=10</em>, <em>timeout_error=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_with_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a coroutine until it’s complete or times out</p>
+<p>If timeout_error is defined, that is raised instead of asyncio.CancelledError on timeout</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.find_and_apply_result">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">find_and_apply_result</code><span class="sig-paren">(</span><em>final_fut</em>, <em>available_futs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.find_and_apply_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a result in available_futs with a result or exception and set that
+result/exception on both final_fut, and all the settable futs
+in available_futs.</p>
+<p>As a bonus, if final_fut is set, then we set that result/exception on
+available_futs.</p>
+<p>and if final_fut is cancelled, we cancel all the available futs</p>
+<p>Return True if we’ve changed final_fut</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_app.helpers.memoized_property">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">memoized_property</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.memoized_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to make a descriptor that memoizes it’s value</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@hp.memoized_property</span>
+    <span class="k">def</span> <span class="nf">thing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">expensive_operation</span><span class="p">()</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+
+<span class="c1"># Get us the result of expensive operation</span>
+<span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">thing</span><span class="p">)</span>
+
+<span class="c1"># And we get the result again but minus the expensive operation</span>
+<span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">thing</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.nested_dict_retrieve">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">nested_dict_retrieve</code><span class="sig-paren">(</span><em>data</em>, <em>keys</em>, <em>dflt</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.nested_dict_retrieve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get a value deep in a nested dictionary structure</p>
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;one&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;two&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;three&quot;</span><span class="p">:</span> <span class="s2">&quot;four&quot;</span><span class="p">}}}</span>
+
+<span class="n">nested_dict_retrieve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;four&quot;</span>
+
+<span class="n">nested_dict_retrieve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;three&quot;</span><span class="p">:</span> <span class="s2">&quot;four&quot;</span><span class="p">}</span>
+
+<span class="n">nested_dict_retrieve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;four&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.noncancelled_results_from_futs">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">noncancelled_results_from_futs</code><span class="sig-paren">(</span><em>futs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.noncancelled_results_from_futs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get back (exception, results) from a list of futures</p>
+<dl class="docutils">
+<dt>exception</dt>
+<dd><p class="first">A single exception if all the errors are the same type
+or if there is only one exception</p>
+<p class="last">otherwise it is None</p>
+</dd>
+<dt>results</dt>
+<dd>A list of the results that exist</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.reporter">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">reporter</code><span class="sig-paren">(</span><em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic reporter for asyncio tasks.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">coroutine</span><span class="p">())</span>
+<span class="n">t</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">reporter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This means that exceptions are logged to the terminal and you won’t
+get warnings about tasks not being looked at when they finish.</p>
+<p>This method will return True if there was no exception and None otherwise.</p>
+<p>It also handles and silences CancelledError.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_app.helpers.silent_reporter">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">silent_reporter</code><span class="sig-paren">(</span><em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.silent_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic reporter for asyncio tasks that doesn’t log errors.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">coroutine</span><span class="p">())</span>
+<span class="n">t</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">silent_reporter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This means that exceptions are <em>not</em> logged to the terminal and you won’t
+get warnings about tasks not being looked at when they finish.</p>
+<p>This method will return True if there was no exception and None otherwise.</p>
+<p>It also handles and silences CancelledError.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="registers.html" class="btn btn-neutral float-right" title="Functionality Registers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="executor.html" class="btn btn-neutral" title="The Executor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

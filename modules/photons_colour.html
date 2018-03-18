@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_colour &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_core" href="photons_core.html"/>
+        <link rel="prev" title="photons_attributes" href="photons_attributes.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_colour</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#colourmessages">ColourMessages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getcolor">101 - GetColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setcolor">102 - SetColor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setwaveform">103 - SetWaveForm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lightstate">107 - LightState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setwaveformoptional">119 - SetWaveFormOptional</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_colour</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_colour.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-colour">
+<span id="id1"></span><h1>photons_colour<a class="headerlink" href="#photons-colour" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_colour"></span><p>This module knows about colour.</p>
+<dl class="docutils">
+<dt>TASK:: set_color</dt>
+<dd><p class="first">Change specified bulb to specified colour</p>
+<p><code class="docutils literal"><span class="pre">lan:set_color</span> <span class="pre">d073d50000</span> <span class="pre">red</span> <span class="pre">--</span> <span class="pre">'{&quot;hue&quot;:</span> <span class="pre">205}'</span></code></p>
+<p>The format of this task is <code class="docutils literal"><span class="pre">&lt;reference&gt;</span> <span class="pre">&lt;color&gt;</span> <span class="pre">--</span> <span class="pre">&lt;overrides&gt;</span></code> where
+overrides is optional.</p>
+<p class="last">The color may be any valid color specifier.</p>
+</dd>
+</dl>
+<div class="section" id="colourmessages">
+<h2>ColourMessages<a class="headerlink" href="#colourmessages" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Messages related to colour.</p>
+<p>These make use of the following helpers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Waveform</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">SAW</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">SINE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">HALF_SINE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">TRIANGLE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">PULSE</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hsbk</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="p">(</span><span class="s1">&#39;hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="o">/</span> <span class="mi">360</span><span class="p">)</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="mi">360</span> <span class="o">/</span> <span class="mi">65535</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+          <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+          <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+          <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;kelvin&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">3500</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">duration_typ</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+      <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">color_and_duration</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="p">(</span><span class="s1">&#39;setcolor_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">waveform_opts</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+          <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;cycles&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;skew_ratio&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">32767</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32767</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
+          <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;waveform&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">Waveform</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">Waveform</span><span class="o">.</span><span class="n">SAW</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="getcolor">
+<h3>101 - GetColor<a class="headerlink" href="#getcolor" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.GetColor</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setcolor">
+<h3>102 - SetColor<a class="headerlink" href="#setcolor" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetColor</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span> <span class="o">*</span><span class="n">color_and_duration</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setwaveform">
+<h3>103 - SetWaveForm<a class="headerlink" href="#setwaveform" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveForm</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveForm</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">103</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lightstate">
+<h3>107 - LightState<a class="headerlink" href="#lightstate" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.LightState</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">LightState</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">107</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;state_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;state_reserved2&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setwaveformoptional">
+<h3>119 - SetWaveFormOptional<a class="headerlink" href="#setwaveformoptional" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveFormOptional</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveFormOptional</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">119</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;hue&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;saturation&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;brightness&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_kelvin&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;kelvin&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="helpers">
+<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
+<p>We also supply the following helpers:</p>
+<dl class="class">
+<dt id="photons_colour.Effects">
+<em class="property">class </em><code class="descclassname">photons_colour.</code><code class="descname">Effects</code><a class="headerlink" href="#photons_colour.Effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for making options related to special waveform effects</p>
+<dl class="method">
+<dt id="photons_colour.Effects.half_sine">
+<code class="descname">half_sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>stream=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.half_sine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options to make the light(s) transition to <cite>color</cite> smoothly, then immediately back to its original color</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_colour.Effects.pulse">
+<code class="descname">pulse</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>duty_cycle=0.5</em>, <em>transient=1</em>, <em>period=1.0</em>, <em>stream=0</em>, <em>skew_ratio=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.pulse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options to make the light(s) pulse <cite>color</cite> and then back to its original color</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_colour.Effects.saw">
+<code class="descname">saw</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>stream=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.saw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options to make the light(s) transition to <cite>color</cite> linearly, then instantly back</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_colour.Effects.sine">
+<code class="descname">sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>stream=0</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.sine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options to make the light(s) transition to <cite>color</cite> and back in a smooth sine wave</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_colour.Effects.triangle">
+<code class="descname">triangle</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>stream=0</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.triangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options to make the light(s) transition to <cite>color</cite> linearly and back</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_colour.Parser">
+<em class="property">class </em><code class="descclassname">photons_colour.</code><code class="descname">Parser</code><a class="headerlink" href="#photons_colour.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for converting valid colour specifiers into the options for a
+<code class="docutils literal"><span class="pre">SetWaveFormOptional</span></code> device command.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://colorizer.org/">http://colorizer.org/</a> and <a class="reference external" href="http://colormine.org/">http://colormine.org/</a> are amazing!</p>
+</div>
+<p>The valid colour names are:</p>
+<p><code class="docutils literal"><span class="pre">'blue'</span></code>
+<code class="docutils literal"><span class="pre">'cyan'</span></code>
+<code class="docutils literal"><span class="pre">'green'</span></code>
+<code class="docutils literal"><span class="pre">'orange'</span></code>
+<code class="docutils literal"><span class="pre">'pink'</span></code>
+<code class="docutils literal"><span class="pre">'purple'</span></code>
+<code class="docutils literal"><span class="pre">'red'</span></code>
+<code class="docutils literal"><span class="pre">'white'</span></code>
+<code class="docutils literal"><span class="pre">'yellow'</span></code></p>
+<p>And valid colour specifiers are as follows:</p>
+<dl class="docutils">
+<dt>01_hsb_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Ahsb:([\d\.]+),([\d\.]+%?),([\d\.]+%?)\Z</span></code></dd>
+<dt>02_rgb_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Argb:(\d+,\d+,\d+)\Z</span></code></dd>
+<dt>03_hex_component</dt>
+<dd><code class="docutils literal"><span class="pre">\A(?:hex:)?#?([0-9a-fA-F]{6})\Z</span></code></dd>
+<dt>04_hue_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Ahue:([\d.]+)\Z</span></code></dd>
+<dt>05_saturation_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Asaturation:([\d.]+%?)\Z</span></code></dd>
+<dt>06_brightness_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Abrightness:([\d.]+%?)\Z</span></code></dd>
+<dt>07_kelvin_component</dt>
+<dd><code class="docutils literal"><span class="pre">\Akelvin:([\d]+)\Z</span></code></dd>
+<dt>10_random_component</dt>
+<dd><code class="docutils literal"><span class="pre">random</span></code></dd>
+<dt>whitespace</dt>
+<dd><code class="docutils literal"><span class="pre">\s+</span></code></dd>
+</dl>
+<p>This class also has some classmethods for your use:</p>
+<dl class="method">
+<dt id="photons_colour.Parser.hsbk">
+<em class="property">classmethod </em><code class="descname">hsbk</code><span class="sig-paren">(</span><em>components</em>, <em>overrides=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Parser.hsbk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal"><span class="pre">(h,</span> <span class="pre">s,</span> <span class="pre">b,</span> <span class="pre">k)</span></code> given a list of colour components</p>
+<p>Take into account hue, saturation, brightness and kelvin keys in overrides if provided</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_colour.Parser.color_to_msg">
+<em class="property">classmethod </em><code class="descname">color_to_msg</code><span class="sig-paren">(</span><em>components</em>, <em>overrides=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Parser.color_to_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <code class="docutils literal"><span class="pre">SetWaveFormOptional</span></code> message that may be used to change the
+state of a device to what has been specified.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_core.html" class="btn btn-neutral float-right" title="photons_core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="photons_attributes.html" class="btn btn-neutral" title="photons_attributes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Finding Serials &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Packets" href="packets.html"/>
+        <link rel="prev" title="The Script Mechanism" href="script_mechanism.html"/>
+   
+	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Finding Serials</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/finding_serials.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="finding-serials">
+<span id="id1"></span><h1>Finding Serials<a class="headerlink" href="#finding-serials" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">run_with</span></code> and <code class="docutils literal"><span class="pre">run_with_all</span></code> functions mentioned in <a class="reference internal" href="script_mechanism.html#script-mechanism"><span class="std std-ref">The Script Mechanism</span></a>
+take in serials to send the messages to, but sometimes we don’t know what serials
+we want to work with and instead want to address devices based on label or group
+or some other property.</p>
+<p>To help with this, photons provides the <code class="docutils literal"><span class="pre">DeviceFinder</span></code>.</p>
+<p>Below is a short introduction to what it can do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<span class="kn">from</span> <span class="nn">photons_device_finder</span> <span class="kn">import</span> <span class="n">DeviceFinder</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">my_process</span><span class="p">(</span><span class="n">lan_target</span><span class="p">):</span>
+    <span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>
+
+    <span class="c1"># Optionally start the device_finder daemon functionality</span>
+    <span class="c1"># Not doing this is equivalent to setting force_refresh to True everytime</span>
+    <span class="c1"># we use the device_finder</span>
+    <span class="c1"># By saying start then filters will use what information it already has,</span>
+    <span class="c1"># and that information will be updated in the background</span>
+    <span class="n">await</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Determine the power for all the devices in the ``house`` group</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;house&quot;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetPower</span><span class="p">()</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">pkt</span><span class="o">.</span><span class="n">power</span><span class="p">)</span>
+
+    <span class="c1"># Set the power for all the devices with the label kitchen</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="n">device_finder</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;kitchen&quot;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">65535</span><span class="p">)</span>
+    <span class="n">await</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also use the device_finder to determine a list of serials given some
+conditions, or even a dictionary of information for those devices.</p>
+<p>Detailed information can be found at <a class="reference internal" href="modules/photons_device_finder.html#photons-device-finder"><span class="std std-ref">photons_device_finder</span></a>.</p>
+<p>Information about the mechanism that supports this can be found at
+<a class="reference internal" href="photons_app/special.html#photons-app-special"><span class="std std-ref">Special References</span></a></p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="packets.html" class="btn btn-neutral float-right" title="Packets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="script_mechanism.html" class="btn btn-neutral" title="The Script Mechanism" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

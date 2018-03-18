@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_tile_messages &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_transform" href="photons_transform.html"/>
+        <link rel="prev" title="photons_themes" href="photons_themes.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_tile_messages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tilemessages">TileMessages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#getdevicechain">701 - GetDeviceChain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statedevicechain">702 - StateDeviceChain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setuserposition">703 - SetUserPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gettilestate64">707 - GetTileState64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statetilestate64">711 - StateTileState64</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#settilestate64">715 - SetTileState64</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_tile_messages</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_tile_messages.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-tile-messages">
+<span id="id1"></span><h1>photons_tile_messages<a class="headerlink" href="#photons-tile-messages" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_tile_messages"></span><dl class="docutils">
+<dt>TASK:: get_device_chain</dt>
+<dd>Get the devices in your chain</dd>
+</dl>
+<dl class="docutils">
+<dt>TASK:: get_chain_state</dt>
+<dd>Get the colors of the tiles in your chain</dd>
+</dl>
+<dl class="docutils">
+<dt>TASK:: set_chain_state</dt>
+<dd><p class="first">Set the state of colors on your tile</p>
+<p><code class="docutils literal"><span class="pre">lan:set_chain_state</span> <span class="pre">d073d5f09124</span> <span class="pre">--</span> <span class="pre">'{&quot;colors&quot;:</span> <span class="pre">[[[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">3500],</span> <span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">3500],</span> <span class="pre">...],</span> <span class="pre">[[0,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">3500],</span> <span class="pre">...],</span> <span class="pre">...],</span> <span class="pre">&quot;tile_index&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;length&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;x&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;y&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;width&quot;:</span> <span class="pre">8}'</span></code></p>
+<p class="last">Where the colors is a grid of 8 rows of 8 <code class="docutils literal"><span class="pre">[h,</span> <span class="pre">s,</span> <span class="pre">b,</span> <span class="pre">k]</span></code> values.</p>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>TASK:: set_tile_positions</dt>
+<dd><p class="first">Set the positions of the tiles in your chain.</p>
+<p class="last"><code class="docutils literal"><span class="pre">lan:set_tile_positions</span> <span class="pre">d073d5f09124</span> <span class="pre">--</span> <span class="pre">'[[0,</span> <span class="pre">0],</span> <span class="pre">[-1,</span> <span class="pre">0],</span> <span class="pre">[-1,</span> <span class="pre">1]]'</span></code></p>
+</dd>
+</dl>
+<div class="section" id="tilemessages">
+<h2>TileMessages<a class="headerlink" href="#tilemessages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getdevicechain">
+<h3>701 - GetDeviceChain<a class="headerlink" href="#getdevicechain" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.GetDeviceChain</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetDeviceChain</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">701</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statedevicechain">
+<h3>702 - StateDeviceChain<a class="headerlink" href="#statedevicechain" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.StateDeviceChain</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateDeviceChain</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">702</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_devices&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">440</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">Tile</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;total_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setuserposition">
+<h3>703 - SetUserPosition<a class="headerlink" href="#setuserposition" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.SetUserPosition</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetUserPosition</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">703</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved6&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;user_x&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;user_y&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gettilestate64">
+<h3>707 - GetTileState64<a class="headerlink" href="#gettilestate64" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.GetTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span><span class="p">,</span> <span class="o">*</span><span class="n">get_tile_state</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statetilestate64">
+<h3>711 - StateTileState64<a class="headerlink" href="#statetilestate64" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.StateTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">711</span><span class="p">,</span> <span class="o">*</span><span class="n">tile_state</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settilestate64">
+<h3>715 - SetTileState64<a class="headerlink" href="#settilestate64" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.SetTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">715</span><span class="p">,</span> <span class="o">*</span><span class="n">set_tile_state</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_transform.html" class="btn btn-neutral float-right" title="photons_transform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="photons_themes.html" class="btn btn-neutral" title="photons_themes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

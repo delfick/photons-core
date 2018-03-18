@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Venvstarter &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
+        <link rel="next" title="The Script Mechanism" href="script_mechanism.html"/>
+        <link rel="prev" title="Using Photons as a library" href="library.html"/>
+   
+	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Using Venvstarter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/venvstarter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-venvstarter">
+<span id="lifx-photons-venvstarter"></span><h1>Using Venvstarter<a class="headerlink" href="#using-venvstarter" title="Permalink to this headline">¶</a></h1>
+<p>Dependency management in python works best when you use virtualenvs. You can
+find more information about these over at <a class="reference external" href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">http://docs.python-guide.org/en/latest/dev/virtualenvs/</a></p>
+<p>To help manage virtualenvs I created a python library called
+<a class="reference external" href="https://venvstarter.readthedocs.io">venvstarter</a> which allows you to manage
+a virtualenv just by specifying what modules you want in that virtualenv in a
+file and then executing that file will create or modify the virtualenv before
+using it to launch some python application.</p>
+<p>Usage is something like:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ pip install venvstarter
+</pre></div>
+</div>
+<p>And then create a file something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3.6</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;LIFX_CONFIG&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LIFX_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;{venv_parent}/lifx.yml&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
+<span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Make this file executable and run it. It’ll make a virtualenv in a folder named
+<code class="docutils literal"><span class="pre">.lifx</span></code> next to this file with the virtualenv inside. It’ll then make sure
+<code class="docutils literal"><span class="pre">photons-core</span></code> is installed in the virtualenv before doing an <code class="docutils literal"><span class="pre">os.exec</span></code> to
+the <code class="docutils literal"><span class="pre">lifx</span></code> executable in the virtualenv.</p>
+<p>The <code class="docutils literal"><span class="pre">lifx</span></code> executable in this case is provided by <code class="docutils literal"><span class="pre">photons-core</span></code> and is a
+generic launcher for all the functionality provided by photons modules.</p>
+<p>You can also activate this virtualenv by doing a <code class="docutils literal"><span class="pre">source</span> <span class="pre">.lifx/bin/activate</span></code>
+and then when you run the <code class="docutils literal"><span class="pre">python</span></code> executable, you are using the <code class="docutils literal"><span class="pre">python</span></code>
+from that virtualenv.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="script_mechanism.html" class="btn btn-neutral float-right" title="The Script Mechanism" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="library.html" class="btn btn-neutral" title="Using Photons as a library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

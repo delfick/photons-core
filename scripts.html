@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Making a Photons Script &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Using Photons as a library" href="library.html"/>
+        <link rel="prev" title="LIFX script" href="lifx_script.html"/>
+   
+	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Making a Photons Script</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/scripts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="making-a-photons-script">
+<span id="lifx-photons-script"></span><h1>Making a Photons Script<a class="headerlink" href="#making-a-photons-script" title="Permalink to this headline">¶</a></h1>
+<p>Let’s say you want to turn your bulb off if a random number between 0 and 10 is
+less than 5.</p>
+<p>So, we create a virtualenv (see <a class="reference internal" href="venvstarter.html#lifx-photons-venvstarter"><span class="std std-ref">Using Venvstarter</span></a>) and then create
+a script that uses that virtualenv.</p>
+<p>First we create <code class="docutils literal"><span class="pre">setup_venv</span></code> with the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3.6</span>
+
+<span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
+<span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>And create our virtualenv by running it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ./setup_venv
+</pre></div>
+</div>
+<p>Now that we have a virtualenv, we can use it to run some code, so let’s start
+our <code class="docutils literal"><span class="pre">my_script</span></code> file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">#/bin/sh</span>
+<span class="s2">&quot;exec&quot;</span> <span class="s2">&quot;`dirname $0`/.lifx/bin/python&quot;</span> <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$@&quot;</span>
+
+<span class="kn">from</span> <span class="nn">photons_app.actions</span> <span class="kn">import</span> <span class="n">an_action</span>
+
+<span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;my_script&quot;</span><span class="p">)</span>
+
+<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">extras</span><span class="o">=</span><span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;socket&quot;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;device_messages&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+<span class="k">def</span> <span class="nf">__lifx__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">__post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Optionally do something with the collector once all our</span>
+    <span class="c1"># dependencies are resolved</span>
+    <span class="k">pass</span>
+
+<span class="nd">@an_action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">&quot;lan&quot;</span><span class="p">,</span> <span class="n">special_reference</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">needs_target</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">do_turn_off</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">artifact</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Do the turn off here&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">photons_app.executor</span> <span class="kn">import</span> <span class="n">main</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">main</span><span class="p">([</span><span class="s2">&quot;lan:do_turn_off&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+<p>I’ll complete the <code class="docutils literal"><span class="pre">do_turn_off</span></code> action below for completeness sake, but first
+let’s go over the different parts of this file and what they are for and what
+they do.</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">#/bin/sh</span></code></dt>
+<dd><p class="first">This the shebang and tells your shell to run this file as a bash script.</p>
+<p class="last">We do this because we use the second line to run the file with the python
+interpreter from our virtualenv.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">&quot;exec&quot;</span> <span class="pre">&quot;`dirname</span> <span class="pre">$0`/.lifx/bin/python&quot;</span> <span class="pre">&quot;$0&quot;</span> <span class="pre">&quot;$&#64;&quot;</span></code></dt>
+<dd>Find the python in our virtualenv and execute this file using it.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The shebang and exec line are only necessary so you don’t have to
+activate the virtualenv yourself. You can always activate the virtualenv and
+run the script with the python from your virtualenv.</p>
+<p class="last">For example, <code class="docutils literal"><span class="pre">source</span> <span class="pre">.lifx/bin/activate</span> <span class="pre">&amp;&amp;</span> <span class="pre">python</span> <span class="pre">my_script</span></code> instead of just
+<code class="docutils literal"><span class="pre">./my_script</span></code></p>
+</div>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">option_merge_addon_hook</span></code></dt>
+<dd><p class="first">This function registers this module and is used to specify what other
+modules should be loaded.</p>
+<p>When modules are created, they have a <code class="docutils literal"><span class="pre">setup.py</span></code> that defines the name of
+these <code class="docutils literal"><span class="pre">entry_points</span></code>. and these are the names you must use here so that
+these modules are initialized properly at the start of the app.</p>
+<p>When modules are loaded, there are two passes over the modules. The first
+pass is used for registering special hooks in the configuration and for
+defining what dependency modules are required.</p>
+<p class="last">The second pass, is the <code class="docutils literal"><span class="pre">post_register</span></code> pass and is done once all
+dependencies are resolved and initialized.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">an_action</span></code></dt>
+<dd><p class="first">This decorator registers a function to be a <a class="reference internal" href="photons_app/defining_actions.html#term-action"><span class="xref std std-term">action</span></a>.</p>
+<p><code class="docutils literal"><span class="pre">an_action</span></code> takes some arguments that define common behaviour for the action..</p>
+<p>In this case we say that the user must specify a target to
+use, with the lan target being set by default.</p>
+<p class="last">We also ask that the reference be treated as a special reference. This means
+empty or <code class="docutils literal"><span class="pre">_</span></code> is all devices on the network, a comma seperated list of serials
+will address just those serials, and <code class="docutils literal"><span class="pre">type:options</span></code> syntax for matching
+against lights. If the <code class="docutils literal"><span class="pre">photons_device_finder</span></code> module is enabled then you
+can say something like <code class="docutils literal"><span class="pre">match:power=off&amp;cap=multizone</span></code> to find all powered
+off strips for example.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">from</span> <span class="pre">photons_app.executor</span> <span class="pre">import</span> <span class="pre">main</span></code></dt>
+<dd><p class="first">This is the photons mainline. Calling it with an array is equivalent to
+running the <code class="docutils literal"><span class="pre">lifx</span></code> application with the specified arguments on the
+command line.</p>
+<p class="last">In this case we are saying run photons with the <code class="docutils literal"><span class="pre">lan</span></code> target and execute
+the <code class="docutils literal"><span class="pre">do_turn_off</span></code> target.</p>
+</dd>
+</dl>
+<p>So now, running our app should spit out something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ./my_script
+15:11:04 INFO    option_merge.collector Adding configuration from /Users/stephenmoore/.photons_apprc.yml
+15:11:04 INFO    option_merge.addons Found lifx.photons.__main__ addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.socket addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.protocol addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.transport addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.device_messages addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.script addon
+15:11:04 INFO    option_merge.collector Converting protocol_register
+15:11:04 INFO    option_merge.collector Converting target_register
+15:11:04 INFO    option_merge.collector Converting photons_app
+15:11:04 INFO    option_merge.collector Converting targets
+Do the turn off here
+</pre></div>
+</div>
+<p>To summarize, we have</p>
+<ul class="simple">
+<li>Loaded the correct modules and only those modules we want</li>
+<li>Ensured that we have a lan target</li>
+<li>Defined the <code class="docutils literal"><span class="pre">do_turn_off</span></code> task</li>
+<li>Started the photons mainline and told it to execute the <code class="docutils literal"><span class="pre">do_turn_off</span></code> task.
+with the <code class="docutils literal"><span class="pre">lan</span></code> target</li>
+</ul>
+<p>And that’s how we create a script using photons!</p>
+<p>For completeness, this particular script would be implemented like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="nd">@an_action</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">&quot;lan&quot;</span><span class="p">,</span> <span class="n">special_reference</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">needs_target</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">do_turn_off</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">artifact</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">([</span><span class="n">reference</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>and usage would be like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ./my_script d073d580085
+
+# Or if we want to apply the SetPower to all devices on the network
+$ ./my_script
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="library.html" class="btn btn-neutral float-right" title="Using Photons as a library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="lifx_script.html" class="btn btn-neutral" title="LIFX script" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

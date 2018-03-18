@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>photons_attributes &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
+        <link rel="next" title="photons_colour" href="photons_colour.html"/>
+        <link rel="prev" title="Available Photons Modules" href="../available_modules.html"/>
+   
+	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../available_modules.html">Available Photons Modules</a> &raquo;</li>
+        
+      <li>photons_attributes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/photons_attributes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="photons-attributes">
+<span id="id1"></span><h1>photons_attributes<a class="headerlink" href="#photons-attributes" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-photons_attributes"></span><p>This module provides tasks for accessing and modifying attributes on a LIFX
+device.</p>
+<dl class="docutils">
+<dt>TASK:: get_attr</dt>
+<dd><p class="first">Get attributes from your globes</p>
+<p><code class="docutils literal"><span class="pre">get_attr</span> <span class="pre">d073d5000000</span> <span class="pre">color</span></code></p>
+<p>Where <code class="docutils literal"><span class="pre">d073d5000000</span></code> is replaced with the serial of the device you are
+addressing and <code class="docutils literal"><span class="pre">color</span></code> is replaced with the attribute you want.</p>
+<p>This task works by looking at all the loaded LIFX binary protocol messages
+defined for the 1024 protocol and looks for <code class="docutils literal"><span class="pre">Get&lt;Attr&gt;</span></code>.</p>
+<p class="last">So if you want the <code class="docutils literal"><span class="pre">color</span></code> attribute, it will look for the <code class="docutils literal"><span class="pre">GetColor</span></code>
+message and send that to the device and print out the reply packet we get
+back.</p>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>TASK:: get_multi_attr</dt>
+<dd><p class="first">Get attributes from your globes</p>
+<p><code class="docutils literal"><span class="pre">get_multi_attr</span> <span class="pre">d073d5000000</span> <span class="pre">multi_zone_color_zones</span></code></p>
+<p>Where <code class="docutils literal"><span class="pre">d073d5000000</span></code> is replaced with the serial of the device you are
+addressing and <code class="docutils literal"><span class="pre">color</span></code> is replaced with the attribute you want.</p>
+<p class="last">This does the same as the get_attr task except it will wait for multiple
+replies.</p>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>TASK:: set_attr</dt>
+<dd><p class="first">Set attributes on your globes</p>
+<p><code class="docutils literal"><span class="pre">set_attr</span> <span class="pre">d073d5000000</span> <span class="pre">color</span> <span class="pre">--</span> <span class="pre">'{&quot;hue&quot;:</span> <span class="pre">360,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">1}'</span></code></p>
+<p>This does the same thing as <code class="docutils literal"><span class="pre">get_attr</span></code> but will look for <code class="docutils literal"><span class="pre">Set&lt;Attr&gt;</span></code>
+message and initiates it with the options found after the <code class="docutils literal"><span class="pre">--</span></code>.</p>
+<p class="last">So in this case it will create <code class="docutils literal"><span class="pre">SetColor(hue=360,</span> <span class="pre">saturation=1,</span> <span class="pre">brightness=1)</span></code>
+and send that to the device.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="photons_colour.html" class="btn btn-neutral float-right" title="photons_colour" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../available_modules.html" class="btn btn-neutral" title="Available Photons Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
