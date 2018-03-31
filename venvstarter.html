@@ -100,6 +100,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
@@ -178,6 +179,11 @@ find more information about these over at <a class="reference external" href="ht
 a virtualenv just by specifying what modules you want in that virtualenv in a
 file and then executing that file will create or modify the virtualenv before
 using it to launch some python application.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">venvstarter doesn’t work on windows, so in that environment you’ll
+have to create and manage your virtualenv yourself.</p>
+</div>
 <p>Usage is something like:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>$ pip install venvstarter
 </pre></div>
@@ -193,7 +199,7 @@ using it to launch some python application.</p>
 
 <span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
 <span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
-    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5.1&quot;</span><span class="p">]</span>
     <span class="p">,</span> <span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
     <span class="p">)</span>
 </pre></div>

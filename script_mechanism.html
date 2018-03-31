@@ -105,6 +105,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
@@ -185,7 +186,7 @@ against the serials of your devices:</p>
 
 <span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sent_to</span> <span class="ow">in</span> <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="s2">&quot;d073d5000000&quot;</span><span class="p">,</span> <span class="s2">&quot;d073d5000001&quot;</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">StatePower</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">pkt</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span> <span class="n">pkt</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>What this has done is taken the <code class="docutils literal"><span class="pre">GetPower</span></code> messages and made a copy for our

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ChangeLog &mdash; Photons 0.1 documentation</title>
+  <title>Tile Animations &mdash; Photons 0.1 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
-        <link rel="next" title="photons_app" href="photons_app/index.html"/>
-        <link rel="prev" title="Known Issues" href="known_issues.html"/>
+        <link rel="next" title="Packets" href="packets.html"/>
+        <link rel="prev" title="Finding Serials" href="finding_serials.html"/>
    
 	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
 
@@ -100,10 +100,10 @@
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
@@ -151,13 +151,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>ChangeLog</li>
+      <li>Tile Animations</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/tile_animations.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -170,19 +170,66 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="changelog">
-<span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="tile-animations">
+<span id="id1"></span><h1>Tile Animations<a class="headerlink" href="#tile-animations" title="Permalink to this headline">¶</a></h1>
+<p>Photons provides some actions for simple animations on the tiles.</p>
+<p>Currently implemented is <code class="docutils literal"><span class="pre">tile_time</span></code>, <code class="docutils literal"><span class="pre">tile_marquee</span></code> and <code class="docutils literal"><span class="pre">tile_pacman</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_time</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;</span><span class="si">{options}</span><span class="s1">&#39;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_marquee</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;{&quot;text&quot;: &quot;hello there&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>Where the options are optional and are as follows:</p>
 <dl class="docutils">
-<dt>0.5.1 - 31 March 2018</dt>
-<dd><ul class="first last simple">
-<li>Tile animations</li>
-<li>Added a <code class="docutils literal"><span class="pre">serial</span></code> property to packets that returns the hexlified target
-i.e. “d073d5000001” or None if target isn’t set on the packet</li>
-<li>Now installs and runs on Windows.</li>
-</ul>
+<dt>background</dt>
+<dd><p class="first">All the animation actions take in a background option of a dictionary containing
+<code class="docutils literal"><span class="pre">{&quot;type&quot;,</span> <span class="pre">&quot;hue&quot;,</span> <span class="pre">&quot;saturation&quot;,</span> <span class="pre">&quot;brightness&quot;,</span> <span class="pre">&quot;kelvin&quot;}</span></code></p>
+<p>type can be <code class="docutils literal"><span class="pre">specified</span></code> or <code class="docutils literal"><span class="pre">current</span></code>. If <code class="docutils literal"><span class="pre">current</span></code> then the hsbk values
+are ignored and the background of the animation is whatever the tile is
+set to.</p>
+<p class="last">if type is <code class="docutils literal"><span class="pre">specified</span></code> then it’ll use the specified hsbk values as the
+background.</p>
 </dd>
-<dt>0.5 - 19 March 2018</dt>
-<dd>Initial opensource release after over a year of internal development.</dd>
+<dt>tile_time</dt>
+<dd><p class="first">This also has the following options:</p>
+<dl class="last docutils">
+<dt>hour24 – boolean – default true</dt>
+<dd>If true, then display in 24 hour time</dd>
+<dt>number_color – hsbk dictionary – default 200, 0.24, 0.5, 3500</dt>
+<dd>The color for the numbers</dd>
+<dt>progress_bar_color – hsbk dictionary – default 0, 1, 0.4, 3500</dt>
+<dd>The color of the progress bar</dd>
+<dt>full_height_progress – boolean – default false</dt>
+<dd>If false then the progress bar is just the bottom pixels</dd>
+</dl>
+</dd>
+<dt>tile_marquee</dt>
+<dd><p class="first">This also has the following options</p>
+<dl class="last docutils">
+<dt>text_color – hsbk dictionary – default 200, 0.24, 0.5, 3500</dt>
+<dd>The color of the text</dd>
+<dt>text – string – required</dt>
+<dd>The text to scroll across the tiles</dd>
+<dt>user_coords – boolean – default false</dt>
+<dd>If this is true, then we use the (user_x, user_y) values from the tiles to
+determine what to display on the tiles. By default we assume the tiles are
+in a horizontal row.</dd>
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+</dl>
+</dd>
+<dt>tile_pacman</dt>
+<dd><p class="first">This also has the following options</p>
+<dl class="last docutils">
+<dt>user_coords – boolean – default false</dt>
+<dd>If this is true, then we use the (user_x, user_y) values from the tiles to
+determine what to display on the tiles. By default we assume the tiles are
+in a horizontal row.</dd>
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+</dl>
+</dd>
 </dl>
 </div>
 
@@ -196,10 +243,10 @@ i.e. “d073d5000001” or None if target isn’t set on the packet</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="photons_app/index.html" class="btn btn-neutral float-right" title="photons_app" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="packets.html" class="btn btn-neutral float-right" title="Packets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="known_issues.html" class="btn btn-neutral" title="Known Issues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="finding_serials.html" class="btn btn-neutral" title="Finding Serials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
