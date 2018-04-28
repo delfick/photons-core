@@ -173,7 +173,21 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>0.5.2 - 28 April 2018</dt>
+<dt>0.5.4 - 28 April 2018</dt>
+<dd><ul class="first last">
+<li><p class="first">You can now specify <code class="docutils literal"><span class="pre">(&quot;lifx.photon&quot;,</span> <span class="pre">&quot;__all__&quot;)</span></code> as a dependency and all
+photons modules will be seen as a dependency of your script.</p>
+<p>Note however that you should not do this in a module you expect to be used
+as a dependency by another module (otherwise you’ll get cyclic dependencies).</p>
+</li>
+</ul>
+</dd>
+<dt>0.5.3 - 22 April 2018</dt>
+<dd><ul class="first last simple">
+<li>Tiny fix to TileState64 message</li>
+</ul>
+</dd>
+<dt>0.5.2 - 21 April 2018</dt>
 <dd><ul class="first last simple">
 <li>Small fixes to the tile animations</li>
 </ul>
