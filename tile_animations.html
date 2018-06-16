@@ -173,11 +173,16 @@
   <div class="section" id="tile-animations">
 <span id="id1"></span><h1>Tile Animations<a class="headerlink" href="#tile-animations" title="Permalink to this headline">¶</a></h1>
 <p>Photons provides some actions for simple animations on the tiles.</p>
-<p>Currently implemented is <code class="docutils literal"><span class="pre">tile_time</span></code>, <code class="docutils literal"><span class="pre">tile_marquee</span></code> and <code class="docutils literal"><span class="pre">tile_pacman</span></code>.</p>
+<p>Currently implemented is <code class="docutils literal"><span class="pre">tile_time</span></code>, <code class="docutils literal"><span class="pre">tile_marquee</span></code>, <code class="docutils literal"><span class="pre">tile_nyan</span></code> and
+<code class="docutils literal"><span class="pre">tile_pacman</span></code>.</p>
 <p>For example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_time</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;</span><span class="si">{options}</span><span class="s1">&#39;</span>
 
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_marquee</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;{&quot;text&quot;: &quot;hello there&quot;}&#39;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_nyan</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_pacman</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Where the options are optional and are as follows:</p>
@@ -211,6 +216,19 @@ background.</p>
 <dd>The color of the text</dd>
 <dt>text – string – required</dt>
 <dd>The text to scroll across the tiles</dd>
+<dt>user_coords – boolean – default false</dt>
+<dd>If this is true, then we use the (user_x, user_y) values from the tiles to
+determine what to display on the tiles. By default we assume the tiles are
+in a horizontal row.</dd>
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+<dt>direction – left or right – default left</dt>
+<dd>The direction the text goes in</dd>
+</dl>
+</dd>
+<dt>tile_nyan</dt>
+<dd><p class="first">This also has the following options</p>
+<dl class="last docutils">
 <dt>user_coords – boolean – default false</dt>
 <dd>If this is true, then we use the (user_x, user_y) values from the tiles to
 determine what to display on the tiles. By default we assume the tiles are
