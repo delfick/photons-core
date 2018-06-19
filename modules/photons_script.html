@@ -269,7 +269,7 @@ we created it.</p>
 <h2>Scripts with functionality<a class="headerlink" href="#scripts-with-functionality" title="Permalink to this headline">¶</a></h2>
 <p>When you do <code class="docutils literal"><span class="pre">target.script(...)</span></code> you may choose to send multiple messages at
 the same time or do something based on the reply from particular messages.</p>
-<p>To do this, <code class="docutils literal"><span class="pre">photons_script</span></code> provides two classes for achieving this.</p>
+<p>To do this, <code class="docutils literal"><span class="pre">photons_script</span></code> provides a few classes for achieving this.</p>
 <dl class="class">
 <dt id="photons_script.script.Pipeline">
 <em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>*children</em>, <em>spread=0</em>, <em>short_circuit_on_error=False</em>, <em>synchronized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.Pipeline" title="Permalink to this definition">¶</a></dt>
@@ -352,6 +352,47 @@ with the results.</p>
 <p>We raise the errors we find that don’t have an associated serial.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_script.script.Repeater">
+<em class="property">class </em><code class="descclassname">photons_script.script.</code><code class="descname">Repeater</code><span class="sig-paren">(</span><em>msg</em>, <em>min_loop_time=30</em>, <em>on_done_loop=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_script.script.Repeater" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will repeat it’s messages forever</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
+<span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
+
+<span class="n">reference1</span> <span class="o">=</span> <span class="s2">&quot;d073d500000&quot;</span>
+<span class="n">reference2</span> <span class="o">=</span> <span class="s2">&quot;d073d500001&quot;</span>
+
+<span class="k">def</span> <span class="nf">error_catcher</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">msg1</span><span class="p">,</span> <span class="n">msg2</span><span class="p">,</span> <span class="n">spread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">Repeater</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">min_loop_time</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">,</span> <span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">,</span> <span class="n">error_catcher</span><span class="o">=</span><span class="n">error_catcher</span><span class="p">):</span>
+        <span class="o">....</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+            <span class="o">...</span>
+        <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that if references is a photons_app.special.SpecialReference then we call reset on it after every loop.</p>
+<p>Also error_catcher <em>must</em> be specified and be a callable that takes each error as they happen.</p>
+<p>Repeater takes in the following keyword arguments:</p>
+<dl class="docutils">
+<dt>min_loop_time</dt>
+<dd><p class="first">The minimum amount of time a loop should take, in seconds.</p>
+<p class="last">So if min_loop_time is 30 and the loop takes 10 seconds, then we’ll wait 20 seconds before going again</p>
+</dd>
+<dt>on_done_loop</dt>
+<dd>An async callable that is called with no arguments when a loop completes (before any sleep from min_loop_time)</dd>
+</dl>
 </dd></dl>
 
 </div>
