@@ -215,6 +215,7 @@ also act as a daemon collecting information in the background.</p>
 <span class="c1"># info will be of the form:</span>
 <span class="c1"># {</span>
 <span class="c1">#      &quot;d073d512c21d&quot;: {</span>
+<span class="c1">#          &quot;serial&quot;: &quot;d073d512c21d&quot;,</span>
 <span class="c1">#          &quot;brightness&quot;: 0.29999237048905164,</span>
 <span class="c1">#          &quot;firmware_version&quot;: 1.21,</span>
 <span class="c1">#          &quot;group_id&quot;: &quot;925fb774c42c11e799e580e650080d3e&quot;,</span>
@@ -231,6 +232,7 @@ also act as a daemon collecting information in the background.</p>
 <span class="c1">#          &quot;saturation&quot;: 0.0</span>
 <span class="c1">#      },</span>
 <span class="c1">#      &quot;d073d514e733&quot;: {</span>
+<span class="c1">#          &quot;serial&quot;: &quot;d073d514e733&quot;,</span>
 <span class="c1">#          &quot;brightness&quot;: 0.29999237048905164,</span>
 <span class="c1">#          &quot;firmware_version&quot;: 1.2,</span>
 <span class="c1">#          &quot;group_id&quot;: &quot;925fb774c42c11e799e580e650080d3e&quot;,</span>
@@ -308,6 +310,8 @@ required for the rest of the arguments to the Filter.</p>
 <p class="last">i.e. if the filter only matches against labels, then we will only refresh
 the labels on our devices.</p>
 </dd>
+<dt>serial</dt>
+<dd>The serial of the device</dd>
 <dt>label</dt>
 <dd>The label set on the device</dd>
 <dt>power</dt>
@@ -353,7 +357,7 @@ you can filter them both by saying
 <code class="docutils literal"><span class="pre">Filter.from_kwargs(product_identifier=&quot;*_plus&quot;)</span></code></p>
 <dl class="class">
 <dt id="photons_device_finder.Filter">
-<em class="property">class </em><code class="descclassname">photons_device_finder.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>brightness</em>, <em>cap</em>, <em>firmware_version</em>, <em>force_refresh</em>, <em>group_id</em>, <em>group_name</em>, <em>hue</em>, <em>kelvin</em>, <em>label</em>, <em>location_id</em>, <em>location_name</em>, <em>power</em>, <em>product_id</em>, <em>product_identifier</em>, <em>saturation</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_device_finder.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>brightness</em>, <em>cap</em>, <em>firmware_version</em>, <em>force_refresh</em>, <em>group_id</em>, <em>group_name</em>, <em>hue</em>, <em>kelvin</em>, <em>label</em>, <em>location_id</em>, <em>location_name</em>, <em>power</em>, <em>product_id</em>, <em>product_identifier</em>, <em>saturation</em>, <em>serial</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>The options for a filter. Usage looks like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">FieldSpec</span><span class="p">()</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="mf">1.22</span><span class="p">)</span>
 

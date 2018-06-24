@@ -391,7 +391,9 @@ with the results.</p>
 <p class="last">So if min_loop_time is 30 and the loop takes 10 seconds, then we’ll wait 20 seconds before going again</p>
 </dd>
 <dt>on_done_loop</dt>
-<dd>An async callable that is called with no arguments when a loop completes (before any sleep from min_loop_time)</dd>
+<dd><p class="first">An async callable that is called with no arguments when a loop completes (before any sleep from min_loop_time)</p>
+<p class="last">Note that if you raise <code class="docutils literal"><span class="pre">Repeater.Stop()</span></code> in this function then the Repeater will stop.</p>
+</dd>
 </dl>
 </dd></dl>
 
