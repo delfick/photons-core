@@ -212,20 +212,23 @@
 <em class="property">class </em><code class="descclassname">photons_transform.transformer.</code><code class="descname">Transformer</code><a class="headerlink" href="#photons_transform.transformer.Transformer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is responsible for creating the messages to send to a device for a
 transformation</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="n">Transformer</span><span class="o">.</span><span class="n">using</span><span class="p">({</span><span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="s2">&quot;on&quot;</span><span class="p">},</span> <span class="n">keep_brightness</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="n">Transformer</span><span class="o">.</span><span class="n">using</span><span class="p">({</span><span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="s2">&quot;on&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">},</span> <span class="n">keep_brightness</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">async</span> <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">references</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>
 <p>If there are no color related attributes specified then we just generate a
 message to set the power on or off as specified.</p>
-<p>If we do have colour related options, then we return a script that will
-first do a <code class="docutils literal"><span class="pre">GetColor</span></code> for each reference and create messages based on the
-result.</p>
-<p>It will have a look at the current power on the device and what is wanted
-and set the difference.</p>
-<p>Finally, it’ll use <code class="docutils literal"><span class="pre">photons_colour.Parser</span></code> to create the
-<code class="docutils literal"><span class="pre">SetWaveformOptional</span></code> message that is needed to change the device.</p>
+<p>If we have <code class="docutils literal"><span class="pre">keep_brightness=True</span></code> or <code class="docutils literal"><span class="pre">power=on</span></code>; and <code class="docutils literal"><span class="pre">color</span></code> options
+then we first ask the devices what their current colour is and use that to
+make the transition to the new state smooth. Essentially when turning a
+light on from off we first set it’s brightness to 0 in the new color, then
+turn the light on, then turn the brightness up to the desired level. The
+<code class="docutils literal"><span class="pre">keep_brightness</span></code> option will ensure the light stays the same brightness
+regardless of the <code class="docutils literal"><span class="pre">color</span></code> options.</p>
+<p>For the color options we use <code class="docutils literal"><span class="pre">photons_colour.Parser</span></code> to create the
+<code class="docutils literal"><span class="pre">SetWaveformOptional</span></code> message that is needed to change the device. This
+means that we support an <code class="docutils literal"><span class="pre">effect</span></code> option for setting different waveforms.</p>
 </dd></dl>
 
 </div>

@@ -173,6 +173,20 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.5.8 - 1 July 2018</dt>
+<dd><ul class="first last simple">
+<li>Fixed a bug I introduced in the Transformer in 0.5.7</li>
+</ul>
+</dd>
+<dt>0.5.7 - 1 July 2018</dt>
+<dd><ul class="first last simple">
+<li>Fixed the FakeTarget in photons_app.test_helpers to deal with errors
+correctly</li>
+<li>Made <code class="docutils literal"><span class="pre">photons_transform.transformer.Transformer</span></code> faster for most cases
+by making it not check the current state of the device when it doesn’t
+need to</li>
+</ul>
+</dd>
 <dt>0.5.6 - 23 June 2018</dt>
 <dd><ul class="first last simple">
 <li>photons_script.script.Repeater can now be stopped by raising Repater.Stop()
