@@ -188,8 +188,11 @@
 <dl class="class">
 <dt id="photons_app.helpers.ChildOfFuture">
 <em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">ChildOfFuture</code><span class="sig-paren">(</span><em>original_fut</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ChildOfFuture" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a future that is considered done/cancelled if it’s parent is
-done/cancelled</p>
+<dd><p>Create a future that also considers the status of it’s parent.</p>
+<p>So if the parent is cancelled, then this future is cancelled.
+If the parent raises an exception, then that exception is given to this result</p>
+<p>The special case is if the parent receives a result, then this future is
+cancelled.</p>
 </dd></dl>
 
 <dl class="class">
@@ -367,8 +370,9 @@ provided func and add reporter as a done callback</p>
 
 <dl class="function">
 <dt id="photons_app.helpers.async_with_timeout">
-<em class="property">await </em><code class="descclassname">photons_app.helpers.</code><code class="descname">async_with_timeout</code><span class="sig-paren">(</span><em>coroutine</em>, <em>timeout=10</em>, <em>timeout_error=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_with_timeout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run a coroutine until it’s complete or times out</p>
+<em class="property">await </em><code class="descclassname">photons_app.helpers.</code><code class="descname">async_with_timeout</code><span class="sig-paren">(</span><em>coroutine</em>, <em>timeout=10</em>, <em>timeout_error=None</em>, <em>silent=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_with_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a coroutine as a task until it’s complete or times out</p>
+<p>If time runs out the task is cancelled</p>
 <p>If timeout_error is defined, that is raised instead of asyncio.CancelledError on timeout</p>
 </dd></dl>
 

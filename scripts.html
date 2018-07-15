@@ -177,11 +177,12 @@ less than 5.</p>
 <p>So, we create a virtualenv (see <a class="reference internal" href="venvstarter.html#lifx-photons-venvstarter"><span class="std std-ref">Using Venvstarter</span></a>) and then create
 a script that uses that virtualenv.</p>
 <p>First we create <code class="docutils literal"><span class="pre">setup_venv</span></code> with the following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3.6</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
 <span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
 <span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
-    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5.8&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.5.9&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">min_python_version</span> <span class="o">=</span> <span class="mf">3.6</span>
     <span class="p">)</span>
 </pre></div>
 </div>
