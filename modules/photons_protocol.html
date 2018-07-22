@@ -661,7 +661,7 @@ representing the number of <code class="docutils literal"><span class="pre">bits
 <dl class="method">
 <dt id="photons_protocol.types.Type.make_integer_spec">
 <code class="descname">make_integer_spec</code><span class="sig-paren">(</span><em>pkt</em>, <em>unpacking</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.make_integer_spec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make an integer spec that respects enum, bitmask and allow_float</p>
+<dd><p>Make an integer spec that respects enum, bitmask and allow_float/version_number</p>
 </dd></dl>
 
 <dl class="method">
@@ -861,6 +861,12 @@ in either case.</p>
 <dt id="photons_protocol.types.Type.untransform">
 <code class="descname">untransform</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.untransform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform the reverse transformation on a value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_protocol.types.Type.version_number">
+<code class="descname">version_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.version_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the _version_number option</p>
 </dd></dl>
 
 </dd></dl>

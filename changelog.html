@@ -173,6 +173,13 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.5.10 - 22 July 2018</dt>
+<dd><ul class="first last simple">
+<li>Made version in StateHostFirmware and StateWifiFirmware a string instead
+of a float to tell the difference between “1.2” and “1.20”</li>
+<li>Fix leaks of asyncio.Task objects</li>
+</ul>
+</dd>
 <dt>0.5.9 - 15 July 2018</dt>
 <dd><ul class="first last simple">
 <li>Fixed a bug in the task runner such where a future could be given a result
