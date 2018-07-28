@@ -237,7 +237,7 @@ only resolved when the program is quitting.</p>
 <dd><p>Get us an instance of PhotonsApp:</p>
 <dl class="class">
 <dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp">
-<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_fut_finder</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_fut_finder</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em>, <em>use_uvloop</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
 <dd><p>The main photons_app object.</p>
 <dl class="docutils">
 <dt>artifact</dt>
@@ -264,6 +264,8 @@ only resolved when the program is quitting.</p>
 <dd>The device(s) to send commands to</dd>
 <dt>target</dt>
 <dd>The target to use when executing the task</dd>
+<dt>use_uvloop</dt>
+<dd>Use uvloop if it is available</dd>
 </dl>
 </dd></dl>
 
