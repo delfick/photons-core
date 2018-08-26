@@ -174,37 +174,29 @@
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
 <dt>0.6 - 26 August 2018</dt>
-<dd><ul class="first last">
-<li><p class="first">Cleaned up the code that handles retries and multiple replies
-- multiple_replies, first_send and first_wait are no longer options</p>
-<blockquote>
-<div><p>for run_with as they are no longer necessary</p>
-</div></blockquote>
-<ul class="simple">
+<dd><ul class="first last simple">
+<li>Cleaned up the code that handles retries and multiple replies<ul>
+<li>multiple_replies, first_send and first_wait are no longer options
+for run_with as they are no longer necessary</li>
 <li>The packet definition now includes options for specifying how many
 packets to expect</li>
 </ul>
 </li>
-<li><p class="first">When error_catcher to run_with is a callable, it is called straight away
+<li>When error_catcher to run_with is a callable, it is called straight away
 with all errors instead of being put onto the asyncio loop to be called
 soon. This means when you have awaited on run_with, you know that all
-errors have been given to the error_catcher</p>
-</li>
-<li><p class="first">Remove uvloop altogether. I don’t think it is actually necessary and it
+errors have been given to the error_catcher</li>
+<li>Remove uvloop altogether. I don’t think it is actually necessary and it
 would break after the process was alive long enough. Also it’s disabled
 for windows anyway, and something that needs to be compiled at
-installation.</p>
-</li>
-<li><p class="first">collector.configuration[“final_future”] is now the Future object itself
-rather than a function returning the future.</p>
-</li>
-<li><p class="first">Anything inheriting from TransportTarget now has <code class="docutils literal"><span class="pre">protocol_register</span></code>
+installation.</li>
+<li>collector.configuration[“final_future”] is now the Future object itself
+rather than a function returning the future.</li>
+<li>Anything inheriting from TransportTarget now has <code class="docutils literal"><span class="pre">protocol_register</span></code>
 attribute instead of <code class="docutils literal"><span class="pre">protocols</span></code> and <code class="docutils literal"><span class="pre">final_future</span></code> instead of
-<code class="docutils literal"><span class="pre">final_fut_finder</span></code></p>
-</li>
-<li><p class="first">Updated delfick_app to give us a –json-console-logs argument for showing
-logs as json lines</p>
-</li>
+<code class="docutils literal"><span class="pre">final_fut_finder</span></code></li>
+<li>Updated delfick_app to give us a –json-console-logs argument for showing
+logs as json lines</li>
 </ul>
 </dd>
 <dt>0.5.11 - 28 July 2018</dt>
