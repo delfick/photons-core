@@ -243,7 +243,9 @@ if one is not already specified.</p>
 <div class="section" id="getservice">
 <h3>2 - GetService<a class="headerlink" href="#getservice" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.GetService</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">2</span>
+    <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -269,7 +271,7 @@ if one is not already specified.</p>
 <span id="the-target"></span><h2>The target<a class="headerlink" href="#module-photons_socket.target" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="photons_socket.target.SocketTarget">
-<em class="property">class </em><code class="descclassname">photons_socket.target.</code><code class="descname">SocketTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_fut_finder</em>, <em>protocols</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_socket.target.SocketTarget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_socket.target.</code><code class="descname">SocketTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_future</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_socket.target.SocketTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>A subclass of <code class="docutils literal"><span class="pre">photons_protocol.target.traget.TransportTarget</span></code>
 using our <code class="docutils literal"><span class="pre">SocketItem</span></code> and <code class="docutils literal"><span class="pre">SocketBridge</span></code></p>
 </dd></dl>
@@ -375,7 +377,7 @@ StateService messages.</p>
 
 <span class="n">final_future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
 <span class="n">everything</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s2">&quot;final_future&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">final_future</span>
+      <span class="s2">&quot;final_future&quot;</span><span class="p">:</span> <span class="n">final_future</span>
     <span class="p">,</span> <span class="s2">&quot;protocol_register&quot;</span><span class="p">:</span> <span class="n">protocol_register</span>
     <span class="p">}</span>
 <span class="n">meta</span> <span class="o">=</span> <span class="n">Meta</span><span class="p">(</span><span class="n">everything</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>

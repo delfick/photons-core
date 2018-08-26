@@ -188,8 +188,10 @@ the collector with <code class="docutils literal"><span class="pre">photons_app.
 <span class="c1"># and core_modules to a list like [&quot;sockets&quot;, &quot;color&quot;]</span>
 <span class="n">collector</span> <span class="o">=</span> <span class="n">library_setup</span><span class="p">()</span>
 
-<span class="c1"># We can get a uvloop from the photons_app object</span>
-<span class="n">loop</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;photons_app&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">uvloop</span>
+<span class="c1"># We can get a loop from the photons_app object</span>
+<span class="c1"># This just gets a normal asyncio event loop</span>
+<span class="c1"># And sets debug on it if photons_app.debug is set</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;photons_app&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loop</span>
 
 <span class="c1"># Or we can do something like</span>
 <span class="c1"># import asyncio</span>

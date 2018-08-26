@@ -211,16 +211,7 @@ scripts can use <code class="docutils literal"><span class="pre">option_merge_ad
 <dt>photons_app</dt>
 <dd>The photons_app settings</dd>
 <dt>final_future</dt>
-<dd><p class="first">A function that returns a future object representing the end of the
-the program. Users may call this function to get a future that is
-only resolved when the program is quitting.</p>
-<p>So to determine if the program is ending:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="n">final_fut</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;final_future&quot;</span><span class="p">]()</span>
-<span class="k">if</span> <span class="n">final_fut</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Program is ending&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd>
+<dd>A future representing the end of the program.</dd>
 </dl>
 </dd></dl>
 
@@ -237,7 +228,7 @@ only resolved when the program is quitting.</p>
 <dd><p>Get us an instance of PhotonsApp:</p>
 <dl class="class">
 <dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp">
-<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_fut_finder</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em>, <em>use_uvloop</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_future</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
 <dd><p>The main photons_app object.</p>
 <dl class="docutils">
 <dt>artifact</dt>
@@ -256,16 +247,14 @@ only resolved when the program is quitting.</p>
 <dd>The arguments after the <code class="docutils literal"><span class="pre">--</span></code> in the commandline</dd>
 <dt>extra_files</dt>
 <dd>Extra files to load</dd>
-<dt>final_fut_finder</dt>
-<dd>A function returning the future representing the end of the program</dd>
+<dt>final_future</dt>
+<dd>A future representing the end of the program</dd>
 <dt>own_ca</dt>
 <dd>A certificate to use for local https connections</dd>
 <dt>reference</dt>
 <dd>The device(s) to send commands to</dd>
 <dt>target</dt>
 <dd>The target to use when executing the task</dd>
-<dt>use_uvloop</dt>
-<dd>Use uvloop if it is available</dd>
 </dl>
 </dd></dl>
 

@@ -260,7 +260,12 @@
 <div class="section" id="gettilestate64">
 <h3>707 - GetTileState64<a class="headerlink" href="#gettilestate64" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.GetTileState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span><span class="p">,</span> <span class="o">*</span><span class="n">get_tile_state</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span><span class="p">,</span> <span class="o">*</span><span class="n">get_tile_state</span>
+    <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">MultiOptions</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">TileMessages</span><span class="o">.</span><span class="n">StateTileState64</span>
+        <span class="p">,</span> <span class="k">lambda</span> <span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="n">MultiOptions</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>

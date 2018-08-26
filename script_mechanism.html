@@ -205,7 +205,7 @@ options to <code class="docutils literal"><span class="pre">run_with</span></cod
 <p>For example, the lan target <code class="docutils literal"><span class="pre">run_with</span></code> takes in:</p>
 <dl class="method">
 <dt>
-<em class="property">async for ... in </em><code class="descclassname">TransportItem.</code><code class="descname">run_with</code><span class="sig-paren">(</span><em>serials</em>, <em>args_for_run</em>, <em>broadcast=False</em>, <em>multiple_replies=False</em>, <em>first_wait=0.05</em>, <em>accept_found=False</em>, <em>found=None</em>, <em>error_catcher=None</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<em class="property">async for ... in </em><code class="descclassname">TransportItem.</code><code class="descname">run_with</code><span class="sig-paren">(</span><em>serials</em>, <em>args_for_run</em>, <em>broadcast=False</em>, <em>accept_found=False</em>, <em>found=None</em>, <em>error_catcher=None</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
 <dd><p>Entry point to this item, the idea is you create a <cite>script</cite> with the
 target and call <cite>run_with</cite> on the script, which ends up calling this</p>
 <p>We acknowledge the following keyword arguments.</p>
@@ -213,12 +213,6 @@ target and call <cite>run_with</cite> on the script, which ends up calling this<
 <dt>broadcast</dt>
 <dd>Whether we are broadcasting these messages or just unicasting directly
 to each device</dd>
-<dt>multiple_replies</dt>
-<dd><p class="first">Whether we expect multiple replies from a single messsage.</p>
-<p class="last">This must be True if we are broadcasting</p>
-</dd>
-<dt>first_wait</dt>
-<dd>Time, in seconds, we wait for our first reply before retrying</dd>
 <dt>find_timeout</dt>
 <dd>timeout for finding devices</dd>
 <dt>connect_timeout</dt>

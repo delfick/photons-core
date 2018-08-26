@@ -214,8 +214,8 @@ is responsible for several things:</p>
                     [--verbose | --silent | --debug | --logging-program LOGGING_PROGRAM]
                     [--tcp-logging-address TCP_LOGGING_ADDRESS]
                     [--udp-logging-address UDP_LOGGING_ADDRESS]
-                    [--syslog-address SYSLOG_ADDRESS] [--version] [--dry-run]
-                    [--task PHOTONS_APP_CHOSEN_TASK]
+                    [--syslog-address SYSLOG_ADDRESS] [--json-console-logs]
+                    [--version] [--dry-run] [--task PHOTONS_APP_CHOSEN_TASK]
                     [--artifact PHOTONS_APP_ARTIFACT]
                     [--reference PHOTONS_APP_REFERENCE]
                     [--config PHOTONS_APP_CONFIG]
@@ -238,6 +238,8 @@ optional arguments:
                         (i.e. localhost:9001)
   --syslog-address SYSLOG_ADDRESS
                         The address to use for syslog (i.e. /dev/log)
+  --json-console-logs   If we haven&#39;t set other logging arguments, this will
+                        mean we log json lines to the console
   --version             Print out the version!
   --dry-run             Should we take any real action or print out what is
                         intends to do

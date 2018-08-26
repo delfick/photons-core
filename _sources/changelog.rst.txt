@@ -3,6 +3,28 @@
 ChangeLog
 =========
 
+0.6 - 26 August 2018
+    * Cleaned up the code that handles retries and multiple replies
+      - multiple_replies, first_send and first_wait are no longer options
+        for run_with as they are no longer necessary
+      - The packet definition now includes options for specifying how many
+        packets to expect
+    * When error_catcher to run_with is a callable, it is called straight away
+      with all errors instead of being put onto the asyncio loop to be called
+      soon. This means when you have awaited on run_with, you know that all
+      errors have been given to the error_catcher
+    * Remove uvloop altogether. I don't think it is actually necessary and it
+      would break after the process was alive long enough. Also it's disabled
+      for windows anyway, and something that needs to be compiled at
+      installation.
+    * collector.configuration["final_future"] is now the Future object itself
+      rather than a function returning the future.
+    * Anything inheriting from TransportTarget now has ``protocol_register``
+      attribute instead of ``protocols`` and ``final_future`` instead of
+      ``final_fut_finder``
+    * Updated delfick_app to give us a --json-console-logs argument for showing
+      logs as json lines
+
 0.5.11 - 28 July 2018
     * Small fix to the version_number_spec for defining a version number on a
       protocol message

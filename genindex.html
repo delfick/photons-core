@@ -201,9 +201,9 @@
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.packets.PacketSpecMixin.actual">actual() (photons_protocol.packets.PacketSpecMixin method)</a>
 </li>
-      <li><a href="photons_app/collector.html#photons_app.collector.Collector.add_configuration">add_configuration() (photons_app.collector.Collector method)</a>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.add_ack">add_ack() (photons_transport.target.result.Result method)</a>
 </li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.FutPair.add_done_callback">add_done_callback() (photons_transport.target.waiter.FutPair method)</a>
+      <li><a href="photons_app/collector.html#photons_app.collector.Collector.add_configuration">add_configuration() (photons_app.collector.Collector method)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.collections.ZoneColors.add_hsbk">add_hsbk() (photons_themes.collections.ZoneColors method)</a>
 
@@ -211,7 +211,11 @@
         <li><a href="modules/photons_themes.html#photons_themes.theme.Theme.add_hsbk">(photons_themes.theme.Theme method)</a>
 </li>
       </ul></li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.add_packet">add_packet() (photons_transport.target.result.Result method)</a>
+</li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.add_points_for_tile">add_points_for_tile() (photons_themes.canvas.Canvas method)</a>
+</li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.add_result">add_result() (photons_transport.target.result.Result method)</a>
 </li>
       <li><a href="photons_app/registers.html#photons_app.registers.TargetRegister.add_target">add_target() (photons_app.registers.TargetRegister method)</a>
 </li>
@@ -221,10 +225,10 @@
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.allow_float">allow_float() (photons_protocol.types.Type method)</a>
 </li>
-      <li><a href="photons_app/defining_actions.html#photons_app.actions.an_action">an_action (class in photons_app.actions)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="photons_app/defining_actions.html#photons_app.actions.an_action">an_action (class in photons_app.actions)</a>
+</li>
       <li><a href="photons_app/executor.html#photons_app.executor.App">App (class in photons_app.executor)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.appliers.LightApplier.apply_theme">apply_theme() (photons_themes.appliers.LightApplier method)</a>
@@ -333,19 +337,19 @@
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.writer.Writer.determine_addr">determine_addr() (photons_transport.target.writer.Writer method)</a>
 </li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.Waiter.determine_next_time">determine_next_time() (photons_transport.target.waiter.Waiter method)</a>
-</li>
       <li><a href="modules/photons_transport.html#photons_transport.target.target.TransportTarget.device_forgetter">device_forgetter() (photons_transport.target.target.TransportTarget method)</a>
+</li>
+      <li><a href="modules/photons_device_finder.html#photons_device_finder.DeviceFinder">DeviceFinder (class in photons_device_finder)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/photons_device_finder.html#photons_device_finder.DeviceFinder">DeviceFinder (class in photons_device_finder)</a>
-</li>
       <li><a href="photons_app/errors.html#photons_app.errors.DevicesNotFound">DevicesNotFound (class in photons_app.errors)</a>
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.writer.Writer.display_written">display_written() (photons_transport.target.writer.Writer method)</a>
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.do_transform">do_transform() (photons_protocol.types.Type method)</a>
+</li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.Waiter.do_write">do_write() (photons_transport.target.waiter.Waiter method)</a>
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.item.Done">Done (class in photons_transport.target.item)</a>
 </li>
@@ -436,8 +440,6 @@
       <li><a href="modules/photons_device_finder.html#photons_device_finder.Filter.from_url_str">from_url_str() (photons_device_finder.Filter method)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.appliers.splotch.TileApplierSplotch.from_user_coords">from_user_coords() (photons_themes.appliers.splotch.TileApplierSplotch method)</a>
-</li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.FutPair">FutPair (class in photons_transport.target.waiter)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -549,6 +551,8 @@
 </li>
       <li><a href="modules/photons_device_finder.html#photons_device_finder.Filter.matches_all">matches_all (photons_device_finder.Filter attribute)</a>
 </li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.maybe_finish">maybe_finish() (photons_transport.target.result.Result method)</a>
+</li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.memoized_property">memoized_property (class in photons_app.helpers)</a>
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.frame.LIFXPacket.message">message() (photons_protocol.frame.LIFXPacket method)</a>
@@ -566,6 +570,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="photons_app/helpers.html#photons_app.helpers.nested_dict_retrieve">nested_dict_retrieve() (in module photons_app.helpers)</a>
+</li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.retry_options.RetryOptions.next_time">next_time (photons_transport.target.retry_options.RetryOptions attribute)</a>
 </li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.noncancelled_results_from_futs">noncancelled_results_from_futs() (in module photons_app.helpers)</a>
 </li>
@@ -679,10 +685,10 @@
 </li>
       <li><a href="modules/photons_socket.html#module-photons_socket.fake">photons_socket.fake (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_socket.html#module-photons_socket.messages">photons_socket.messages (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_socket.html#module-photons_socket.target">photons_socket.target (module)</a>
 </li>
       <li><a href="modules/photons_themes.html#module-photons_themes">photons_themes (module)</a>
@@ -714,6 +720,10 @@
       <li><a href="modules/photons_transport.html#module-photons_transport.target.bridge">photons_transport.target.bridge (module)</a>
 </li>
       <li><a href="modules/photons_transport.html#module-photons_transport.target.item">photons_transport.target.item (module)</a>
+</li>
+      <li><a href="modules/photons_transport.html#module-photons_transport.target.result">photons_transport.target.result (module)</a>
+</li>
+      <li><a href="modules/photons_transport.html#module-photons_transport.target.retry_options">photons_transport.target.retry_options (module)</a>
 </li>
       <li><a href="modules/photons_transport.html#module-photons_transport.target.target">photons_transport.target.target (module)</a>
 </li>
@@ -761,15 +771,19 @@
 </li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ThreadToAsyncQueue.request">request() (photons_app.helpers.ThreadToAsyncQueue method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ResettableFuture">ResettableFuture (class in photons_app.helpers)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="photons_app/registers.html#photons_app.registers.TargetRegister.resolve">resolve() (photons_app.registers.TargetRegister method)</a>
 </li>
       <li><a href="photons_app/special.html#photons_app.special.ResolveReferencesFromFile">ResolveReferencesFromFile (class in photons_app.special)</a>
 </li>
       <li><a href="photons_app/errors.html#photons_app.errors.ResolverNotFound">ResolverNotFound (class in photons_app.errors)</a>
+</li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result">Result (class in photons_transport.target.result)</a>
+</li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.retry_options.RetryOptions">RetryOptions (class in photons_transport.target.retry_options)</a>
 </li>
       <li><a href="modules/photons_script.html#photons_script.script.Decider.run_with">run_with() (photons_script.script.Decider method)</a>
 
@@ -789,6 +803,8 @@
 </li>
       <li><a href="modules/photons_colour.html#photons_colour.Effects.saw">saw() (photons_colour.Effects method)</a>
 </li>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.schedule_finisher">schedule_finisher() (photons_transport.target.result.Result method)</a>
+</li>
       <li><a href="modules/photons_transport.html#photons_transport.target.target.TransportTarget.script">script() (photons_transport.target.target.TransportTarget method)</a>
 </li>
       <li><a href="modules/photons_script.html#photons_script.script.ScriptRunner">ScriptRunner (class in photons_script.script)</a>
@@ -805,13 +821,7 @@
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.set_default_color_func">set_default_color_func() (photons_themes.canvas.Canvas method)</a>
 </li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.FutPair.set_final">set_final() (photons_transport.target.waiter.FutPair method)</a>
-</li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.FutPair.set_final_cb">set_final_cb() (photons_transport.target.waiter.FutPair method)</a>
-</li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ThreadToAsyncQueue.set_futures">set_futures() (photons_app.helpers.ThreadToAsyncQueue method)</a>
-</li>
-      <li><a href="modules/photons_transport.html#photons_transport.target.waiter.FutPair.set_result">set_result() (photons_transport.target.waiter.FutPair method)</a>
 </li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ThreadToAsyncQueue.setup">setup() (photons_app.helpers.ThreadToAsyncQueue method)</a>
 </li>
@@ -827,10 +837,10 @@
         <li><a href="modules/photons_transport.html#photons_transport.target.target.TransportTarget.simplify">(photons_transport.target.target.TransportTarget method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_transport.html#photons_transport.target.item.TransportItem.simplify_parts">simplify_parts() (photons_transport.target.item.TransportItem method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_colour.html#photons_colour.Effects.sine">sine() (photons_colour.Effects method)</a>
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.packets.PacketSpecMixin.size_bits">size_bits() (photons_protocol.packets.PacketSpecMixin method)</a>
@@ -923,6 +933,8 @@
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.packets.PacketSpecMixin.tobytes">tobytes() (photons_protocol.packets.PacketSpecMixin method)</a>
 </li>
+      <li><a href="photons_app/helpers.html#photons_app.helpers.transfer_result">transfer_result() (in module photons_app.helpers)</a>
+</li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.transform">transform() (photons_protocol.types.Type method)</a>
 </li>
       <li><a href="modules/photons_transform.html#photons_transform.transformer.Transformer">Transformer (class in photons_transform.transformer)</a>
@@ -985,6 +997,8 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/photons_transport.html#photons_transport.target.result.Result.wait_for_result">wait_for_result() (photons_transport.target.result.Result method)</a>
+</li>
       <li><a href="modules/photons_transport.html#photons_transport.target.waiter.Waiter">Waiter (class in photons_transport.target.waiter)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.width">width (photons_themes.canvas.Canvas attribute)</a>

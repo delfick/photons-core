@@ -469,6 +469,13 @@ get warnings about tasks not being looked at when they finish.</p>
 <p>It also handles and silences CancelledError.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="photons_app.helpers.transfer_result">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">transfer_result</code><span class="sig-paren">(</span><em>fut</em>, <em>errors_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.transfer_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a done_callback that transfers the result/errors/cancellation to fut</p>
+<p>If errors_only is True then it will not transfer a result to fut</p>
+</dd></dl>
+
 </div>
 
 

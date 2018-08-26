@@ -385,7 +385,7 @@ dictionary of data.</p>
 </div>
 <dl class="method">
 <dt id="photons_protocol.frame.LIFXPacket.message">
-<em class="property">classmethod </em><code class="descname">message</code><span class="sig-paren">(</span><em>message_type</em>, <em>*payload_fields</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.frame.LIFXPacket.message" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">message</code><span class="sig-paren">(</span><em>message_type</em>, <em>*payload_fields</em>, <em>multi=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.frame.LIFXPacket.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is to be used in conjunction with <code class="docutils literal"><span class="pre">photons_protocol.messages.Messages</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span>
 
@@ -413,6 +413,38 @@ like:</p>
 </div>
 <p>Here, <code class="docutils literal"><span class="pre">MyOtherMessage</span></code> will use the same fields as <code class="docutils literal"><span class="pre">MyMessage</span></code> but
 will have a <code class="docutils literal"><span class="pre">pkt_type</span></code> of <code class="docutils literal"><span class="pre">14</span></code> instead of <code class="docutils literal"><span class="pre">13</span></code>.</p>
+<p>And you can specify multiple replies options with the multi keyword:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span><span class="p">,</span> <span class="n">MultiOptions</span>
+
+<span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
+    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
+        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
+
+        <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">MultiOptions</span><span class="p">(</span>
+              <span class="c1"># expect MymessageReply messages</span>
+              <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">MyMessages</span><span class="o">.</span><span class="n">MyMessageReply</span>
+
+              <span class="c1"># Use total on the reply packet to determine how many packets to receive</span>
+            <span class="p">,</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">total</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">14</span>
+        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">total_type</span><span class="p">)</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>If you expect multiple replies but don’t know how many to expect you can say:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
+    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
+        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
+
+        <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

@@ -128,6 +128,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.item">The item</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.waiter">The waiter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.writer">The writer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.result">Result</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.retry_options">Retry options</a></li>
 </ul>
 </li>
 </ul>
@@ -223,7 +225,7 @@ the writing/reading</dd>
 <span id="the-target"></span><h2>The target<a class="headerlink" href="#module-photons_transport.target.target" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="photons_transport.target.target.TransportTarget">
-<em class="property">class </em><code class="descclassname">photons_transport.target.target.</code><code class="descname">TransportTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_fut_finder</em>, <em>protocols</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.target.</code><code class="descname">TransportTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_future</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is responsible for bringing together the TransportBridge and the TransportItems</p>
 <p>It implements the ability to create and destroy args_for_run (the bridge), as well as
 creating a <cite>script</cite> that may be run with <cite>script.run_with</cite>.</p>
@@ -235,9 +237,20 @@ creating a <cite>script</cite> that may be run with <cite>script.run_with</cite>
     <span class="n">description</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">string_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Understands how to talk to a device over a TCP socket&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">protocols</span></code> and <code class="docutils literal"><span class="pre">final_fut_finder</span></code> are retrieved automatically from
+<p><code class="docutils literal"><span class="pre">protocol_register</span></code> and <code class="docutils literal"><span class="pre">final_future</span></code> are retrieved automatically from
 <code class="docutils literal"><span class="pre">Meta</span></code> if we create the transport by doing
 <code class="docutils literal"><span class="pre">TransportTarget.normalise(meta,</span> <span class="pre">**kwargs)</span></code></p>
+<p>Note that the path on the meta cannot be root. So make you meta like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">input_algorithms.meta</span> <span class="kn">import</span> <span class="n">Meta</span>
+<span class="kn">from</span> <span class="nn">option_merge</span> <span class="kn">import</span> <span class="n">MergedOptions</span>
+
+<span class="n">configuration</span> <span class="o">=</span> <span class="n">MergedOptions</span><span class="o">.</span><span class="n">using</span><span class="p">({</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="s2">&quot;final_future&quot;</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()})</span>
+
+<span class="c1"># By saying `at(&quot;options&quot;)` on the meta we are putting it not at root</span>
+<span class="c1"># So when we resolve final_future we don&#39;t get recursive option errors</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">Meta</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;options&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Generally you’ll be passed in a transport via the <code class="docutils literal"><span class="pre">tasks</span></code> mechanism and
 you won’t have to instantiate it yourself.</p>
 <dl class="method">
@@ -366,7 +379,7 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 
 <dl class="method">
 <dt id="photons_transport.target.bridge.TransportBridge.make_writer">
-<em class="property">await </em><code class="descname">make_writer</code><span class="sig-paren">(</span><em>packet</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.make_writer" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">make_writer</code><span class="sig-paren">(</span><em>original</em>, <em>packet</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.make_writer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make an object for writing to this bridge</p>
 </dd></dl>
 
@@ -447,7 +460,7 @@ sequence</p>
 
 <dl class="method">
 <dt id="photons_transport.target.item.TransportItem.run_with">
-<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>serials</em>, <em>args_for_run</em>, <em>broadcast=False</em>, <em>multiple_replies=False</em>, <em>first_wait=0.05</em>, <em>accept_found=False</em>, <em>found=None</em>, <em>error_catcher=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.run_with" title="Permalink to this definition">¶</a></dt>
+<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>serials</em>, <em>args_for_run</em>, <em>broadcast=False</em>, <em>accept_found=False</em>, <em>found=None</em>, <em>error_catcher=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.run_with" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry point to this item, the idea is you create a <cite>script</cite> with the
 target and call <cite>run_with</cite> on the script, which ends up calling this</p>
 <p>We acknowledge the following keyword arguments.</p>
@@ -455,12 +468,6 @@ target and call <cite>run_with</cite> on the script, which ends up calling this<
 <dt>broadcast</dt>
 <dd>Whether we are broadcasting these messages or just unicasting directly
 to each device</dd>
-<dt>multiple_replies</dt>
-<dd><p class="first">Whether we expect multiple replies from a single messsage.</p>
-<p class="last">This must be True if we are broadcasting</p>
-</dd>
-<dt>first_wait</dt>
-<dd>Time, in seconds, we wait for our first reply before retrying</dd>
 <dt>find_timeout</dt>
 <dd>timeout for finding devices</dd>
 <dt>connect_timeout</dt>
@@ -519,95 +526,37 @@ in which case, we just return packet as is</p>
 <div class="section" id="module-photons_transport.target.waiter">
 <span id="the-waiter"></span><h2>The waiter<a class="headerlink" href="#module-photons_transport.target.waiter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="photons_transport.target.waiter.FutPair">
-<em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">FutPair</code><span class="sig-paren">(</span><em>parentfut</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.FutPair" title="Permalink to this definition">¶</a></dt>
-<dd><p>A future who takes in a future that resolves to two futures.</p>
-<p>This future is cancelled or raises an error if any of these futures are
-cancelled or raise an error.</p>
-<p>This future eventually resolves to the result of the second result future if
-the first result future is also resolved.</p>
-<p>So say we have:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-
-<span class="n">final_fut1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
-<span class="n">final_fut2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
-
-<span class="n">fut</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
-<span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">((</span><span class="n">final_fut1</span><span class="p">,</span> <span class="n">final_fut2</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Then:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">final</span> <span class="o">=</span> <span class="n">FutPair</span><span class="p">(</span><span class="n">fut</span><span class="p">)</span>
-
-<span class="n">final_fut1</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">final_fut1</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">final_result</span><span class="p">)</span>
-
-<span class="k">assert</span> <span class="p">(</span><span class="n">await</span> <span class="n">final</span><span class="p">)</span> <span class="ow">is</span> <span class="n">final_result</span>
-</pre></div>
-</div>
-<dl class="method">
-<dt id="photons_transport.target.waiter.FutPair.add_done_callback">
-<code class="descname">add_done_callback</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.FutPair.add_done_callback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ensure func gets put onto the loop when the FutPair is done.</p>
-<p>This means if our parentfut is not done, it gets registered in
-done_callback and used when parentfut and subsequent res_fut is done.</p>
-<p>Otherwise, if parentfut is already finished and the ack_fut is already finished,
-we may have missed the boat with the _parent_done_cb we add to the ack,
-so we put the func straight onto the res_fut itself</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="photons_transport.target.waiter.FutPair.set_final">
-<code class="descname">set_final</code><span class="sig-paren">(</span><em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.FutPair.set_final" title="Permalink to this definition">¶</a></dt>
-<dd><p>This callback is called on the completion of FutPair, as registered
-by the __init__</p>
-<p>Essentially it’s just transferring the result from the res_fut onto the
-self.final future.</p>
-<p>We also protect against setting a result on the final when it already has
-a result or cancellation.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="photons_transport.target.waiter.FutPair.set_final_cb">
-<code class="descname">set_final_cb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.FutPair.set_final_cb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make sure we setup our callbacks, otherwise final will never be completed</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="photons_transport.target.waiter.FutPair.set_result">
-<code class="descname">set_result</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.FutPair.set_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets a result on final.</p>
-<p>Also cancels parentfut or ack_fut/res_fut if parentfut is already done</p>
-<p>This is because we are preferring the result from this call over whatever
-those futures provide, so we should stop them</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="photons_transport.target.waiter.Waiter">
-<em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">Waiter</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>writer</em>, <em>first_resend=0.1</em>, <em>first_wait=0.1</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">Waiter</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>writer</em>, <em>retry_options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keep writing till we get a response!</p>
 <p>It’s up to the caller to cancel this if we take too long</p>
 <p>This object is a future, the result of which is the final response from our
 writer.</p>
-<p>We expect to get back <code class="docutils literal"><span class="pre">(ack_fut,</span> <span class="pre">res_fut)</span></code> from <code class="docutils literal"><span class="pre">writer</span></code> which we create
-a <code class="docutils literal"><span class="pre">FutPair</span></code> from. We keep collecting these until one of the <code class="docutils literal"><span class="pre">FutPair</span></code>
-resolves and we have a result.</p>
+<p>We keep using writer until we have a result that is complete.</p>
 <p>When this happens we set the result/error/cancellation on all the other
 futures that were created in the process.</p>
 <p>We keep writing writer with an exponential backoff.</p>
 <dl class="method">
-<dt id="photons_transport.target.waiter.Waiter.determine_next_time">
-<code class="descname">determine_next_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter.determine_next_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine when to write next.</p>
-<p>We are super optimistic at first, and lose interest quickly</p>
+<dt id="photons_transport.target.waiter.Waiter.do_write">
+<em class="property">await </em><code class="descname">do_write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter.do_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use our write to ensure we have a connection and then get a result
+object by writing to our device.</p>
+<p>If the result object is already done then we call _writings_cb straight
+away, otherwise we tell the result object to call _writigs_cb when it’s
+done</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_transport.target.waiter.Waiter.writings">
 <em class="property">await </em><code class="descname">writings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter.writings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keep writing till we fulfill that future!!!</p>
+<p>There are four cases where this function gets called:</p>
+<ul class="simple">
+<li>When we start awaiting for this waiter</li>
+<li>retry_options.next_time after a write is done</li>
+<li>retry_options.next_check_after_wait_for_result after detecting a partial result</li>
+<li>When a result is done</li>
+</ul>
 </dd></dl>
 
 </dd></dl>
@@ -617,20 +566,20 @@ futures that were created in the process.</p>
 <span id="the-writer"></span><h2>The writer<a class="headerlink" href="#module-photons_transport.target.writer" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="photons_transport.target.writer.Executor">
-<em class="property">class </em><code class="descclassname">photons_transport.target.writer.</code><code class="descname">Executor</code><span class="sig-paren">(</span><em>writer</em>, <em>packet</em>, <em>conn</em>, <em>serial</em>, <em>addr</em>, <em>target</em>, <em>expect_zero</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Executor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.writer.</code><code class="descname">Executor</code><span class="sig-paren">(</span><em>writer</em>, <em>original</em>, <em>packet</em>, <em>conn</em>, <em>serial</em>, <em>addr</em>, <em>target</em>, <em>expect_zero</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Executor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Container of information necessary for writing to a device.</p>
 <p>Ultimately it uses the Writer that’s passed in to do the actual writing</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="photons_transport.target.writer.Writer">
-<em class="property">class </em><code class="descclassname">photons_transport.target.writer.</code><code class="descname">Writer</code><span class="sig-paren">(</span><em>bridge</em>, <em>packet</em>, <em>conn=None</em>, <em>addr=None</em>, <em>multiple_replies=False</em>, <em>broadcast=False</em>, <em>desired_services=None</em>, <em>found=None</em>, <em>connect_timeout=10</em>, <em>expect_zero=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.writer.</code><code class="descname">Writer</code><span class="sig-paren">(</span><em>bridge</em>, <em>original</em>, <em>packet</em>, <em>retry_options</em>, <em>conn=None</em>, <em>addr=None</em>, <em>broadcast=False</em>, <em>desired_services=None</em>, <em>found=None</em>, <em>connect_timeout=10</em>, <em>expect_zero=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does what it says on the tin! This writes to a device using the bridge that
 is passed in.</p>
 <p>Usage is via the bridge.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">await</span> <span class="n">bridge</span><span class="o">.</span><span class="n">make_writer</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="n">ack_fut</span><span class="p">,</span> <span class="n">res_fut</span> <span class="o">=</span> <span class="n">await</span> <span class="n">writer</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">await</span> <span class="n">res_fut</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">await</span> <span class="n">writer</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">await</span> <span class="n">result</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -669,19 +618,125 @@ do the writing</p>
 
 <dl class="method">
 <dt id="photons_transport.target.writer.Writer.write">
-<em class="property">await </em><code class="descname">write</code><span class="sig-paren">(</span><em>serial</em>, <em>packet</em>, <em>clone</em>, <em>conn</em>, <em>addr</em>, <em>made_futures</em>, <em>expect_zero=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return two futures representing the acknowledgement and result of writing
-this message to the device.</p>
-<p>If the packet has False for <code class="docutils literal"><span class="pre">ack_required</span></code> then the acknoledgement
-future is already resolved to <code class="docutils literal"><span class="pre">True</span></code>.</p>
-<p>If <code class="docutils literal"><span class="pre">res_required</span></code> is False, then the result future is already resolved
-to an empty list.</p>
-<p>We allow these futures to be resolved by telling the bridge to expect
+<em class="property">await </em><code class="descname">write</code><span class="sig-paren">(</span><em>serial</em>, <em>original</em>, <em>clone</em>, <em>original_source</em>, <em>conn</em>, <em>addr</em>, <em>requests</em>, <em>expect_zero=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the result object representing the results we get from the device</p>
+<p>We allow this result to be resolved by telling the bridge to expect
 results for this <code class="docutils literal"><span class="pre">(source,</span> <span class="pre">sequence,</span> <span class="pre">target)</span></code> combination.</p>
 <p>Finally, we use <code class="docutils literal"><span class="pre">bridge.write_to_conn</span></code> if it is defined, otherwise
 we use <code class="docutils literal"><span class="pre">bridge.write_to_sock</span></code>. The difference between them is
 <code class="docutils literal"><span class="pre">write_to_sock</span></code> does not require awaiting, whereas <code class="docutils literal"><span class="pre">write_to_conn</span></code>
 does.</p>
+<p>We also create a clone of the packet and set it’s source to be different
+depending on how many times we have retried this packet.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-photons_transport.target.result">
+<span id="result"></span><h2>Result<a class="headerlink" href="#module-photons_transport.target.result" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="photons_transport.target.result.Result">
+<em class="property">class </em><code class="descclassname">photons_transport.target.result.</code><code class="descname">Result</code><span class="sig-paren">(</span><em>request</em>, <em>broadcast</em>, <em>retry_options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Knows about acks and results from the device. It uses the request packet to
+determine when we are done based on ack_required, res_required and multi
+options</p>
+<dl class="method">
+<dt id="photons_transport.target.result.Result.add_ack">
+<code class="descname">add_ack</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.add_ack" title="Permalink to this definition">¶</a></dt>
+<dd><p>If we are already done, do nothing</p>
+<p>Otherwise if we don’t need a result and we didn’t broadcast
+, set ourselves as done</p>
+<p>If we did broadcast and we don’t need a result then wait for the next ack
+such that if we don’t get another ack before our timeout, we mark
+ourselves as done</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_transport.target.result.Result.add_packet">
+<code class="descname">add_packet</code><span class="sig-paren">(</span><em>pkt</em>, <em>addr</em>, <em>broadcast</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.add_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if we should call add_ack or add_result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_transport.target.result.Result.add_result">
+<code class="descname">add_result</code><span class="sig-paren">(</span><em>result</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.add_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a non ack reply from the device</p>
+<p>If we have all the packets we want then set result ourselves</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_transport.target.result.Result.maybe_finish">
+<code class="descname">maybe_finish</code><span class="sig-paren">(</span><em>last</em>, <em>attr</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.maybe_finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by schedule_finisher to finish this Result when we don’t know how
+many multiple replies we are expecting.</p>
+<p>The idea is that when this callback is called and we haven’t received
+any newer packets, then we mark this result as done</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_transport.target.result.Result.schedule_finisher">
+<code class="descname">schedule_finisher</code><span class="sig-paren">(</span><em>attr</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.schedule_finisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule maybe_finish to check in the future if we are done with this
+result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_transport.target.result.Result.wait_for_result">
+<code class="descname">wait_for_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result.wait_for_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether we should wait for a result</p>
+<p>If we expect both and ack and a result then we say yes only if it’s been
+less than gap_between_ack_and_res since the ack if we have received one.</p>
+<p>If we expect a bound number of results and it’s been less than
+gap_between_results since the last result, then say yes</p>
+<p>If we expect an unbond number of results, only return False if we haven’t
+received anything yet</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-photons_transport.target.retry_options">
+<span id="retry-options"></span><h2>Retry options<a class="headerlink" href="#module-photons_transport.target.retry_options" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="photons_transport.target.retry_options.RetryOptions">
+<em class="property">class </em><code class="descclassname">photons_transport.target.retry_options.</code><code class="descname">RetryOptions</code><a class="headerlink" href="#photons_transport.target.retry_options.RetryOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options for working out how long to wait for replies to our messages</p>
+<dl class="docutils">
+<dt>finish_multi_gap</dt>
+<dd>When a packet has an unbound number of results or acks, this number is
+used to schedule the next check to see if we should finish this result</dd>
+<dt>gap_between_results</dt>
+<dd><p class="first">When a packet has an unbound number of results we uses this number to
+determine when we have enough results. Essentially the answer is yes if
+it’s been this long since the last result</p>
+<p class="last">It is a good idea to make this number less than finish_multi_gap so that
+when we check after a finish_multi_gap amount of time in the future we
+can mark the result as done</p>
+</dd>
+<dt>gap_between_ack_and_res</dt>
+<dd><p class="first">When a packet has a received an acknowledgment but not a result, this
+number is used to determine if we should wait for the result or send
+the request again.</p>
+<p class="last">i.e. only send a retry if it’s been longer than this time since the
+acknowledgement</p>
+</dd>
+<dt>next_check_after_wait_for_result</dt>
+<dd>If we should wait for the next reply instead of sending a retry, then
+we use this time to schedule the next check.</dd>
+<dt>timeouts</dt>
+<dd><p class="first">A list of (step, end) tuples that is used to determine the retry backoff.</p>
+<p>This is used by the <code class="docutils literal"><span class="pre">next_time</span></code> property on this object.</p>
+<p>Essentially, starting with the first step, increase by step until you
+reach end and then use the next tuple to determine backoff from there.</p>
+<p class="last">So <code class="docutils literal"><span class="pre">[(0.1,</span> <span class="pre">0.1),</span> <span class="pre">(0.2,</span> <span class="pre">0.5),</span> <span class="pre">(0.5,</span> <span class="pre">3)]</span></code> would go
+<code class="docutils literal"><span class="pre">0.1,</span> <span class="pre">0.3,</span> <span class="pre">0.5,</span> <span class="pre">1,</span> <span class="pre">1.5,</span> <span class="pre">2,</span> <span class="pre">2.5,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">...</span></code></p>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="photons_transport.target.retry_options.RetryOptions.next_time">
+<code class="descname">next_time</code><a class="headerlink" href="#photons_transport.target.retry_options.RetryOptions.next_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the next backoff time</p>
 </dd></dl>
 
 </dd></dl>

@@ -248,6 +248,11 @@
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetMultiZoneColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">502</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;end_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+
+    <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">MultiOptions</span><span class="p">(</span>
+          <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="p">[</span><span class="n">MultiZoneMessages</span><span class="o">.</span><span class="n">StateMultiZoneStateMultiZones</span><span class="p">,</span> <span class="n">MultiZoneMessages</span><span class="o">.</span><span class="n">StateMultiZoneStateZones</span><span class="p">]</span>
+        <span class="p">,</span> <span class="k">lambda</span> <span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="nb">min</span><span class="p">((</span><span class="n">req</span><span class="o">.</span><span class="n">end_index</span> <span class="o">//</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">num_zones</span> <span class="o">//</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
