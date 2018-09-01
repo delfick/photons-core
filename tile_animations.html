@@ -183,6 +183,8 @@
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_nyan</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_pacman</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_gameoflife</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Where the options are optional and are as follows:</p>
@@ -246,6 +248,32 @@ determine what to display on the tiles. By default we assume the tiles are
 in a horizontal row.</dd>
 <dt>num_iterations – int – default -1</dt>
 <dd>How many iterations before we stop. -1 means never stop</dd>
+</dl>
+</dd>
+<dt>tile_gameoflife</dt>
+<dd><p class="first">This simulates the conway’s game of life (<a class="reference external" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life</a>)</p>
+<p>Pixels turn on to represent <code class="docutils literal"><span class="pre">alive</span></code> cells and turn off to represent <code class="docutils literal"><span class="pre">dead</span></code>
+cells.</p>
+<p>We will randomly turn on cells with random colors every second and then
+iterate using the rules of the simulation</p>
+<p>This also has the following options</p>
+<dl class="last docutils">
+<dt>user_coords – boolean – default false</dt>
+<dd>If this is true, then we use the (user_x, user_y) values from the tiles to
+determine what to display on the tiles. By default we assume the tiles are
+in a horizontal row.</dd>
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+<dt>new_color_style – <code class="docutils literal"><span class="pre">random</span></code> or <code class="docutils literal"><span class="pre">average</span></code> – default <code class="docutils literal"><span class="pre">average</span></code></dt>
+<dd><p class="first">This determines what color we set points that become alive. If random then
+we choose a random color. If average then we set the color to be the average
+of it’s surrounding neighbours.</p>
+<p class="last">Note that the randomly placed cells every second are random colors regardless
+of this option.</p>
+</dd>
+<dt>iteration_delay – float – default 0.1</dt>
+<dd>The amount of seconds between each iteration of the simulation. Note that
+0.1 is the smallest value.</dd>
 </dl>
 </dd>
 </dl>
