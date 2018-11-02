@@ -264,6 +264,9 @@ to get these objects.</p>
     <span class="n">has_multizone</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">has_variable_color_temp</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">has_chain</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="n">min_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2500</span><span class="p">)</span>
+    <span class="n">max_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -299,6 +302,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_original’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘Original 1000’</td>
@@ -342,6 +351,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_gu10_color’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘Color 650’</td>
 </tr>
@@ -383,6 +398,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19_white’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>6500</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2700</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘White 800’</td>
@@ -426,6 +447,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19_white’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>6500</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2700</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘White 800’</td>
 </tr>
@@ -467,6 +494,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30_white’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>6500</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2700</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘White 900 BR30’</td>
@@ -510,6 +543,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30_color’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘Color 1000 BR30’</td>
 </tr>
@@ -551,6 +590,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19_color’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘Color 1000’</td>
@@ -594,6 +639,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX A19’</td>
 </tr>
@@ -635,6 +686,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX BR30’</td>
@@ -678,6 +735,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19_plus’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX+ A19’</td>
 </tr>
@@ -719,6 +782,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30_plus’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX+ BR30’</td>
@@ -762,6 +831,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_z’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Z’</td>
 </tr>
@@ -803,6 +878,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_z’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Z’</td>
@@ -846,6 +927,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_downlight_o’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX DOWNLIGHT O’</td>
 </tr>
@@ -887,6 +974,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_downlight_n’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX DOWNLIGHT N’</td>
@@ -930,6 +1023,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_beam’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Beam’</td>
 </tr>
@@ -971,6 +1070,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX A19’</td>
@@ -1014,6 +1119,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX BR30’</td>
 </tr>
@@ -1055,6 +1166,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_a19_plus’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX+ A19’</td>
@@ -1098,6 +1215,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_br30_plus’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX+ BR30’</td>
 </tr>
@@ -1139,6 +1262,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_color’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini Color’</td>
@@ -1182,6 +1311,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_day_dusk’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>4000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>1500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini Day Dusk’</td>
 </tr>
@@ -1223,6 +1358,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_day’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>2700</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2700</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini Day’</td>
@@ -1266,6 +1407,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_gu10_color’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX GU10 Color’</td>
 </tr>
@@ -1307,6 +1454,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_tile’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Tile’</td>
@@ -1350,6 +1503,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_color’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>9000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini Color’</td>
 </tr>
@@ -1392,6 +1551,12 @@ to get these objects.</p>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_day_dusk’</td>
 </tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>4000</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>1500</td>
+</tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini Day Dusk’</td>
 </tr>
@@ -1433,6 +1598,12 @@ to get these objects.</p>
 </tr>
 <tr class="row-even"><td>identifier</td>
 <td>‘lifx_mini_white’</td>
+</tr>
+<tr class="row-odd"><td>max_kelvin</td>
+<td>2700</td>
+</tr>
+<tr class="row-even"><td>min_kelvin</td>
+<td>2700</td>
 </tr>
 <tr class="row-odd"><td>name</td>
 <td>‘LIFX Mini White’</td>
