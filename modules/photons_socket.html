@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -108,32 +109,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_socket</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#discoverymessages">DiscoveryMessages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#getservice">2 - GetService</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#stateservice">3 - StateService</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#acknowledgment">45 - Acknowledgment</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_socket.target">The target</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_socket.connection">The connection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_socket.fake">Helper for tests</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -223,50 +214,6 @@ broadcast address.</p>
 <p class="last">This module will create a target called <code class="docutils literal"><span class="pre">lan</span></code> in the configuration
 if one is not already specified.</p>
 </div>
-<span class="target" id="module-photons_socket.messages"></span><dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">photons_socket.messages.Services</span></code></dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Services</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The different services a device exposes&quot;&quot;&quot;</span>
-    <span class="n">UDP</span>       <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">RESERVED1</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">RESERVED2</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">RESERVED3</span> <span class="o">=</span> <span class="mi">4</span>
-    <span class="n">RESERVED4</span> <span class="o">=</span> <span class="mi">5</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-<div class="section" id="discoverymessages">
-<h2>DiscoveryMessages<a class="headerlink" href="#discoverymessages" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>Messages related to Discovery</div></blockquote>
-<div class="section" id="getservice">
-<h3>2 - GetService<a class="headerlink" href="#getservice" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.GetService</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">2</span>
-    <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="stateservice">
-<h3>3 - StateService<a class="headerlink" href="#stateservice" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.StateService</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">3</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">Services</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;port&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="acknowledgment">
-<h3>45 - Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.Acknowledgment</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Acknowledgment</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="section" id="module-photons_socket.target">
 <span id="the-target"></span><h2>The target<a class="headerlink" href="#module-photons_socket.target" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -352,36 +299,22 @@ StateService messages.</p>
 <span id="helper-for-tests"></span><h2>Helper for tests<a class="headerlink" href="#module-photons_socket.fake" title="Permalink to this headline">¶</a></h2>
 <p>Test helpers for creating fake devices that talk over the lan</p>
 <p>Usage looks like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_app.formatter</span> <span class="kn">import</span> <span class="n">MergedOptionStringFormatter</span>
-<span class="kn">from</span> <span class="nn">photons_app.registers</span> <span class="kn">import</span> <span class="n">ProtocolRegister</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_socket.fake</span> <span class="kn">import</span> <span class="n">FakeDevice</span><span class="p">,</span> <span class="n">MemorySocketTarget</span>
+<span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">protocol_register</span><span class="p">,</span> <span class="n">DeviceMessages</span>
 
-<span class="kn">from</span> <span class="nn">photons_socket.fake</span> <span class="kn">import</span> <span class="n">FakeDevice</span><span class="p">,</span> <span class="n">MemorySocketTarget</span>
-<span class="kn">from</span> <span class="nn">photons_socket.messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span>
-<span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
-<span class="kn">from</span> <span class="nn">photons_protocol.frame</span> <span class="kn">import</span> <span class="n">LIFXPacket</span>
-
-<span class="kn">from</span> <span class="nn">input_algorithms.meta</span> <span class="kn">import</span> <span class="n">Meta</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 
-<span class="c1"># The protocol register is used to transform bytes into objects</span>
-<span class="c1"># Note that for acks to work, we must register DiscoveryMessages</span>
-<span class="n">protocol_register</span> <span class="o">=</span> <span class="n">ProtocolRegister</span><span class="p">()</span>
-<span class="n">protocol_register</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">LIFXPacket</span><span class="p">)</span>
-<span class="n">protocol_register</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">DiscoveryMessages</span><span class="p">)</span>
-<span class="n">protocol_register</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="p">)</span>
-
 <span class="k">class</span> <span class="nc">MyDevice</span><span class="p">(</span><span class="n">FakeDevice</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">make_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">make_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetGroup</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">StateGroup</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;123&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="n">updated_at</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">final_future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
-<span class="n">everything</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
       <span class="s2">&quot;final_future&quot;</span><span class="p">:</span> <span class="n">final_future</span>
     <span class="p">,</span> <span class="s2">&quot;protocol_register&quot;</span><span class="p">:</span> <span class="n">protocol_register</span>
     <span class="p">}</span>
-<span class="n">meta</span> <span class="o">=</span> <span class="n">Meta</span><span class="p">(</span><span class="n">everything</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">MemorySocketTarget</span><span class="o">.</span><span class="n">FieldSpec</span><span class="p">(</span><span class="n">formatter</span><span class="o">=</span><span class="n">MergedOptionStringFormatter</span><span class="p">)</span><span class="o">.</span><span class="n">normalise</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">MemorySocketTarget</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 
 <span class="n">device1</span> <span class="o">=</span> <span class="n">MyDevice</span><span class="p">(</span><span class="s2">&quot;d073d5000001&quot;</span><span class="p">,</span> <span class="n">protocol_register</span><span class="p">)</span>
 <span class="n">await</span> <span class="n">device1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>

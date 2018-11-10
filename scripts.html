@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
         <link rel="next" title="Using Photons as a library" href="library.html"/>
-        <link rel="prev" title="LIFX script" href="lifx_script.html"/>
+        <link rel="prev" title="Tasks" href="tasks.html"/>
    
 	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
 
@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -181,7 +182,7 @@ a script that uses that virtualenv.</p>
 
 <span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
 <span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
-    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.6.2&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.7.0&quot;</span><span class="p">]</span>
     <span class="p">,</span> <span class="n">min_python_version</span> <span class="o">=</span> <span class="mf">3.6</span>
     <span class="p">)</span>
 </pre></div>
@@ -205,7 +206,7 @@ our <code class="docutils literal"><span class="pre">my_script</span></code> fil
 
 <span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">extras</span><span class="o">=</span><span class="p">[</span>
       <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;socket&quot;</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;device_messages&quot;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;messages&quot;</span><span class="p">)</span>
     <span class="p">])</span>
 <span class="k">def</span> <span class="nf">__lifx__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">pass</span>
@@ -286,7 +287,7 @@ the <code class="docutils literal"><span class="pre">do_turn_off</span></code> t
 15:11:04 INFO    option_merge.addons Found lifx.photons.socket addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.protocol addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.transport addon
-15:11:04 INFO    option_merge.addons Found lifx.photons.device_messages addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.messages addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.script addon
 15:11:04 INFO    option_merge.collector Converting protocol_register
 15:11:04 INFO    option_merge.collector Converting target_register
@@ -305,7 +306,7 @@ with the <code class="docutils literal"><span class="pre">lan</span></code> targ
 </ul>
 <p>And that’s how we create a script using photons!</p>
 <p>For completeness, this particular script would be implemented like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
 
@@ -337,7 +338,7 @@ $ ./my_script
         <a href="library.html" class="btn btn-neutral float-right" title="Using Photons as a library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lifx_script.html" class="btn btn-neutral" title="LIFX script" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tasks.html" class="btn btn-neutral" title="Tasks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

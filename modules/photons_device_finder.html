@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
-        <link rel="next" title="photons_device_messages" href="photons_device_messages.html"/>
+        <link rel="next" title="photons_messages" href="photons_messages.html"/>
         <link rel="prev" title="photons_core" href="photons_core.html"/>
    
 	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -108,24 +109,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_device_finder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#valid-filters">Valid Filters</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -198,13 +196,6 @@
 <span id="id1"></span><h1>photons_device_finder<a class="headerlink" href="#photons-device-finder" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-photons_device_finder"></span><p>This module provides an object for finding devices based on filters, which can
 also act as a daemon collecting information in the background.</p>
-<dl class="docutils">
-<dt>TASK:: find_with_filter</dt>
-<dd><p class="first">Find serials that match the provided filter</p>
-<p><code class="docutils literal"><span class="pre">find_with_filter</span> <span class="pre">--</span> <span class="pre">'{&quot;label&quot;:</span> <span class="pre">[&quot;kitchen&quot;,</span> <span class="pre">&quot;loungeroom&quot;],</span> <span class="pre">&quot;product_identifier&quot;:</span> <span class="pre">&quot;lifx_z&quot;}'</span></code></p>
-<p class="last">Not providing options after the <code class="docutils literal"><span class="pre">--</span></code> will find all devices on the network.</p>
-</dd>
-</dl>
 <p>The idea is that you can query the device_finder for information.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>
 
@@ -300,8 +291,33 @@ having <code class="docutils literal"><span class="pre">force_refresh=True</span
 of finding devices for future calls. If you want to re-use one and have it
 search again, call <code class="docutils literal"><span class="pre">reset</span></code> on it.</p>
 </div>
+<div class="section" id="tasks">
+<span id="finder-filters"></span><h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../tasks.html#tasks"><span class="std std-ref">Tasks</span></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">find_with_filter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">Find serials that match the provided filter</p>
+<p><code class="docutils literal"><span class="pre">find_with_filter</span> <span class="pre">--</span> <span class="pre">'{&quot;label&quot;:</span> <span class="pre">[&quot;kitchen&quot;,</span> <span class="pre">&quot;loungeroom&quot;],</span> <span class="pre">&quot;product_identifier&quot;:</span> <span class="pre">&quot;lifx_z&quot;}'</span></code></p>
+<p class="last">Not providing options after the <code class="docutils literal"><span class="pre">--</span></code> will find all devices on the network.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="valid-filters">
-<span id="finder-filters"></span><h2>Valid Filters<a class="headerlink" href="#valid-filters" title="Permalink to this headline">¶</a></h2>
+<h2>Valid Filters<a class="headerlink" href="#valid-filters" title="Permalink to this headline">¶</a></h2>
 <p>The filter takes in:</p>
 <dl class="docutils">
 <dt>force_refresh:</dt>
@@ -516,7 +532,7 @@ traffic.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="photons_device_messages.html" class="btn btn-neutral float-right" title="photons_device_messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="photons_messages.html" class="btn btn-neutral float-right" title="photons_messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="photons_core.html" class="btn btn-neutral" title="photons_core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

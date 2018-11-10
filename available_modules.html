@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
-        <link rel="next" title="photons_attributes" href="modules/photons_attributes.html"/>
+        <link rel="next" title="photons_colour" href="modules/photons_colour.html"/>
         <link rel="prev" title="LIFX Binary protocol" href="binary_protocol.html"/>
    
 	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -107,21 +108,17 @@
 <li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Available Photons Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -193,20 +190,16 @@
 <div class="toctree-wrapper compound">
 </div>
 <dl class="docutils">
-<dt><a class="reference internal" href="modules/photons_attributes.html#photons-attributes"><span class="std std-ref">photons_attributes</span></a></dt>
-<dd>Tasks for setting and getting attributes on devices</dd>
 <dt><a class="reference internal" href="modules/photons_colour.html#photons-colour"><span class="std std-ref">photons_colour</span></a></dt>
-<dd>Colour related LIFX binary protocol messages and colour conversion functionality</dd>
+<dd>Colour conversion functionality</dd>
+<dt><a class="reference internal" href="modules/photons_control.html#photons-control"><span class="std std-ref">photons_control</span></a></dt>
+<dd>Tasks and code for control of the devices</dd>
 <dt><a class="reference internal" href="modules/photons_core.html#photons-core"><span class="std std-ref">photons_core</span></a></dt>
 <dd>Requiring this module will in turn require all lifx-photons-core modules</dd>
 <dt><a class="reference internal" href="modules/photons_device_finder.html#photons-device-finder"><span class="std std-ref">photons_device_finder</span></a></dt>
 <dd>Device finder that gathers information about devices in the background</dd>
-<dt><a class="reference internal" href="modules/photons_device_messages.html#photons-device-messages"><span class="std std-ref">photons_device_messages</span></a></dt>
-<dd>LIFX binary protocol messages related to devices</dd>
-<dt><a class="reference internal" href="modules/photons_docs.html#photons-docs"><span class="std std-ref">photons_docs</span></a></dt>
-<dd>Entry point for creating documentation</dd>
-<dt><a class="reference internal" href="modules/photons_multizone.html#photons-multizone"><span class="std std-ref">photons_multizone</span></a></dt>
-<dd>LIFX Binary protocol messages related to multizone capabilities</dd>
+<dt><a class="reference internal" href="modules/photons_messages.html#photons-messages"><span class="std std-ref">photons_messages</span></a></dt>
+<dd>The LIFX binary message classes</dd>
 <dt><a class="reference internal" href="modules/photons_products_registry.html#photons-products-registry"><span class="std std-ref">photons_products_registry</span></a></dt>
 <dd>A registry of LIFX products</dd>
 <dt><a class="reference internal" href="modules/photons_protocol.html#photons-protocol"><span class="std std-ref">photons_protocol</span></a></dt>
@@ -217,12 +210,8 @@
 <dd>A target for talking to devices over a socket</dd>
 <dt><a class="reference internal" href="modules/photons_themes.html#photons-themes"><span class="std std-ref">photons_themes</span></a></dt>
 <dd>Determine how to apply themes to devices</dd>
-<dt><a class="reference internal" href="modules/photons_tile_messages.html#photons-tile-messages"><span class="std std-ref">photons_tile_messages</span></a></dt>
-<dd>LIFX binary protocol messages for Tiles</dd>
 <dt><a class="reference internal" href="modules/photons_tile_paint.html#photons-tile-paint"><span class="std std-ref">photons_tile_paint</span></a></dt>
 <dd>Utilities for painting on the tiles</dd>
-<dt><a class="reference internal" href="modules/photons_transform.html#photons-transform"><span class="std std-ref">photons_transform</span></a></dt>
-<dd>Helpers for creating messages for transforming the state of a device</dd>
 <dt><a class="reference internal" href="modules/photons_transport.html#photons-transport"><span class="std std-ref">photons_transport</span></a></dt>
 <dd>Core classes for creating Photons targets</dd>
 </dl>
@@ -238,7 +227,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="modules/photons_attributes.html" class="btn btn-neutral float-right" title="photons_attributes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="modules/photons_colour.html" class="btn btn-neutral float-right" title="photons_colour" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="binary_protocol.html" class="btn btn-neutral" title="LIFX Binary protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

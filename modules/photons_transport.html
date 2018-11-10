@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
-        <link rel="prev" title="photons_transform" href="photons_transform.html"/>
+        <link rel="prev" title="photons_tile_paint" href="photons_tile_paint.html"/>
    
 	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
 
@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -107,29 +108,29 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_transport</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.target">The target</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.bridge">The bridge</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.item">The item</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.waiter">The waiter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.writer">The writer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.result">Result</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target.retry_options">Retry options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-photons_transport.target">Target</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.target">The target</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.bridge">The bridge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.item">The item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.waiter">The waiter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.writer">The writer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.result">Result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-photons_transport.target.retry_options">Retry options</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -203,11 +204,37 @@
 <span id="id1"></span><h1>photons_transport<a class="headerlink" href="#photons-transport" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-photons_transport"></span><p>Core functionality for making photons transports. These are objects responsible
 for getting messages to a device.</p>
-<dl class="docutils">
-<dt>TASK:: find_devices</dt>
-<dd>Print the devices that can be found</dd>
-</dl>
-<span class="target" id="module-photons_transport.target"></span><p>A transport is essentially functionality for getting messages as objects and sending
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../tasks.html#tasks"><span class="std std-ref">Tasks</span></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">find_devices</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">List the devices that can be found on the network</p>
+<p><code class="docutils literal"><span class="pre">target:find_devices</span> <span class="pre">&lt;broadcast&gt;</span></code></p>
+<p>If you specify a broadcast (i.e. 192.168.0.255) then it will broadcast the
+discovery messages to that address.</p>
+<p class="last">Otherwise it will use the default broadcast address for the target you are
+using. (i.e. the lan target by default broadcasts to 255.255.255.255)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-photons_transport.target">
+<span id="target"></span><h2>Target<a class="headerlink" href="#module-photons_transport.target" title="Permalink to this headline">¶</a></h2>
+<p>A transport is essentially functionality for getting messages as objects and sending
 them to devices as binary (or as http) (or as nats messages, etc)</p>
 <p>We have three concepts here:</p>
 <dl class="docutils">
@@ -222,7 +249,7 @@ the writing/reading</dd>
 </dd>
 </dl>
 <div class="section" id="module-photons_transport.target.target">
-<span id="the-target"></span><h2>The target<a class="headerlink" href="#module-photons_transport.target.target" title="Permalink to this headline">¶</a></h2>
+<span id="the-target"></span><h3>The target<a class="headerlink" href="#module-photons_transport.target.target" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.target.TransportTarget">
 <em class="property">class </em><code class="descclassname">photons_transport.target.target.</code><code class="descname">TransportTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_future</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget" title="Permalink to this definition">¶</a></dt>
@@ -309,7 +336,7 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 
 </div>
 <div class="section" id="module-photons_transport.target.bridge">
-<span id="the-bridge"></span><h2>The bridge<a class="headerlink" href="#module-photons_transport.target.bridge" title="Permalink to this headline">¶</a></h2>
+<span id="the-bridge"></span><h3>The bridge<a class="headerlink" href="#module-photons_transport.target.bridge" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.bridge.TransportBridge">
 <em class="property">class </em><code class="descclassname">photons_transport.target.bridge.</code><code class="descname">TransportBridge</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>transport_target</em>, <em>protocol_register</em>, <em>found=None</em>, <em>default_broadcast='255.255.255.255'</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge" title="Permalink to this definition">¶</a></dt>
@@ -421,7 +448,7 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 
 </div>
 <div class="section" id="module-photons_transport.target.item">
-<span id="the-item"></span><h2>The item<a class="headerlink" href="#module-photons_transport.target.item" title="Permalink to this headline">¶</a></h2>
+<span id="the-item"></span><h3>The item<a class="headerlink" href="#module-photons_transport.target.item" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.item.Done">
 <em class="property">class </em><code class="descclassname">photons_transport.target.item.</code><code class="descname">Done</code><a class="headerlink" href="#photons_transport.target.item.Done" title="Permalink to this definition">¶</a></dt>
@@ -530,7 +557,7 @@ in which case, we just return packet as is</p>
 
 </div>
 <div class="section" id="module-photons_transport.target.waiter">
-<span id="the-waiter"></span><h2>The waiter<a class="headerlink" href="#module-photons_transport.target.waiter" title="Permalink to this headline">¶</a></h2>
+<span id="the-waiter"></span><h3>The waiter<a class="headerlink" href="#module-photons_transport.target.waiter" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.waiter.Waiter">
 <em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">Waiter</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>writer</em>, <em>retry_options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter" title="Permalink to this definition">¶</a></dt>
@@ -569,7 +596,7 @@ done</p>
 
 </div>
 <div class="section" id="module-photons_transport.target.writer">
-<span id="the-writer"></span><h2>The writer<a class="headerlink" href="#module-photons_transport.target.writer" title="Permalink to this headline">¶</a></h2>
+<span id="the-writer"></span><h3>The writer<a class="headerlink" href="#module-photons_transport.target.writer" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.writer.Executor">
 <em class="property">class </em><code class="descclassname">photons_transport.target.writer.</code><code class="descname">Executor</code><span class="sig-paren">(</span><em>writer</em>, <em>original</em>, <em>packet</em>, <em>conn</em>, <em>serial</em>, <em>addr</em>, <em>target</em>, <em>expect_zero</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Executor" title="Permalink to this definition">¶</a></dt>
@@ -640,7 +667,7 @@ depending on how many times we have retried this packet.</p>
 
 </div>
 <div class="section" id="module-photons_transport.target.result">
-<span id="result"></span><h2>Result<a class="headerlink" href="#module-photons_transport.target.result" title="Permalink to this headline">¶</a></h2>
+<span id="result"></span><h3>Result<a class="headerlink" href="#module-photons_transport.target.result" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.result.Result">
 <em class="property">class </em><code class="descclassname">photons_transport.target.result.</code><code class="descname">Result</code><span class="sig-paren">(</span><em>request</em>, <em>broadcast</em>, <em>retry_options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.result.Result" title="Permalink to this definition">¶</a></dt>
@@ -703,7 +730,7 @@ received anything yet</p>
 
 </div>
 <div class="section" id="module-photons_transport.target.retry_options">
-<span id="retry-options"></span><h2>Retry options<a class="headerlink" href="#module-photons_transport.target.retry_options" title="Permalink to this headline">¶</a></h2>
+<span id="retry-options"></span><h3>Retry options<a class="headerlink" href="#module-photons_transport.target.retry_options" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.retry_options.RetryOptions">
 <em class="property">class </em><code class="descclassname">photons_transport.target.retry_options.</code><code class="descname">RetryOptions</code><a class="headerlink" href="#photons_transport.target.retry_options.RetryOptions" title="Permalink to this definition">¶</a></dt>
@@ -749,6 +776,7 @@ reach end and then use the next tuple to determine backoff from there.</p>
 
 </div>
 </div>
+</div>
 
 
            </div>
@@ -761,7 +789,7 @@ reach end and then use the next tuple to determine backoff from there.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="photons_transform.html" class="btn btn-neutral" title="photons_transform" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="photons_tile_paint.html" class="btn btn-neutral" title="photons_tile_paint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

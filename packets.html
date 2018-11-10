@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -179,10 +180,9 @@ to pack and unpack these packets via <code class="docutils literal"><span class=
 <code class="docutils literal"><span class="pre">photons_app.registers.ProtocolRegister</span></code>.</p>
 <p>If you use the module system of photons then one of these will be available and
 filled out via <code class="docutils literal"><span class="pre">collector.configuration[&quot;protocol_register&quot;]</span></code>.</p>
-<p>Otherwise you have to create it yourself.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_socket.messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span>
-<span class="kn">from</span> <span class="nn">photons_protocol.frame</span> <span class="kn">import</span> <span class="n">LIFXPacket</span>
-<span class="kn">from</span> <span class="nn">photons_colour</span> <span class="kn">import</span> <span class="n">ColourMessages</span>
+<p>Otherwise, just import the default one from <code class="docutils literal"><span class="pre">photons_messages.protocol_register</span></code></p>
+<p>Or you can create a new one yourself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span><span class="p">,</span> <span class="n">ColourMessages</span><span class="p">,</span> <span class="n">LIFXPacket</span>
 
 <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">LIFXPacket</span><span class="p">)</span>
 <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ColourMessages</span><span class="p">)</span>
@@ -194,7 +194,7 @@ filled out via <code class="docutils literal"><span class="pre">collector.config
 <p>If you manually create a target and pass in a protocol register,
 you must register a Messages class that implements message 45 (the acknowledgement
 packet) for the target to be able to tell the difference between acks and replies.</p>
-<p class="last"><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages</span></code> is an example of a class that
+<p class="last"><code class="docutils literal"><span class="pre">photons_messages.CoreMessages</span></code> is an example of a class that
 defines the Acknowledgement message.</p>
 </div>
 <p>And then you can use the protocol_register to unpack messages you receive from
@@ -263,7 +263,7 @@ function returns us the actual value in the packet.</p>
 <p>Another example of a packet with transformed values is <code class="docutils literal"><span class="pre">DeviceMessages.SetLightPower</span></code>.
 In this packet, the duration is transformed into seconds whereas the packet
 defines it in milliseconds:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
 
 <span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 

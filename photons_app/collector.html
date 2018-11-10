@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -228,7 +229,7 @@ scripts can use <code class="docutils literal"><span class="pre">option_merge_ad
 <dd><p>Get us an instance of PhotonsApp:</p>
 <dl class="class">
 <dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp">
-<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_future</em>, <em>own_ca</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>final_future</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
 <dd><p>The main photons_app object.</p>
 <dl class="docutils">
 <dt>artifact</dt>
@@ -249,8 +250,6 @@ scripts can use <code class="docutils literal"><span class="pre">option_merge_ad
 <dd>Extra files to load</dd>
 <dt>final_future</dt>
 <dd>A future representing the end of the program</dd>
-<dt>own_ca</dt>
-<dd>A certificate to use for local https connections</dd>
 <dt>reference</dt>
 <dd>The device(s) to send commands to</dd>
 <dt>target</dt>
@@ -309,30 +308,7 @@ instantiated target_register.</p>
 
 </dd>
 <dt>protocol_register</dt>
-<dd><dl class="first last attribute">
-<dt id="photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.protocol_register_spec">
-<code class="descclassname">PhotonsAppSpec.</code><code class="descname">protocol_register_spec</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.Collector.PhotonsAppSpec.protocol_register_spec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a ProtocolRegister object</p>
-<dl class="class">
-<dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.ProtocolRegister">
-<em class="property">class </em><code class="descname">ProtocolRegister</code><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.ProtocolRegister" title="Permalink to this definition">¶</a></dt>
-<dd><p>A register for Photons Protocol Messages classes.</p>
-<p>These classes hold different message types for a particular protocol.</p>
-<p>Usage is typically in an addon’s option_merge hook.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
-
-<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="p">[</span><span class="o">..</span><span class="p">]</span>
-    <span class="n">prot_register</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span>
-    <span class="n">prot_register</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9001</span><span class="p">,</span> <span class="n">MyProtocolPacket</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</dd>
+<dd>The protocol_register object from photons_messages</dd>
 </dl>
 </dd></dl>
 

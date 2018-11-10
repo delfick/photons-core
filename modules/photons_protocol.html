@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -108,19 +109,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_protocol</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-photons_protocol.packets">LIFX Packet Protocol</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lifxpacket">LIFXPacket</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-photons_protocol.packets">LIFX Packet Protocol</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_protocol.messages">Defining Messages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_protocol.types">Types for message fields</a></li>
 </ul>
@@ -128,9 +124,7 @@
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -202,25 +196,6 @@
   <div class="section" id="photons-protocol">
 <span id="id1"></span><h1>photons_protocol<a class="headerlink" href="#photons-protocol" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-photons_protocol"></span><p>Here we have the core logic for creating LIFX binary protocol messages.</p>
-<p>We also have tasks for packing and unpacking messages from the commandline.</p>
-<dl class="docutils">
-<dt>TASK:: pack</dt>
-<dd><p class="first">Pack json found after the <code class="docutils literal"><span class="pre">--</span></code> into hexlified string</p>
-<p class="last">For example <code class="docutils literal"><span class="pre">pack</span> <span class="pre">--</span> <span class="pre">'{&quot;frame_address&quot;:</span> <span class="pre">{&quot;ack_required&quot;:</span> <span class="pre">true,</span> <span class="pre">&quot;res_required&quot;:</span> <span class="pre">true,</span> <span class="pre">&quot;reserved2&quot;:</span> <span class="pre">&quot;000000000000&quot;,</span> <span class="pre">&quot;reserved3&quot;:</span> <span class="pre">&quot;00&quot;,</span> <span class="pre">&quot;sequence&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;target&quot;:</span> <span class="pre">&quot;0000000000000000&quot;},</span> <span class="pre">&quot;frame_header&quot;:</span> <span class="pre">{&quot;addressable&quot;:</span> <span class="pre">true,</span> <span class="pre">&quot;protocol&quot;:</span> <span class="pre">1024,</span> <span class="pre">&quot;reserved1&quot;:</span> <span class="pre">&quot;00&quot;,</span> <span class="pre">&quot;size&quot;:</span> <span class="pre">68,</span> <span class="pre">&quot;source&quot;:</span> <span class="pre">591976603,</span> <span class="pre">&quot;tagged&quot;:</span> <span class="pre">false},</span> <span class="pre">&quot;payload&quot;:</span> <span class="pre">{},</span> <span class="pre">&quot;protocol_header&quot;:</span> <span class="pre">{&quot;pkt_type&quot;:</span> <span class="pre">45,</span> <span class="pre">&quot;reserved4&quot;:</span> <span class="pre">&quot;0000000000000000&quot;,</span> <span class="pre">&quot;reserved5&quot;:</span> <span class="pre">&quot;0000&quot;}}'</span></code></p>
-</dd>
-</dl>
-<dl class="docutils">
-<dt>TASK:: pack_payload</dt>
-<dd><p class="first">Pack json found after the <code class="docutils literal"><span class="pre">--</span></code> into hexlified string</p>
-<p class="last">for example <code class="docutils literal"><span class="pre">pack_payload</span> <span class="pre">117</span> <span class="pre">--</span> <span class="pre">'{&quot;level&quot;:</span> <span class="pre">65535,</span> <span class="pre">&quot;duration&quot;:</span> <span class="pre">10}'</span></code></p>
-</dd>
-</dl>
-<dl class="docutils">
-<dt>TASK:: unpack</dt>
-<dd><p class="first">Unpack hexlified string found after the <code class="docutils literal"><span class="pre">--</span></code> into a json dictionary</p>
-<p class="last">for example <code class="docutils literal"><span class="pre">unpack</span> <span class="pre">--</span> <span class="pre">310000148205ed33d073d51261e20000000000000000030100000000000000006600000000f4690000ffffac0d00000000</span></code></p>
-</dd>
-</dl>
 <div class="section" id="module-photons_protocol.packets">
 <span id="lifx-packet-protocol"></span><h2>LIFX Packet Protocol<a class="headerlink" href="#module-photons_protocol.packets" title="Permalink to this headline">¶</a></h2>
 <p>To create a packet class we use <code class="docutils literal"><span class="pre">dictobj.PacketSpec</span></code> which is defined here.</p>
@@ -368,88 +343,6 @@ is added to the spec and requires a T.Bytes</p>
 
 </dd></dl>
 
-<div class="section" id="lifxpacket">
-<h3>LIFXPacket<a class="headerlink" href="#lifxpacket" title="Permalink to this headline">¶</a></h3>
-<p>Photons protocol also defines the <code class="docutils literal"><span class="pre">parent_packet</span></code> for the LIFX binary protocol.</p>
-<dl class="class">
-<dt id="photons_protocol.frame.LIFXPacket">
-<em class="property">class </em><code class="descclassname">photons_protocol.frame.</code><code class="descname">LIFXPacket</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.frame.LIFXPacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>The LIFXPacket represents protocol 1024.</p>
-<p>It can be used to generate payload messages for this protocol.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is the <code class="docutils literal"><span class="pre">parent_packet</span></code> for this protocol. This means
-any message can be represented with this class using a payload as
-<code class="docutils literal"><span class="pre">bytes</span></code>. Specific message classes will represent the payload as a
-dictionary of data.</p>
-</div>
-<dl class="method">
-<dt id="photons_protocol.frame.LIFXPacket.message">
-<em class="property">classmethod </em><code class="descname">message</code><span class="sig-paren">(</span><em>message_type</em>, <em>*payload_fields</em>, <em>multi=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.frame.LIFXPacket.message" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is to be used in conjunction with <code class="docutils literal"><span class="pre">photons_protocol.messages.Messages</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span>
-
-<span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
-    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
-        <span class="p">)</span>
-</pre></div>
-</div>
-<p>This method returns a function that when called will return a new class
-representing the message you are creating.</p>
-<p>You may also use the fields from an existing packet by doing something
-like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span>
-
-<span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
-    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="n">MyOtherMessage</span> <span class="o">=</span> <span class="n">MyMessage</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Here, <code class="docutils literal"><span class="pre">MyOtherMessage</span></code> will use the same fields as <code class="docutils literal"><span class="pre">MyMessage</span></code> but
-will have a <code class="docutils literal"><span class="pre">pkt_type</span></code> of <code class="docutils literal"><span class="pre">14</span></code> instead of <code class="docutils literal"><span class="pre">13</span></code>.</p>
-<p>And you can specify multiple replies options with the multi keyword:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_protocol.messages</span> <span class="kn">import</span> <span class="n">Messages</span><span class="p">,</span> <span class="n">MultiOptions</span>
-
-<span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
-    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
-
-        <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">MultiOptions</span><span class="p">(</span>
-              <span class="c1"># expect MymessageReply messages</span>
-              <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">MyMessages</span><span class="o">.</span><span class="n">MyMessageReply</span>
-
-              <span class="c1"># Use total on the reply packet to determine how many packets to receive</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">total</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">14</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">total_type</span><span class="p">)</span>
-        <span class="p">)</span>
-</pre></div>
-</div>
-<p>If you expect multiple replies but don’t know how many to expect you can say:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMessages</span><span class="p">(</span><span class="n">Messages</span><span class="p">):</span>
-    <span class="n">MyMessage</span> <span class="o">=</span> <span class="n">LIFXPacket</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="mi">13</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_one&quot;</span><span class="p">,</span> <span class="n">field_one_type</span><span class="p">)</span>
-        <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;field_two&quot;</span><span class="p">,</span> <span class="n">field_two_type</span><span class="p">)</span>
-
-        <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 </div>
 <div class="section" id="module-photons_protocol.messages">
 <span id="defining-messages"></span><h2>Defining Messages<a class="headerlink" href="#module-photons_protocol.messages" title="Permalink to this headline">¶</a></h2>

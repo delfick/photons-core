@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -106,12 +107,17 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">LIFX Binary protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lifx-packet">LIFX Packet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#colourmessages">ColourMessages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#getcolor">101 - GetColor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setcolor">102 - SetColor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setwaveform">103 - SetWaveForm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lightstate">107 - LightState</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setwaveformoptional">119 - SetWaveFormOptional</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#coremessages">CoreMessages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acknowledgment">45 - Acknowledgment</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#devicemessages">DeviceMessages</a><ul>
@@ -152,7 +158,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#discoverymessages">DiscoveryMessages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#getservice">2 - GetService</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stateservice">3 - StateService</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#acknowledgment">45 - Acknowledgment</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multizonemessages">MultiZoneMessages</a><ul>
@@ -239,12 +244,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-photons_protocol.frame">
-<span id="id1"></span><span id="lifx-binary-protocol"></span><h1>LIFX Binary protocol<a class="headerlink" href="#module-photons_protocol.frame" title="Permalink to this headline">¶</a></h1>
-<p>The LIFXPacket is made up of the following:</p>
-<dl class="docutils">
-<dt>frame_header</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FrameHeader</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
+  <div class="section" id="lifx-binary-protocol">
+<span id="id1"></span><h1>LIFX Binary protocol<a class="headerlink" href="#lifx-binary-protocol" title="Permalink to this headline">¶</a></h1>
+<p>All messages can be found in the <code class="docutils literal"><span class="pre">photons_messages</span></code> module. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+
+<span class="n">set_power_message</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All messages have the properties on the <code class="docutils literal"><span class="pre">LIFXPacket</span></code> as well as the payload
+for that messages.</p>
+<div class="section" id="lifx-packet">
+<h2>LIFX Packet<a class="headerlink" href="#lifx-packet" title="Permalink to this headline">¶</a></h2>
+<p>The packet contains the following three sections as well as the payload which
+is specific to each messages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FrameHeader</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
           <span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">size_bits</span><span class="p">(</span><span class="n">pkt</span><span class="p">)</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)))</span>
         <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;protocol&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1024</span><span class="p">))</span>
@@ -255,9 +269,7 @@
         <span class="p">]</span>
 </pre></div>
 </div>
-</dd>
-<dt>frame_address</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FrameAddress</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FrameAddress</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
           <span class="p">(</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
         <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved2&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">48</span><span class="p">))</span>
@@ -268,9 +280,7 @@
         <span class="p">]</span>
 </pre></div>
 </div>
-</dd>
-<dt>protocol_header</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProtocolHeader</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ProtocolHeader</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
           <span class="p">(</span><span class="s1">&#39;reserved4&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
         <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;pkt_type&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">pkt</span><span class="o">.</span><span class="n">Payload</span><span class="o">.</span><span class="n">message_type</span><span class="p">))</span>
@@ -278,104 +288,51 @@
         <span class="p">]</span>
 </pre></div>
 </div>
-</dd>
-<dt>payload</dt>
-<dd>As determined by each payload type</dd>
-</dl>
+<p>Also if you have a packet object, you can test what type of packet by using the
+<code class="docutils literal"><span class="pre">|</span></code> operator. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+
+<span class="n">set_power</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">65535</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">set_power</span> <span class="o">|</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="colourmessages">
 <h2>ColourMessages<a class="headerlink" href="#colourmessages" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Messages related to colour.</p>
-<p>These make use of the following helpers:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Waveform</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">SAW</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">SINE</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">HALF_SINE</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">TRIANGLE</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">PULSE</span> <span class="o">=</span> <span class="mi">4</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hsbk</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="o">/</span> <span class="mi">360</span><span class="p">)</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="mi">360</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;kelvin&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">3500</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">duration_typ</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-      <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-    <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">color_and_duration</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;setcolor_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">waveform_opts</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;cycles&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;skew_ratio&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">32767</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32767</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;waveform&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">Waveform</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">Waveform</span><span class="o">.</span><span class="n">SAW</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="getcolor">
 <h3>101 - GetColor<a class="headerlink" href="#getcolor" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.GetColor</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.ColourMessages.GetColor</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setcolor">
 <h3>102 - SetColor<a class="headerlink" href="#setcolor" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetColor</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span> <span class="o">*</span><span class="n">color_and_duration</span><span class="p">)</span>
+<p><code class="docutils literal"><span class="pre">photons_messages.ColourMessages.SetColor</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">102</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">color_and_duration</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setwaveform">
 <h3>103 - SetWaveForm<a class="headerlink" href="#setwaveform" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveForm</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.ColourMessages.SetWaveForm</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveForm</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">103</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">waveform_opts</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="lightstate">
 <h3>107 - LightState<a class="headerlink" href="#lightstate" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.LightState</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.ColourMessages.LightState</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">LightState</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">107</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">hsbk</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;state_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
@@ -386,12 +343,12 @@
 </div>
 <div class="section" id="setwaveformoptional">
 <h3>119 - SetWaveFormOptional<a class="headerlink" href="#setwaveformoptional" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveFormOptional</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.ColourMessages.SetWaveFormOptional</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveFormOptional</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">119</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">waveform_opts</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;hue&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;saturation&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;brightness&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
@@ -401,18 +358,28 @@
 </div>
 </div>
 </div>
+<div class="section" id="coremessages">
+<h2>CoreMessages<a class="headerlink" href="#coremessages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="acknowledgment">
+<h3>45 - Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.CoreMessages.Acknowledgment</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Acknowledgment</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="devicemessages">
 <h2>DeviceMessages<a class="headerlink" href="#devicemessages" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="gethostinfo">
 <h3>12 - GetHostInfo<a class="headerlink" href="#gethostinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetHostInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetHostInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetHostInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statehostinfo">
 <h3>13 - StateHostInfo<a class="headerlink" href="#statehostinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateHostInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateHostInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateHostInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">13</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
@@ -424,14 +391,14 @@
 </div>
 <div class="section" id="gethostfirmware">
 <h3>14 - GetHostFirmware<a class="headerlink" href="#gethostfirmware" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetHostFirmware</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetHostFirmware</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetHostFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statehostfirmware">
 <h3>15 - StateHostFirmware<a class="headerlink" href="#statehostfirmware" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateHostFirmware</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateHostFirmware</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateHostFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">15</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
@@ -442,14 +409,14 @@
 </div>
 <div class="section" id="getwifiinfo">
 <h3>16 - GetWifiInfo<a class="headerlink" href="#getwifiinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetWifiInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetWifiInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetWifiInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statewifiinfo">
 <h3>17 - StateWifiInfo<a class="headerlink" href="#statewifiinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateWifiInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateWifiInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateWifiInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">17</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tx&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
@@ -461,14 +428,14 @@
 </div>
 <div class="section" id="getwififirmware">
 <h3>18 - GetWifiFirmware<a class="headerlink" href="#getwififirmware" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetWifiFirmware</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetWifiFirmware</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetWifiFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statewififirmware">
 <h3>19 - StateWifiFirmware<a class="headerlink" href="#statewififirmware" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateWifiFirmware</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateWifiFirmware</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateWifiFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">19</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
@@ -479,14 +446,14 @@
 </div>
 <div class="section" id="getpower">
 <h3>20 - GetPower<a class="headerlink" href="#getpower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetPower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetPower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setpower">
 <h3>21 - SetPower<a class="headerlink" href="#setpower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetPower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetPower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">21</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
@@ -495,7 +462,7 @@
 </div>
 <div class="section" id="statepower">
 <h3>22 - StatePower<a class="headerlink" href="#statepower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StatePower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StatePower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StatePower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">22</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
@@ -504,14 +471,14 @@
 </div>
 <div class="section" id="getlabel">
 <h3>23 - GetLabel<a class="headerlink" href="#getlabel" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLabel</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetLabel</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLabel</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setlabel">
 <h3>24 - SetLabel<a class="headerlink" href="#setlabel" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLabel</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetLabel</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLabel</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">24</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">)</span>
@@ -520,21 +487,21 @@
 </div>
 <div class="section" id="statelabel">
 <h3>25 - StateLabel<a class="headerlink" href="#statelabel" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLabel</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateLabel</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLabel</span> <span class="o">=</span> <span class="n">SetLabel</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getversion">
 <h3>32 - GetVersion<a class="headerlink" href="#getversion" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetVersion</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetVersion</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetVersion</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="stateversion">
 <h3>33 - StateVersion<a class="headerlink" href="#stateversion" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateVersion</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateVersion</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateVersion</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">33</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;vendor&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;product&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
@@ -545,40 +512,32 @@
 </div>
 <div class="section" id="getinfo">
 <h3>34 - GetInfo<a class="headerlink" href="#getinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">34</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="stateinfo">
 <h3>35 - StateInfo<a class="headerlink" href="#stateinfo" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateInfo</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateInfo</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateInfo</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">35</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;uptime&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">*</span> <span class="mf">1e9</span>
-        <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mf">1e9</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-      <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;downtime&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-          <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">*</span> <span class="mf">1e9</span>
-        <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="mf">1e9</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-      <span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;uptime&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">nano_to_seconds</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;downtime&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">nano_to_seconds</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getlocation">
 <h3>48 - GetLocation<a class="headerlink" href="#getlocation" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLocation</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetLocation</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setlocation">
 <h3>49 - SetLocation<a class="headerlink" href="#setlocation" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLocation</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetLocation</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">49</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
@@ -589,7 +548,7 @@
 </div>
 <div class="section" id="statelocation">
 <h3>50 - StateLocation<a class="headerlink" href="#statelocation" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLocation</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateLocation</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLocation</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">50</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
@@ -600,14 +559,14 @@
 </div>
 <div class="section" id="getgroup">
 <h3>51 - GetGroup<a class="headerlink" href="#getgroup" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetGroup</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetGroup</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">51</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setgroup">
 <h3>52 - SetGroup<a class="headerlink" href="#setgroup" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetGroup</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetGroup</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">52</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
@@ -618,7 +577,7 @@
 </div>
 <div class="section" id="stategroup">
 <h3>53 - StateGroup<a class="headerlink" href="#stategroup" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateGroup</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateGroup</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateGroup</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">53</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
@@ -629,7 +588,7 @@
 </div>
 <div class="section" id="echorequest">
 <h3>58 - EchoRequest<a class="headerlink" href="#echorequest" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.EchoRequest</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.EchoRequest</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EchoRequest</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">58</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;echoing&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
     <span class="p">)</span>
@@ -638,31 +597,31 @@
 </div>
 <div class="section" id="echoresponse">
 <h3>59 - EchoResponse<a class="headerlink" href="#echoresponse" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.EchoResponse</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.EchoResponse</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EchoResponse</span> <span class="o">=</span> <span class="n">EchoRequest</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">59</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getlightpower">
 <h3>116 - GetLightPower<a class="headerlink" href="#getlightpower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetLightPower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetLightPower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setlightpower">
 <h3>117 - SetLightPower<a class="headerlink" href="#setlightpower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetLightPower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetLightPower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">117</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">duration_typ</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statelightpower">
 <h3>118 - StateLightPower<a class="headerlink" href="#statelightpower" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateLightPower</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateLightPower</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateLightPower</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">118</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
@@ -671,21 +630,21 @@
 </div>
 <div class="section" id="getinfrared">
 <h3>120 - GetInfrared<a class="headerlink" href="#getinfrared" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.GetInfrared</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.GetInfrared</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetInfrared</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="stateinfrared">
 <h3>121 - StateInfrared<a class="headerlink" href="#stateinfrared" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.StateInfrared</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.StateInfrared</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateInfrared</span> <span class="o">=</span> <span class="n">SetInfrared</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setinfrared">
 <h3>122 - SetInfrared<a class="headerlink" href="#setinfrared" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_device_messages.DeviceMessages.SetInfrared</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DeviceMessages.SetInfrared</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetInfrared</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">122</span>
     <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
@@ -695,11 +654,9 @@
 </div>
 <div class="section" id="discoverymessages">
 <h2>DiscoveryMessages<a class="headerlink" href="#discoverymessages" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>Messages related to Discovery</div></blockquote>
 <div class="section" id="getservice">
 <h3>2 - GetService<a class="headerlink" href="#getservice" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.GetService</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DiscoveryMessages.GetService</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">2</span>
     <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="p">)</span>
@@ -708,55 +665,33 @@
 </div>
 <div class="section" id="stateservice">
 <h3>3 - StateService<a class="headerlink" href="#stateservice" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.StateService</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.DiscoveryMessages.StateService</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateService</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">3</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">Services</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">Services</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;port&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="p">)</span>
     <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="acknowledgment">
-<h3>45 - Acknowledgment<a class="headerlink" href="#acknowledgment" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_socket.messages.DiscoveryMessages.Acknowledgment</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Acknowledgment</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="multizonemessages">
 <h2>MultiZoneMessages<a class="headerlink" href="#multizonemessages" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Messages related to multizone functionality (i.e. light strips)</p>
-<p>Uses:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ApplicationRequestType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NO_APPLY</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">APPLY</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">APPLY_ONLY</span> <span class="o">=</span> <span class="mi">2</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ZoneCountScanType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">RESCAN</span> <span class="o">=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div></blockquote>
 <div class="section" id="setmultizonecolorzones">
 <h3>501 - SetMultiZoneColorZones<a class="headerlink" href="#setmultizonecolorzones" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.SetMultiZoneColorZones</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.SetMultiZoneColorZones</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetMultiZoneColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">501</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;end_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">ApplicationRequestType</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">ApplicationRequestType</span><span class="o">.</span><span class="n">APPLY</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">duration_typ</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">ApplicationRequestType</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">ApplicationRequestType</span><span class="o">.</span><span class="n">APPLY</span><span class="p">))</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getmultizonecolorzones">
 <h3>502 - GetMultiZoneColorZones<a class="headerlink" href="#getmultizonecolorzones" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.GetMultiZoneColorZones</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.GetMultiZoneColorZones</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetMultiZoneColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">502</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;end_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
@@ -771,27 +706,27 @@
 </div>
 <div class="section" id="statemultizonestatezones">
 <h3>503 - StateMultiZoneStateZones<a class="headerlink" href="#statemultizonestatezones" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.StateMultiZoneStateZones</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.StateMultiZoneStateZones</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateMultiZoneStateZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">503</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;num_zones&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;zone_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">hsbk</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="getmultizonezonecount">
 <h3>504 - GetMultiZoneZoneCount<a class="headerlink" href="#getmultizonezonecount" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.GetMultiZoneZoneCount</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.GetMultiZoneZoneCount</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetMultiZoneZoneCount</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">504</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;scan&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">ZoneCountScanType</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">ZoneCountScanType</span><span class="o">.</span><span class="n">RESCAN</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;scan&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">ZoneCountScanType</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">ZoneCountScanType</span><span class="o">.</span><span class="n">RESCAN</span><span class="p">))</span>
     <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statemultizonestatezonecount">
 <h3>505 - StateMultiZoneStateZoneCount<a class="headerlink" href="#statemultizonestatezonecount" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.StateMultiZoneStateZoneCount</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.StateMultiZoneStateZoneCount</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateMultiZoneStateZoneCount</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">505</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;num_zones&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
@@ -801,11 +736,11 @@
 </div>
 <div class="section" id="statemultizonestatemultizones">
 <h3>506 - StateMultiZoneStateMultiZones<a class="headerlink" href="#statemultizonestatemultizones" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_multizone.MultiZoneMessages.StateMultiZoneStateMultiZones</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.StateMultiZoneStateMultiZones</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateMultiZoneStateMultiZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">506</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;num_zones&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;zone_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">Color</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="n">return_color</span><span class="p">))</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -815,17 +750,17 @@
 <h2>TileMessages<a class="headerlink" href="#tilemessages" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="getdevicechain">
 <h3>701 - GetDeviceChain<a class="headerlink" href="#getdevicechain" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.GetDeviceChain</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.GetDeviceChain</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetDeviceChain</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">701</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="statedevicechain">
 <h3>702 - StateDeviceChain<a class="headerlink" href="#statedevicechain" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.StateDeviceChain</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.StateDeviceChain</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateDeviceChain</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">702</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_devices&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">440</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">Tile</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_devices&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">440</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Tile</span><span class="p">))</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;total_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
@@ -833,7 +768,7 @@
 </div>
 <div class="section" id="setuserposition">
 <h3>703 - SetUserPosition<a class="headerlink" href="#setuserposition" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.SetUserPosition</span></code></p>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.SetUserPosition</span></code></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetUserPosition</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">703</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved6&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
@@ -845,8 +780,11 @@
 </div>
 <div class="section" id="gettilestate64">
 <h3>707 - GetTileState64<a class="headerlink" href="#gettilestate64" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.GetTileState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span><span class="p">,</span> <span class="o">*</span><span class="n">get_tile_state</span>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.GetTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>
     <span class="p">,</span> <span class="n">multi</span> <span class="o">=</span> <span class="n">MultiOptions</span><span class="p">(</span>
           <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">TileMessages</span><span class="o">.</span><span class="n">StateTileState64</span>
         <span class="p">,</span> <span class="k">lambda</span> <span class="n">req</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="n">MultiOptions</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
@@ -857,15 +795,25 @@
 </div>
 <div class="section" id="statetilestate64">
 <h3>711 - StateTileState64<a class="headerlink" href="#statetilestate64" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.StateTileState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">711</span><span class="p">,</span> <span class="o">*</span><span class="n">tile_state</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.StateTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">711</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="n">return_color</span><span class="p">))</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="settilestate64">
 <h3>715 - SetTileState64<a class="headerlink" href="#settilestate64" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_tile_messages.TileMessages.SetTileState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">715</span><span class="p">,</span> <span class="o">*</span><span class="n">set_tile_state</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.SetTileState64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetTileState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">715</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">duration_typ</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="n">return_color</span><span class="p">))</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -178,8 +179,8 @@ we want to work with and instead want to address devices based on label or group
 or some other property.</p>
 <p>To help with this, photons provides the <code class="docutils literal"><span class="pre">DeviceFinder</span></code>.</p>
 <p>Below is a short introduction to what it can do:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
-<span class="kn">from</span> <span class="nn">photons_device_finder</span> <span class="kn">import</span> <span class="n">DeviceFinder</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_finder</span> <span class="kn">import</span> <span class="n">DeviceFinder</span>
+<span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
 
 <span class="n">async</span> <span class="k">def</span> <span class="nf">my_process</span><span class="p">(</span><span class="n">lan_target</span><span class="p">):</span>
     <span class="n">device_finder</span> <span class="o">=</span> <span class="n">DeviceFinder</span><span class="p">(</span><span class="n">lan_target</span><span class="p">)</span>

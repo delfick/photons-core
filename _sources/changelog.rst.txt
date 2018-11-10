@@ -3,12 +3,31 @@
 ChangeLog
 =========
 
+0.7.0 - 10 November 2018
+    Moved code into ``photons_control`` and ``photons_messages``. This means
+    ``photons_attributes``, ``photons_device_messages``, ``photons_tile_messages``
+    and ``photons_transform`` no longer exist.
+
+    Anything related to messages in those modules (and in ``photons_sockets.messages``
+    is now in ``photons_messages``.
+
+    Everything else in those modules, and the actions from ``photons_protocol``
+    are now in ``photons_control``.
+
+0.6.3 - 10 November 2018
+    * Fix potential hang when connecting to a device (very unlikely error case,
+      but now it's handled).
+    * Moved the __or__ functionality on packets onto the LIFXPacket object as
+      it's implementation depended on fields specifically on LIFXPacket. This
+      is essentially a no-op within photons.
+    * Added a create helper to TransportTarget
+
 0.6.2 - 22 October 2018
     * Fixed cleanup logic
     * Make products registry aware of kelvin ranges
     * Made defaults for values in a message definition go through the spec for
       that field when no value is specified
-    * Don't raise an error if we can't find any devices, instead respect the 
+    * Don't raise an error if we can't find any devices, instead respect the
       error_catcher option and only raise errors for not finding each serial that
       we couldn't find
 

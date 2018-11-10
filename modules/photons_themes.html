@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
-        <link rel="next" title="photons_tile_messages" href="photons_tile_messages.html"/>
+        <link rel="next" title="photons_tile_paint" href="photons_tile_paint.html"/>
         <link rel="prev" title="photons_socket" href="photons_socket.html"/>
    
 	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -108,18 +109,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_themes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_themes.theme">Theme</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_themes.collections">Collections</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_themes.appliers">Appliers</a><ul>
@@ -130,9 +130,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_themes.canvas">Canvas</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -205,17 +203,37 @@
 <span id="id1"></span><h1>photons_themes<a class="headerlink" href="#photons-themes" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-photons_themes"></span><p>This module contains utilities for determining how to apply a range of colours
 to a device.</p>
-<dl class="docutils">
-<dt>TASK:: apply_theme</dt>
-<dd><p class="first">Apply a theme to specified device</p>
+<div class="section" id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../tasks.html#tasks"><span class="std std-ref">Tasks</span></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">apply_theme</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">Apply a theme to specified device</p>
 <p><code class="docutils literal"><span class="pre">lan:apply_theme</span> <span class="pre">d073d5000001</span> <span class="pre">--</span> <span class="pre">`{&quot;colors&quot;:</span> <span class="pre">&lt;colors&gt;,</span> <span class="pre">&quot;theme&quot;:</span> <span class="pre">&quot;SPLOTCH&quot;}'</span></code></p>
 <p>If you don’t specify serials, then the theme will apply to all devices found on the network.</p>
 <p>colors must be an array of <code class="docutils literal"><span class="pre">{&quot;hue&quot;:</span> <span class="pre">&lt;hue&gt;,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">&lt;saturation&gt;,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">&lt;brightness&gt;,</span> <span class="pre">&quot;kelvin&quot;:</span> <span class="pre">&lt;kelvin&gt;}</span></code></p>
 <p>theme must be a valid theme type and defaults to SPLOTCH</p>
 <p>You may also specify <code class="docutils literal"><span class="pre">duration</span></code> which is how long to take to apply in seconds.</p>
 <p class="last">And you may also supply <code class="docutils literal"><span class="pre">hue</span></code>, <code class="docutils literal"><span class="pre">saturation</span></code>, <code class="docutils literal"><span class="pre">brightness</span></code> and <code class="docutils literal"><span class="pre">kelvin</span></code> to override the specified colors.</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="module-photons_themes.theme">
 <span id="theme"></span><h2>Theme<a class="headerlink" href="#module-photons_themes.theme" title="Permalink to this headline">¶</a></h2>
 <p>A theme is just a collection of colors and the job of the appliers is to choose
@@ -565,14 +583,14 @@ to not fill in the gaps.</p>
 <dd>is higher y means moving up.</dd>
 </dl>
 <p>So let’s say you have a 4 by 4 tile, get_color will be called with the following points:</p>
-<div class="highlight-plain"><div class="highlight"><pre><span></span>(0, 0) (1, 0) (2, 0) (3, 0)
+<div class="highlight-none"><div class="highlight"><pre><span></span>(0, 0) (1, 0) (2, 0) (3, 0)
 (0, 1) (1, 1) (2, 1) (3, 1)
 (0, 2) (1, 2) (2, 2) (3, 2)
 (0, 3) (1, 3) (2, 3) (3, 3)
 </pre></div>
 </div>
 <p>And if you have left_x, top_y of (10, 4), it’ll set the following points on the canvas:</p>
-<div class="highlight-plain"><div class="highlight"><pre><span></span>(10, 4) (11, 4) (12, 4) (13, 4)
+<div class="highlight-none"><div class="highlight"><pre><span></span>(10, 4) (11, 4) (12, 4) (13, 4)
 (10, 3) (11, 3) (12, 3) (13, 3)
 (10, 2) (11, 2) (12, 2) (13, 2)
 (10, 1) (11, 1) (12, 1) (13, 1)
@@ -637,7 +655,7 @@ most x value.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="photons_tile_messages.html" class="btn btn-neutral float-right" title="photons_tile_messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="photons_tile_paint.html" class="btn btn-neutral float-right" title="photons_tile_paint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="photons_socket.html" class="btn btn-neutral" title="photons_socket" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
-        <link rel="next" title="Making a Photons Script" href="scripts.html"/>
+        <link rel="next" title="Tasks" href="tasks.html"/>
         <link rel="prev" title="Photons" href="index.html"/>
    
 	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
@@ -94,10 +94,8 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">LIFX script</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -199,21 +197,7 @@ in your PATH which can be used to access photons functionality.</p>
 </dd>
 </dl>
 <p>If you execute <code class="docutils literal"><span class="pre">lifx</span></code> with no arguments it will display all the available tasks.</p>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>In all the commands that take in a reference, the reference can be empty or an
-<code class="docutils literal"><span class="pre">_</span></code> to signify running the command against all the devices on the network.</p>
-<p>Or it can be a comma separated list of serials like <code class="docutils literal"><span class="pre">d073d5000001,d073d5000002</span></code></p>
-<p>Or it can be a <code class="docutils literal"><span class="pre">match:&lt;options&gt;</span></code> where <code class="docutils literal"><span class="pre">&lt;options&gt;</span></code> is a url query string
-specifying filters to match against.</p>
-<p>For example, <code class="docutils literal"><span class="pre">match:group_name=one&amp;cap=multizone</span></code> will match against all
-the multizone capable lights in the <code class="docutils literal"><span class="pre">one</span></code> group.</p>
-<p>Or <code class="docutils literal"><span class="pre">match:cap=multizone&amp;cap=ir</span></code> will match against all the multizone and
-infrared capable lights.</p>
-<p>See <a class="reference internal" href="modules/photons_device_finder.html#finder-filters"><span class="std std-ref">Valid Filters</span></a> for valid options to the match filter.</p>
-<p>You may also specify a file that has newline separated serials in it by saying
-<code class="docutils literal"><span class="pre">file:/path/to/filename</span></code>.</p>
-</div>
+<p>See <a class="reference internal" href="tasks.html#tasks"><span class="std std-ref">Tasks</span></a> for more information.</p>
 </div>
 
 
@@ -226,7 +210,7 @@ infrared capable lights.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="scripts.html" class="btn btn-neutral float-right" title="Making a Photons Script" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tasks.html" class="btn btn-neutral float-right" title="Tasks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Photons" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -173,6 +174,25 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.7.0 - 10 November 2018</dt>
+<dd><p class="first">Moved code into <code class="docutils literal"><span class="pre">photons_control</span></code> and <code class="docutils literal"><span class="pre">photons_messages</span></code>. This means
+<code class="docutils literal"><span class="pre">photons_attributes</span></code>, <code class="docutils literal"><span class="pre">photons_device_messages</span></code>, <code class="docutils literal"><span class="pre">photons_tile_messages</span></code>
+and <code class="docutils literal"><span class="pre">photons_transform</span></code> no longer exist.</p>
+<p>Anything related to messages in those modules (and in <code class="docutils literal"><span class="pre">photons_sockets.messages</span></code>
+is now in <code class="docutils literal"><span class="pre">photons_messages</span></code>.</p>
+<p class="last">Everything else in those modules, and the actions from <code class="docutils literal"><span class="pre">photons_protocol</span></code>
+are now in <code class="docutils literal"><span class="pre">photons_control</span></code>.</p>
+</dd>
+<dt>0.6.3 - 10 November 2018</dt>
+<dd><ul class="first last simple">
+<li>Fix potential hang when connecting to a device (very unlikely error case,
+but now it’s handled).</li>
+<li>Moved the __or__ functionality on packets onto the LIFXPacket object as
+it’s implementation depended on fields specifically on LIFXPacket. This
+is essentially a no-op within photons.</li>
+<li>Added a create helper to TransportTarget</li>
+</ul>
+</dd>
 <dt>0.6.2 - 22 October 2018</dt>
 <dd><ul class="first last simple">
 <li>Fixed cleanup logic</li>

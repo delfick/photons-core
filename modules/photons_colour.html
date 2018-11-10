@@ -37,8 +37,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Photons 0.1 documentation" href="../index.html"/>
         <link rel="up" title="Available Photons Modules" href="../available_modules.html"/>
-        <link rel="next" title="photons_core" href="photons_core.html"/>
-        <link rel="prev" title="photons_attributes" href="photons_attributes.html"/>
+        <link rel="next" title="photons_control" href="photons_control.html"/>
+        <link rel="prev" title="Available Photons Modules" href="../available_modules.html"/>
    
 	<link rel="stylesheet" href="../_static/css/styles.css" type="text/css"/>
 
@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
@@ -108,32 +109,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../photons_app/index.html">photons_app</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../binary_protocol.html">LIFX Binary protocol</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../available_modules.html">Available Photons Modules</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="photons_attributes.html">photons_attributes</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_colour</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#colourmessages">ColourMessages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#getcolor">101 - GetColor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#setcolor">102 - SetColor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#setwaveform">103 - SetWaveForm</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lightstate">107 - LightState</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#setwaveformoptional">119 - SetWaveFormOptional</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#helpers">Helpers</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">photons_colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_control.html">photons_control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_core.html">photons_core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_device_finder.html">photons_device_finder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_device_messages.html">photons_device_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_docs.html">photons_docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_multizone.html">photons_multizone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_tile_messages.html">photons_tile_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_transform.html">photons_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_transport.html">photons_transport</a></li>
 </ul>
 </li>
@@ -205,137 +191,6 @@
   <div class="section" id="photons-colour">
 <span id="id1"></span><h1>photons_colour<a class="headerlink" href="#photons-colour" title="Permalink to this headline">¶</a></h1>
 <span class="target" id="module-photons_colour"></span><p>This module knows about colour.</p>
-<dl class="docutils">
-<dt>TASK:: set_color</dt>
-<dd><p class="first">Change specified bulb to specified colour</p>
-<p><code class="docutils literal"><span class="pre">lan:set_color</span> <span class="pre">d073d50000</span> <span class="pre">red</span> <span class="pre">--</span> <span class="pre">'{&quot;hue&quot;:</span> <span class="pre">205}'</span></code></p>
-<p>The format of this task is <code class="docutils literal"><span class="pre">&lt;reference&gt;</span> <span class="pre">&lt;color&gt;</span> <span class="pre">--</span> <span class="pre">&lt;overrides&gt;</span></code> where
-overrides is optional.</p>
-<p class="last">The color may be any valid color specifier.</p>
-</dd>
-</dl>
-<div class="section" id="colourmessages">
-<h2>ColourMessages<a class="headerlink" href="#colourmessages" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>Messages related to colour.</p>
-<p>These make use of the following helpers:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Waveform</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">SAW</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">SINE</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">HALF_SINE</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">TRIANGLE</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">PULSE</span> <span class="o">=</span> <span class="mi">4</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hsbk</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="o">/</span> <span class="mi">360</span><span class="p">)</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="mi">360</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">65535</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;kelvin&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">3500</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">duration_typ</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-      <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-    <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">color_and_duration</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;setcolor_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">duration_typ</span><span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">waveform_opts</span> <span class="o">=</span> <span class="p">(</span>
-      <span class="p">(</span><span class="s1">&#39;period&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;cycles&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Float</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;skew_ratio&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-              <span class="k">lambda</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mi">32767</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-            <span class="p">,</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32767</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">allow_float</span><span class="p">()</span>
-          <span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;waveform&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">Waveform</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">Waveform</span><span class="o">.</span><span class="n">SAW</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
-<div class="section" id="getcolor">
-<h3>101 - GetColor<a class="headerlink" href="#getcolor" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.GetColor</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setcolor">
-<h3>102 - SetColor<a class="headerlink" href="#setcolor" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetColor</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetColor</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span> <span class="o">*</span><span class="n">color_and_duration</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setwaveform">
-<h3>103 - SetWaveForm<a class="headerlink" href="#setwaveform" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveForm</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveForm</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">103</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="lightstate">
-<h3>107 - LightState<a class="headerlink" href="#lightstate" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.LightState</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">LightState</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">107</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;state_reserved1&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Int16</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">8</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;state_reserved2&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setwaveformoptional">
-<h3>119 - SetWaveFormOptional<a class="headerlink" href="#setwaveformoptional" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_colour.ColourMessages.SetWaveFormOptional</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetWaveFormOptional</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">119</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;transient&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">hsbk</span>
-    <span class="p">,</span> <span class="o">*</span><span class="n">waveform_opts</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_hue&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;hue&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_saturation&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;saturation&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_brightness&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;brightness&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s1">&#39;set_kelvin&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">BoolInt</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;kelvin&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span> <span class="k">else</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="helpers">
-<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
-<p>We also supply the following helpers:</p>
 <dl class="class">
 <dt id="photons_colour.Effects">
 <em class="property">class </em><code class="descclassname">photons_colour.</code><code class="descname">Effects</code><a class="headerlink" href="#photons_colour.Effects" title="Permalink to this definition">¶</a></dt>
@@ -430,7 +285,6 @@ state of a device to what has been specified.</p>
 </dd></dl>
 
 </div>
-</div>
 
 
            </div>
@@ -442,10 +296,10 @@ state of a device to what has been specified.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="photons_core.html" class="btn btn-neutral float-right" title="photons_core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="photons_control.html" class="btn btn-neutral float-right" title="photons_control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="photons_attributes.html" class="btn btn-neutral" title="photons_attributes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../available_modules.html" class="btn btn-neutral" title="Available Photons Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

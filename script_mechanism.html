@@ -95,6 +95,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
@@ -180,7 +181,7 @@
 <p>Once you have your target object, you interact with your lights by creating a
 “script” with the messages you want to send to your devices and running that
 against the serials of your devices:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
 
 <span class="n">script</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetPower</span><span class="p">())</span>
 
@@ -251,9 +252,8 @@ the <code class="docutils literal"><span class="pre">errors</span></code> proper
 them for all of the serials specified and collect all the responses.</p>
 <p>If you want to make sure they happen in order, then use a
 <code class="docutils literal"><span class="pre">photons_script.script.Pipeline</span></code>. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_device_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span><span class="p">,</span> <span class="n">ColourMessages</span>
 <span class="kn">from</span> <span class="nn">photons_script.script</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">photons_colour</span> <span class="kn">import</span> <span class="n">ColourMessages</span>
 
 <span class="n">color_no_brightness</span> <span class="o">=</span> <span class="n">ColourMessages</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="mi">210</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">brightness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kelvin</span><span class="o">=</span><span class="mi">3500</span><span class="p">,</span> <span class="n">res_required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">power_on</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">65535</span><span class="p">,</span> <span class="n">res_required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
