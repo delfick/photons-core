@@ -112,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_control</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-photons_control.script">Script helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.transform">Transformer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.multizone">Multizone Helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.tile">Tile Helpers</a></li>
@@ -122,7 +123,6 @@
 <li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_script.html">photons_script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_socket.html">photons_socket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
@@ -497,6 +497,154 @@ back.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="module-photons_control.script">
+<span id="script-helpers"></span><h2>Script helpers<a class="headerlink" href="#module-photons_control.script" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="photons_control.script.Decider">
+<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Decider</code><span class="sig-paren">(</span><em>getter</em>, <em>decider</em>, <em>wanted</em>, <em>simplifier=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Decider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This one is a complex beast used for determining what to do based on the
+response from a particular message.</p>
+<dl class="docutils">
+<dt>getter</dt>
+<dd>A list of messages that are sent to each <code class="docutils literal"><span class="pre">reference</span></code>.</dd>
+<dt>decider</dt>
+<dd>A function that takes in <code class="docutils literal"><span class="pre">(reference,</span> <span class="pre">received1,</span> <span class="pre">received2,</span> <span class="pre">...)</span></code> where
+each <code class="docutils literal"><span class="pre">received</span></code> is a reply from <code class="docutils literal"><span class="pre">getter</span></code> and yields messages to send
+to that reference.</dd>
+<dt>wanted</dt>
+<dd>A list of messages that we want to get back from the <code class="docutils literal"><span class="pre">getter</span></code>. Any
+reply that doesn’t match this message type is dropped before we call
+<code class="docutils literal"><span class="pre">decider</span></code></dd>
+</dl>
+<dl class="method">
+<dt id="photons_control.script.Decider.run_with">
+<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>references</em>, <em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Decider.run_with" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each msg in <code class="docutils literal"><span class="pre">getter</span></code>, run it against all the references and
+collect all the reply packets per reference for all the packets that
+match the <code class="docutils literal"><span class="pre">wanted</span></code> message types.</p>
+<p>For each reference that has results from <code class="docutils literal"><span class="pre">getter</span></code>, call <code class="docutils literal"><span class="pre">decider</span></code> with
+the reference and the replies from <code class="docutils literal"><span class="pre">getter</span></code>. This function yields
+messages which we simplify and send.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The messages from decider must already have a target set on them</p>
+</div>
+<p>Any errors are collected and if they have a serial, will be returned
+with the results.</p>
+<p>We raise the errors we find that don’t have an associated serial.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>references</em>, <em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>For each msg in <code class="docutils literal"><span class="pre">getter</span></code>, run it against all the references and
+collect all the reply packets per reference for all the packets that
+match the <code class="docutils literal"><span class="pre">wanted</span></code> message types.</p>
+<p>For each reference that has results from <code class="docutils literal"><span class="pre">getter</span></code>, call <code class="docutils literal"><span class="pre">decider</span></code> with
+the reference and the replies from <code class="docutils literal"><span class="pre">getter</span></code>. This function yields
+messages which we simplify and send.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The messages from decider must already have a target set on them</p>
+</div>
+<p>Any errors are collected and if they have a serial, will be returned
+with the results.</p>
+<p>We raise the errors we find that don’t have an associated serial.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_control.script.Pipeline">
+<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>*children</em>, <em>spread=0</em>, <em>short_circuit_on_error=False</em>, <em>synchronized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will send and wait for multiple
+messages to each <code class="docutils literal"><span class="pre">reference</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
+<span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
+
+<span class="n">reference1</span> <span class="o">=</span> <span class="s2">&quot;d073d500000&quot;</span>
+<span class="n">reference2</span> <span class="o">=</span> <span class="s2">&quot;d073d500001&quot;</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">msg1</span><span class="p">,</span> <span class="n">msg2</span><span class="p">))</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">,</span> <span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">....</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg1</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg2</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg1</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg2</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>This also takes in the following keyword arguments:</p>
+<dl class="docutils">
+<dt>spread</dt>
+<dd>Specify how much wait (in seconds) between each message per device</dd>
+<dt>short_circuit_on_error</dt>
+<dd><p class="first">Stop trying to send messages to a device if we encounter an error.</p>
+<p class="last">This will only effect sending messages to the device that had an error</p>
+</dd>
+<dt>synchronized</dt>
+<dd><p class="first">If this is set to False then each bulb gets it’s own coroutine and so
+messages will go at different times depending on how slow/fast each bulb
+is.</p>
+<p class="last">If this is set to True then we wait on the slowest bulb before going to
+the next message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_control.script.Repeater">
+<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Repeater</code><span class="sig-paren">(</span><em>msg</em>, <em>min_loop_time=30</em>, <em>on_done_loop=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Repeater" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will repeat it’s messages forever</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
+<span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
+
+<span class="n">reference1</span> <span class="o">=</span> <span class="s2">&quot;d073d500000&quot;</span>
+<span class="n">reference2</span> <span class="o">=</span> <span class="s2">&quot;d073d500001&quot;</span>
+
+<span class="k">def</span> <span class="nf">error_catcher</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">msg1</span><span class="p">,</span> <span class="n">msg2</span><span class="p">,</span> <span class="n">spread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">Repeater</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">min_loop_time</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">,</span> <span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">,</span> <span class="n">error_catcher</span><span class="o">=</span><span class="n">error_catcher</span><span class="p">):</span>
+        <span class="o">....</span>
+</pre></div>
+</div>
+<p>Is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+            <span class="o">...</span>
+        <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that if references is a photons_app.special.SpecialReference then we call reset on it after every loop.</p>
+<p>Also error_catcher <em>must</em> be specified and be a callable that takes each error as they happen.</p>
+<p>Repeater takes in the following keyword arguments:</p>
+<dl class="docutils">
+<dt>min_loop_time</dt>
+<dd><p class="first">The minimum amount of time a loop should take, in seconds.</p>
+<p class="last">So if min_loop_time is 30 and the loop takes 10 seconds, then we’ll wait 20 seconds before going again</p>
+</dd>
+<dt>on_done_loop</dt>
+<dd><p class="first">An async callable that is called with no arguments when a loop completes (before any sleep from min_loop_time)</p>
+<p class="last">Note that if you raise <code class="docutils literal"><span class="pre">Repeater.Stop()</span></code> in this function then the Repeater will stop.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-photons_control.transform">
 <span id="transformer"></span><h2>Transformer<a class="headerlink" href="#module-photons_control.transform" title="Permalink to this headline">¶</a></h2>

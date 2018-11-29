@@ -251,9 +251,9 @@ the <code class="docutils literal"><span class="pre">errors</span></code> proper
 <p>You can provide a list of messages to <code class="docutils literal"><span class="pre">target.script</span></code> and it will send all of
 them for all of the serials specified and collect all the responses.</p>
 <p>If you want to make sure they happen in order, then use a
-<code class="docutils literal"><span class="pre">photons_script.script.Pipeline</span></code>. For example:</p>
+<code class="docutils literal"><span class="pre">photons_control.script.Pipeline</span></code>. For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span><span class="p">,</span> <span class="n">ColourMessages</span>
-<span class="kn">from</span> <span class="nn">photons_script.script</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">photons_control.script</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 
 <span class="n">color_no_brightness</span> <span class="o">=</span> <span class="n">ColourMessages</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="mi">210</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">brightness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kelvin</span><span class="o">=</span><span class="mi">3500</span><span class="p">,</span> <span class="n">res_required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">power_on</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">65535</span><span class="p">,</span> <span class="n">res_required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -285,11 +285,9 @@ is storing the ip addresses of our serials.</p>
 </pre></div>
 </div>
 <p>You can create an <code class="docutils literal"><span class="pre">afr</span></code> and pass it in yourself by running <code class="docutils literal"><span class="pre">args_for_run</span></code> and
-<code class="docutils literal"><span class="pre">close_args_for_run</span></code> yourself, or you can use the <code class="docutils literal"><span class="pre">photons_script.script.ATarget</span></code>
-context manager.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_script.script</span> <span class="kn">import</span> <span class="n">ATarget</span>
-
-<span class="n">async</span> <span class="k">with</span> <span class="n">ATarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+<code class="docutils literal"><span class="pre">close_args_for_run</span></code> yourself, or you can use the <code class="docutils literal"><span class="pre">session()</span></code> context manager
+on the target.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
     <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">serial1</span><span class="p">,</span> <span class="n">serial2</span><span class="p">],</span> <span class="n">afr</span><span class="p">)</span>
     <span class="n">script2</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">serial2</span><span class="p">],</span> <span class="n">afr</span><span class="p">)</span>
 </pre></div>

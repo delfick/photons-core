@@ -338,6 +338,14 @@ when a new result is set.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="photons_app.helpers.add_error">
+<code class="descclassname">photons_app.helpers.</code><code class="descname">add_error</code><span class="sig-paren">(</span><em>catcher</em>, <em>error</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.add_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an error to an error_catcher.</p>
+<p>This means if it’s callable we call it with the error</p>
+<p>and if it’s a list or set we add the error to it.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="photons_app.helpers.async_as_background">
 <code class="descclassname">photons_app.helpers.</code><code class="descname">async_as_background</code><span class="sig-paren">(</span><em>coroutine</em>, <em>silent=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.async_as_background" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a task with reporter as a done callback using provided loop and
