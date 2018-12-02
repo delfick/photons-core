@@ -101,7 +101,10 @@
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tile Animations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tile Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#starting-an-animation-programmatically">Starting an animation programmatically</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
@@ -183,6 +186,8 @@
 
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_nyan</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_twinkles</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_pacman</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_gameoflife</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
@@ -251,6 +256,23 @@ in a horizontal row.</dd>
 <dd>How many iterations before we stop. -1 means never stop</dd>
 </dl>
 </dd>
+<dt>tile_twinkles</dt>
+<dd><p class="first">This displays dots on the tiles like twinkling stars! It also has the following
+options.</p>
+<dl class="last docutils">
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+<dt>pallete – optional string</dt>
+<dd>The colours to use, this a choice between. Not specifying this means random
+colours</dd>
+<dt>num_twinkles – int – default 20</dt>
+<dd>The number of twinkles to display</dd>
+<dt>fade_in_speed – float – default 0.125</dt>
+<dd>How long to take to fade in a twinkle</dd>
+<dt>fade_out_speed – float – default 0.078</dt>
+<dd>How long to take to fade out a twinkle</dd>
+</dl>
+</dd>
 <dt>tile_gameoflife</dt>
 <dd><p class="first">This simulates the conway’s game of life (<a class="reference external" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life</a>)</p>
 <p>Pixels turn on to represent <code class="docutils literal"><span class="pre">alive</span></code> cells and turn off to represent <code class="docutils literal"><span class="pre">dead</span></code>
@@ -278,6 +300,25 @@ of this option.</p>
 </dl>
 </dd>
 </dl>
+<div class="section" id="starting-an-animation-programmatically">
+<h2>Starting an animation programmatically<a class="headerlink" href="#starting-an-animation-programmatically" title="Permalink to this headline">¶</a></h2>
+<p>You can start the animation in a script by doing something like the following
+assuming you already have a lan target object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="c1"># Cancel this final_future when you want to stop the animation</span>
+<span class="n">final_future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello there&quot;</span><span class="p">}</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;d073d5000001&quot;</span>
+    <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about valid objects for the reference, see <a class="reference internal" href="photons_app/special.html#photons-app-special"><span class="std std-ref">Special References</span></a></p>
+</div>
 </div>
 
 
