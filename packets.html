@@ -182,10 +182,10 @@ to pack and unpack these packets via <code class="docutils literal"><span class=
 filled out via <code class="docutils literal"><span class="pre">collector.configuration[&quot;protocol_register&quot;]</span></code>.</p>
 <p>Otherwise, just import the default one from <code class="docutils literal"><span class="pre">photons_messages.protocol_register</span></code></p>
 <p>Or you can create a new one yourself.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span><span class="p">,</span> <span class="n">ColourMessages</span><span class="p">,</span> <span class="n">LIFXPacket</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DiscoveryMessages</span><span class="p">,</span> <span class="n">LightMessages</span><span class="p">,</span> <span class="n">LIFXPacket</span>
 
 <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">LIFXPacket</span><span class="p">)</span>
-<span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ColourMessages</span><span class="p">)</span>
+<span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LightMessages</span><span class="p">)</span>
 <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">message_register</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">DiscoveryMessages</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -203,7 +203,7 @@ the bulb.</p>
 
 <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;580000541cf7e30cd073d514e73300004c4946585632000128cc694f8bdee2146b000000aa2affffcc4cac0d0000000073747269700000000000000000000000000000000000000000000000000000000000000000000000&quot;</span>
 <span class="n">pkt</span> <span class="o">=</span> <span class="n">Messages</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">protocol_register</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">ColourMessages</span><span class="o">.</span><span class="n">LightState</span>
+<span class="k">assert</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">LightMessages</span><span class="o">.</span><span class="n">LightState</span>
 <span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span>
       <span class="s2">&quot;frame_address&quot;</span><span class="p">:</span>
       <span class="p">{</span> <span class="s2">&quot;ack_required&quot;</span><span class="p">:</span> <span class="n">false</span>
@@ -228,8 +228,8 @@ the bulb.</p>
       <span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;strip&quot;</span>
       <span class="p">,</span> <span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="mi">0</span>
       <span class="p">,</span> <span class="s2">&quot;saturation&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
-      <span class="p">,</span> <span class="s2">&quot;state_reserved1&quot;</span><span class="p">:</span> <span class="mi">0</span>
-      <span class="p">,</span> <span class="s2">&quot;state_reserved2&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved6&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">,</span> <span class="s2">&quot;reserved7&quot;</span><span class="p">:</span> <span class="mi">0</span>
       <span class="p">}</span>
     <span class="p">,</span> <span class="s2">&quot;protocol_header&quot;</span><span class="p">:</span>
       <span class="p">{</span> <span class="s2">&quot;pkt_type&quot;</span><span class="p">:</span> <span class="mi">107</span>
@@ -260,24 +260,24 @@ includes transformations for some values in the payload.</p>
 </div>
 <p>Here accessing the variable returns the transformed value, whereas the <code class="docutils literal"><span class="pre">actual</span></code>
 function returns us the actual value in the packet.</p>
-<p>Another example of a packet with transformed values is <code class="docutils literal"><span class="pre">DeviceMessages.SetLightPower</span></code>.
+<p>Another example of a packet with transformed values is <code class="docutils literal"><span class="pre">LightMessages.SetLightPower</span></code>.
 In this packet, the duration is transformed into seconds whereas the packet
 defines it in milliseconds:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">LightMessages</span>
 
-<span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">pkt</span> <span class="o">=</span> <span class="n">LightMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="k">assert</span> <span class="n">pkt</span><span class="o">.</span><span class="n">actual</span><span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10000</span>
 </pre></div>
 </div>
 <p>Note that when creating a packet from user input it’s better to use the <code class="docutils literal"><span class="pre">normalise</span></code>
 functionality on the class:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pkt</span> <span class="o">=</span> <span class="n">LightMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <span class="c1"># Or</span>
 
 <span class="kn">from</span> <span class="nn">input_algorithms.meta</span> <span class="kn">import</span> <span class="n">Meta</span>
-<span class="n">pkt</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">normalise</span><span class="p">(</span><span class="n">Meta</span><span class="o">.</span><span class="n">empty</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="n">pkt</span> <span class="o">=</span> <span class="n">LightMessages</span><span class="o">.</span><span class="n">SetLightPower</span><span class="o">.</span><span class="n">normalise</span><span class="p">(</span><span class="n">Meta</span><span class="o">.</span><span class="n">empty</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Doing this will mean that the values are checked at the instantiation of the

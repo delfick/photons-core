@@ -196,31 +196,31 @@
 <dd><p>Class for making options related to special waveform effects</p>
 <dl class="method">
 <dt id="photons_colour.Effects.half_sine">
-<code class="descname">half_sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>stream=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.half_sine" title="Permalink to this definition">¶</a></dt>
+<code class="descname">half_sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.half_sine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options to make the light(s) transition to <cite>color</cite> smoothly, then immediately back to its original color</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_colour.Effects.pulse">
-<code class="descname">pulse</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>duty_cycle=0.5</em>, <em>transient=1</em>, <em>period=1.0</em>, <em>stream=0</em>, <em>skew_ratio=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.pulse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pulse</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>duty_cycle=0.5</em>, <em>transient=1</em>, <em>period=1.0</em>, <em>skew_ratio=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.pulse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options to make the light(s) pulse <cite>color</cite> and then back to its original color</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_colour.Effects.saw">
-<code class="descname">saw</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>stream=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.saw" title="Permalink to this definition">¶</a></dt>
+<code class="descname">saw</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>transient=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.saw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options to make the light(s) transition to <cite>color</cite> linearly, then instantly back</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_colour.Effects.sine">
-<code class="descname">sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>stream=0</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.sine" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sine</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.sine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options to make the light(s) transition to <cite>color</cite> and back in a smooth sine wave</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_colour.Effects.triangle">
-<code class="descname">triangle</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>stream=0</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.triangle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">triangle</code><span class="sig-paren">(</span><em>cycles=1</em>, <em>period=1.0</em>, <em>peak=0.5</em>, <em>transient=1</em>, <em>skew_ratio=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Effects.triangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options to make the light(s) transition to <cite>color</cite> linearly and back</p>
 </dd></dl>
 
@@ -230,7 +230,7 @@
 <dt id="photons_colour.Parser">
 <em class="property">class </em><code class="descclassname">photons_colour.</code><code class="descname">Parser</code><a class="headerlink" href="#photons_colour.Parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for converting valid colour specifiers into the options for a
-<code class="docutils literal"><span class="pre">SetWaveFormOptional</span></code> device command.</p>
+<code class="docutils literal"><span class="pre">SetWaveformOptional</span></code> device command.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last"><a class="reference external" href="http://colorizer.org/">http://colorizer.org/</a> and <a class="reference external" href="http://colormine.org/">http://colormine.org/</a> are amazing!</p>
@@ -277,7 +277,7 @@
 <dl class="method">
 <dt id="photons_colour.Parser.color_to_msg">
 <em class="property">classmethod </em><code class="descname">color_to_msg</code><span class="sig-paren">(</span><em>components</em>, <em>overrides=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_colour.Parser.color_to_msg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a <code class="docutils literal"><span class="pre">SetWaveFormOptional</span></code> message that may be used to change the
+<dd><p>Create a <code class="docutils literal"><span class="pre">SetWaveformOptional</span></code> message that may be used to change the
 state of a device to what has been specified.</p>
 </dd></dl>
 
