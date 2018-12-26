@@ -191,6 +191,10 @@
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_pacman</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 
 <span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_gameoflife</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_falling</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_dice_roll</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Where the options are optional and are as follows:</p>
@@ -281,10 +285,10 @@ cells.</p>
 iterate using the rules of the simulation</p>
 <p>This also has the following options</p>
 <dl class="last docutils">
-<dt>user_coords – boolean – default false</dt>
+<dt>user_coords – boolean – default true</dt>
 <dd>If this is true, then we use the (user_x, user_y) values from the tiles to
-determine what to display on the tiles. By default we assume the tiles are
-in a horizontal row.</dd>
+determine what to display on the tiles. If false we assume the tiles are in
+a straight line.</dd>
 <dt>num_iterations – int – default -1</dt>
 <dd>How many iterations before we stop. -1 means never stop</dd>
 <dt>new_color_style – <code class="docutils literal"><span class="pre">random</span></code> or <code class="docutils literal"><span class="pre">average</span></code> – default <code class="docutils literal"><span class="pre">average</span></code></dt>
@@ -297,6 +301,53 @@ of this option.</p>
 <dt>iteration_delay – float – default 0.1</dt>
 <dd>The amount of seconds between each iteration of the simulation. Note that
 0.1 is the smallest value.</dd>
+</dl>
+</dd>
+<dt>tile_falling</dt>
+<dd><p class="first">This is just pixels falling from the top to the bottom.</p>
+<p>Essentially we have lines of pixels with the tip being a special colour and
+the rest between a random colour in a hue_range with decreasing brightness
+where each line is of a random length.</p>
+<p>The following are options available for this animation:</p>
+<dl class="last docutils">
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+<dt>hue_ranges – null or list of strings or csv – default “90-110”</dt>
+<dd><p class="first">A string or a list of strings where each string is a comma separated range
+where the range is either ‘&lt;min&gt;-&lt;max&gt;’ or the word ‘rainbow’. These numbers
+are used to determine the colour of each pixel in each line. Saying rainbow
+is the same as saying ‘0-360’.</p>
+<p>For example if you said ‘0-10,rainbow’ then half the lines will be the full
+range of colours and the other half of the lines will have red pixels.</p>
+<p>You can say a single number to represent just that number. For example if
+you said ‘0-10,100’ then half will be between 0 and 10 and the other half
+will all be exactly 100.</p>
+<p class="last">If this is set to null then only the tip will have a nonzero brightness.</p>
+</dd>
+<dt>line_tip_hue – null or hue range – default 60</dt>
+<dd><p class="first">A single hue range like those in hue_ranges. I.e. ‘rainbow’ or ‘60’ or ‘0-10’</p>
+<p>If this is set to null then the tip of each line will not be a special colour,
+otherwise it’s hue will be a random value in the range specified.</p>
+<p class="last">Note that if both hue_ranges and line_tip_hue are null then hue_ranges will
+remain null and line_tip_hue will become 60.</p>
+</dd>
+<dt>blinking_pixels – boolean – default true</dt>
+<dd>Whether pixels should randomly blink as they are moving down.</dd>
+</dl>
+</dd>
+<dt>tile_dice_roll</dt>
+<dd><p class="first">This does a roll of a dice following by choosing a number to be displayed on
+all the tiles</p>
+<p>The following are options available for this animation:</p>
+<dl class="last docutils">
+<dt>num_iterations – int – default 1</dt>
+<dd><p class="first">How many rolls to perform. By default we only do one roll</p>
+<p class="last">-1 means we never stop rolling the dice.</p>
+</dd>
+<dt>roll_time – float – default 2</dt>
+<dd>The number of seconds to roll the dice for before choosing a number</dd>
+<dt>dice_color – hsbk dictionary – default 200, 1, 1, 3500</dt>
+<dd>The color of the dots on the dice</dd>
 </dl>
 </dd>
 </dl>
@@ -315,6 +366,38 @@ assuming you already have a lan target object:</p>
     <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello there&quot;</span><span class="p">}</span>
     <span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;d073d5000001&quot;</span>
     <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also pause if it if you pass in an asyncio.Condition and acquire it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span>
+
+<span class="kn">from</span> <span class="nn">photons_app</span> <span class="kn">import</span> <span class="n">helpers</span> <span class="k">as</span> <span class="n">hp</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="c1"># Cancel this final_future when you want to stop the animation</span>
+<span class="n">final_future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
+
+<span class="c1"># condition used to pause the animation</span>
+<span class="n">pauser</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">pause_for_a_while</span><span class="p">():</span>
+   <span class="sd">&quot;&quot;&quot;example of what you need to do to pause and resume the animation&quot;&quot;&quot;</span>
+   <span class="c1"># After two seconds, pause the animation</span>
+   <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+   <span class="n">await</span> <span class="n">pauser</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+
+   <span class="c1"># After another two seconds, resume the animation</span>
+   <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+   <span class="n">pauser</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="n">hp</span><span class="o">.</span><span class="n">async_as_background</span><span class="p">(</span><span class="n">pause_for_a_while</span><span class="p">())</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello there&quot;</span><span class="p">}</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;d073d5000001&quot;</span>
+    <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span>
+        <span class="p">,</span> <span class="n">pauser</span> <span class="o">=</span> <span class="n">pauser</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 <p>For more information about valid objects for the reference, see <a class="reference internal" href="photons_app/special.html#photons-app-special"><span class="std std-ref">Special References</span></a></p>
