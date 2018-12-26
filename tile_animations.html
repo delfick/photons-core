@@ -177,37 +177,36 @@
   <div class="section" id="tile-animations">
 <span id="id1"></span><h1>Tile Animations<a class="headerlink" href="#tile-animations" title="Permalink to this headline">¶</a></h1>
 <p>Photons provides some actions for simple animations on the tiles.</p>
-<p>Currently implemented is <code class="docutils literal"><span class="pre">tile_time</span></code>, <code class="docutils literal"><span class="pre">tile_marquee</span></code>, <code class="docutils literal"><span class="pre">tile_nyan</span></code> and
-<code class="docutils literal"><span class="pre">tile_pacman</span></code>.</p>
-<p>For example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_time</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;</span><span class="si">{options}</span><span class="s1">&#39;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_marquee</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;{&quot;text&quot;: &quot;hello there&quot;}&#39;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_nyan</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_twinkles</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_pacman</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_gameoflife</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_falling</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
-
-<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_dice_roll</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span>
+<p>To run them, say something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="o">&lt;</span><span class="n">animation</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span> <span class="o">--</span> <span class="s1">&#39;</span><span class="si">{options}</span><span class="s1">&#39;</span>
 </pre></div>
 </div>
-<p>Where the options are optional and are as follows:</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Run the time animation on all tiles</span>
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_time</span>
+
+<span class="c1"># Make &quot;hello there&quot; scroll on all the tiles in the home group</span>
+<span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">tile_marquee</span> <span class="n">match</span><span class="p">:</span><span class="n">group_name</span><span class="o">=</span><span class="n">home</span> <span class="o">--</span> <span class="s1">&#39;{&quot;text&quot;: &quot;hello there&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>The following animations are available</p>
+<ul class="simple">
+<li>tile_time</li>
+<li>tile_marquee</li>
+<li>tile_nyan</li>
+<li>tile_twinkles</li>
+<li>tile_pacman</li>
+<li>tile_gameoflife</li>
+<li>tile_falling</li>
+<li>tile_dice_roll</li>
+</ul>
+<p>Where all animations take in a <code class="docutils literal"><span class="pre">background</span></code> option, which is a dictionary
+containing <code class="docutils literal"><span class="pre">{&quot;type&quot;,</span> <span class="pre">&quot;hue&quot;,</span> <span class="pre">&quot;saturation&quot;,</span> <span class="pre">&quot;brightness&quot;,</span> <span class="pre">&quot;kelvin&quot;}</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">type</span></code> can be <code class="docutils literal"><span class="pre">specified</span></code> or <code class="docutils literal"><span class="pre">current</span></code>. If <code class="docutils literal"><span class="pre">current</span></code> then the hsbk values
+are ignored and the background of the animation is whatever the tile is set to.
+If type is <code class="docutils literal"><span class="pre">specified</span></code> then it’ll use the specified hsbk values as the background.</p>
+<p>The animations also contain these options:</p>
 <dl class="docutils">
-<dt>background</dt>
-<dd><p class="first">All the animation actions take in a background option of a dictionary containing
-<code class="docutils literal"><span class="pre">{&quot;type&quot;,</span> <span class="pre">&quot;hue&quot;,</span> <span class="pre">&quot;saturation&quot;,</span> <span class="pre">&quot;brightness&quot;,</span> <span class="pre">&quot;kelvin&quot;}</span></code></p>
-<p>type can be <code class="docutils literal"><span class="pre">specified</span></code> or <code class="docutils literal"><span class="pre">current</span></code>. If <code class="docutils literal"><span class="pre">current</span></code> then the hsbk values
-are ignored and the background of the animation is whatever the tile is
-set to.</p>
-<p class="last">if type is <code class="docutils literal"><span class="pre">specified</span></code> then it’ll use the specified hsbk values as the
-background.</p>
-</dd>
 <dt>tile_time</dt>
 <dd><p class="first">This also has the following options:</p>
 <dl class="last docutils">
