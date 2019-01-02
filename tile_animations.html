@@ -200,11 +200,16 @@
 <li>tile_falling</li>
 <li>tile_dice_roll</li>
 </ul>
-<p>Where all animations take in a <code class="docutils literal"><span class="pre">background</span></code> option, which is a dictionary
-containing <code class="docutils literal"><span class="pre">{&quot;type&quot;,</span> <span class="pre">&quot;hue&quot;,</span> <span class="pre">&quot;saturation&quot;,</span> <span class="pre">&quot;brightness&quot;,</span> <span class="pre">&quot;kelvin&quot;}</span></code>.</p>
+<p>Where all animations take in <code class="docutils literal"><span class="pre">background</span></code> and <code class="docutils literal"><span class="pre">combine_tiles</span></code> options.</p>
+<p><code class="docutils literal"><span class="pre">background</span></code> is a dictionary containing
+<code class="docutils literal"><span class="pre">{&quot;type&quot;,</span> <span class="pre">&quot;hue&quot;,</span> <span class="pre">&quot;saturation&quot;,</span> <span class="pre">&quot;brightness&quot;,</span> <span class="pre">&quot;kelvin&quot;}</span></code>.</p>
 <p><code class="docutils literal"><span class="pre">type</span></code> can be <code class="docutils literal"><span class="pre">specified</span></code> or <code class="docutils literal"><span class="pre">current</span></code>. If <code class="docutils literal"><span class="pre">current</span></code> then the hsbk values
 are ignored and the background of the animation is whatever the tile is set to.
 If type is <code class="docutils literal"><span class="pre">specified</span></code> then it’ll use the specified hsbk values as the background.</p>
+<p>The <code class="docutils literal"><span class="pre">combine_tiles</span></code> option is a boolean that defaults to False. If true then
+all the tiles are combined into a single animation rather than being separate
+animations. Note that you need to set user_x/user_y on your tiles such that
+they don’t overlap for this to look like a combined animation.</p>
 <p>The animations also contain these options:</p>
 <dl class="docutils">
 <dt>tile_time</dt>
