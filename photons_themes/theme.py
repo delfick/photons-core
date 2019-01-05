@@ -12,6 +12,7 @@ import random
 import math
 
 class ThemeColor:
+    __slots__ = ('hue', 'saturation', 'brightness', 'kelvin')
     """
     An encapsulation of ``hue``, ``saturation``, ``brightness`` and ``kelvin``.
     """
@@ -20,6 +21,10 @@ class ThemeColor:
         self.saturation = saturation
         self.brightness = brightness
         self.kelvin = int(kelvin)
+
+    @classmethod
+    def copy(kls, other):
+        return ThemeColor(other.hue, other.saturation, other.brightness, other.kelvin)
 
     def as_dict(self):
         return {"hue": self.hue, "saturation": self.saturation, "brightness": self.brightness, "kelvin": self.kelvin}
@@ -92,7 +97,7 @@ class ThemeColor:
             return self
 
     def __repr__(self):
-        return "<Color {}>".format(str((self.hue, self.saturation, self.brightness, self.kelvin)))
+        return "<Color ({0.hue}, {0.saturation}, {0.brightness}, {0.kelvin})>".format(self)
 
 class Theme:
     """A wrapper around a list of ThemeColor objects"""
