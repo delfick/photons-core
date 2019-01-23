@@ -27,6 +27,7 @@ The following animations are available
 * tile_gameoflife
 * tile_falling
 * tile_dice_roll
+* tile_balls
 
 Where all animations take in ``background`` and ``combine_tiles`` options.
 
@@ -170,7 +171,7 @@ tile_falling
   random_orientations -- bool -- default false
     If true then we will choose a random orientation for each tile
 
-  hue_ranges -- null or list of strings or csv -- default "90-110"
+  line_hues -- null or list of strings or csv -- default "90"
     A string or a list of strings where each string is a comma separated range
     where the range is either '<min>-<max>' or the word 'rainbow'. These numbers
     are used to determine the colour of each pixel in each line. Saying rainbow
@@ -185,17 +186,27 @@ tile_falling
 
     If this is set to null then only the tip will have a nonzero brightness.
 
-  line_tip_hue -- null or hue range -- default 60
-    A single hue range like those in hue_ranges. I.e. 'rainbow' or '60' or '0-10'
+  line_tip_hues -- null or list of strings or csv -- default "40"
+    Multiple hue ranges like in the line_hues option.
 
     If this is set to null then the tip of each line will not be a special colour,
-    otherwise it's hue will be a random value in the range specified.
+    otherwise it's hue will be a random value from the ranges specified.
 
-    Note that if both hue_ranges and line_tip_hue are null then hue_ranges will
-    remain null and line_tip_hue will become 60.
+    Note that if both line_hues and line_tip_hue are null then line_hues will
+    remain null and line_tip_hue will become 40.
 
-  blinking_pixels -- boolean -- default true
-    Whether pixels should randomly blink as they are moving down.
+  fade_amount -- integer -- default 0.1
+    This controls how quickly the lines fade. A smaller number makes the lines
+    longer.
+
+    So if you want a cool dripping rainbow effect say something like
+    ``{"fade_amount": 0, "line_hues": "rainbow", "line_tip_hue": null}``
+
+  min_speed - float -- default 0.2
+    The minimum amount of pixels to fall every tick of the animation
+
+  max_speed - float -- default 0.4
+    The maximum amount of pixels to fall every tick of the animation
 
 tile_dice_roll
   This does a roll of a dice following by choosing a number to be displayed on
@@ -213,6 +224,41 @@ tile_dice_roll
 
   dice_color -- hsbk dictionary -- default 200, 1, 1, 3500
     The color of the dots on the dice
+
+tile_balls
+  Bouncing balls around the box that your tiles form.
+
+  When two balls collide they are turned white and removed. Two new balls will
+  take their place.
+
+  The following are options available for this animation:
+
+  num_iterations -- int -- default -1
+    How many iterations before we stop. -1 means never stop
+
+  random_orientations -- bool -- default false
+    If true then we will choose a random orientation for each tile
+
+  num_balls -- int -- default 5
+    The number of balls to have on your tiles at any one time.
+
+  ball_hues -- null or list of strings or csv -- default "rainbow"
+    A string or a list of strings where each string is a comma separated range
+    where the range is either '<min>-<max>' or the word 'rainbow'.
+
+    Every time a new ball is made the color will be from one of these ranges.
+
+    For example, to have just red and green balls you would say "0,100"
+
+  fade_amount -- integer -- default 0.02
+    This controls how quickly the lines made by the balls fade. A smaller number
+    makes the lines longer.
+
+  min_speed - float -- default 0.6
+    The minimum amount of pixels to fall every tick of the animation
+
+  max_speed - float -- default 0.8
+    The maximum amount of pixels to fall every tick of the animation
 
 Starting an animation programmatically
 --------------------------------------

@@ -174,7 +174,26 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>0.9.4 - 3 Jan 2019</dt>
+<dt>0.10.0 - 23 January 2019</dt>
+<dd><ul class="first last simple">
+<li>Started using ruamel.yaml instead of PyYaml to load configuration</li>
+</ul>
+</dd>
+<dt>0.9.5 - 21 January 2019</dt>
+<dd><ul class="first last simple">
+<li>Make the dice roll work better with multiple tiles and the combine_tiles
+option</li>
+<li>Made the falling animation much smoother. Many thanks to &#64;mic159!</li>
+<li>Changed the <code class="docutils literal"><span class="pre">hue_ranges</span></code> option of the tile_falling animation to
+<code class="docutils literal"><span class="pre">line_hues</span></code> and the <code class="docutils literal"><span class="pre">line_tip_hue</span></code> option to <code class="docutils literal"><span class="pre">line_tip_hues</span></code></li>
+<li>Added tile_balls tile animation</li>
+<li>Made it possible for photons_protocol to specify an enum field as having
+unknown values</li>
+<li>Fixed how skew_ratio in waveform messages are transformed. It’s actually
+scaled 0 to 1, not -1 to 1.</li>
+</ul>
+</dd>
+<dt>0.9.4 - 3 January 2019</dt>
 <dd><ul class="first last simple">
 <li>Added get_tile_positions action</li>
 <li>Adjustments to the dice font</li>

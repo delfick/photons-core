@@ -199,6 +199,7 @@
 <li>tile_gameoflife</li>
 <li>tile_falling</li>
 <li>tile_dice_roll</li>
+<li>tile_balls</li>
 </ul>
 <p>Where all animations take in <code class="docutils literal"><span class="pre">background</span></code> and <code class="docutils literal"><span class="pre">combine_tiles</span></code> options.</p>
 <p><code class="docutils literal"><span class="pre">background</span></code> is a dictionary containing
@@ -320,7 +321,7 @@ where each line is of a random length.</p>
 <dd>How many iterations before we stop. -1 means never stop</dd>
 <dt>random_orientations – bool – default false</dt>
 <dd>If true then we will choose a random orientation for each tile</dd>
-<dt>hue_ranges – null or list of strings or csv – default “90-110”</dt>
+<dt>line_hues – null or list of strings or csv – default “90”</dt>
 <dd><p class="first">A string or a list of strings where each string is a comma separated range
 where the range is either ‘&lt;min&gt;-&lt;max&gt;’ or the word ‘rainbow’. These numbers
 are used to determine the colour of each pixel in each line. Saying rainbow
@@ -332,15 +333,23 @@ you said ‘0-10,100’ then half will be between 0 and 10 and the other half
 will all be exactly 100.</p>
 <p class="last">If this is set to null then only the tip will have a nonzero brightness.</p>
 </dd>
-<dt>line_tip_hue – null or hue range – default 60</dt>
-<dd><p class="first">A single hue range like those in hue_ranges. I.e. ‘rainbow’ or ‘60’ or ‘0-10’</p>
+<dt>line_tip_hues – null or list of strings or csv – default “40”</dt>
+<dd><p class="first">Multiple hue ranges like in the line_hues option.</p>
 <p>If this is set to null then the tip of each line will not be a special colour,
-otherwise it’s hue will be a random value in the range specified.</p>
-<p class="last">Note that if both hue_ranges and line_tip_hue are null then hue_ranges will
-remain null and line_tip_hue will become 60.</p>
+otherwise it’s hue will be a random value from the ranges specified.</p>
+<p class="last">Note that if both line_hues and line_tip_hue are null then line_hues will
+remain null and line_tip_hue will become 40.</p>
 </dd>
-<dt>blinking_pixels – boolean – default true</dt>
-<dd>Whether pixels should randomly blink as they are moving down.</dd>
+<dt>fade_amount – integer – default 0.1</dt>
+<dd><p class="first">This controls how quickly the lines fade. A smaller number makes the lines
+longer.</p>
+<p class="last">So if you want a cool dripping rainbow effect say something like
+<code class="docutils literal"><span class="pre">{&quot;fade_amount&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;line_hues&quot;:</span> <span class="pre">&quot;rainbow&quot;,</span> <span class="pre">&quot;line_tip_hue&quot;:</span> <span class="pre">null}</span></code></p>
+</dd>
+<dt>min_speed - float – default 0.2</dt>
+<dd>The minimum amount of pixels to fall every tick of the animation</dd>
+<dt>max_speed - float – default 0.4</dt>
+<dd>The maximum amount of pixels to fall every tick of the animation</dd>
 </dl>
 </dd>
 <dt>tile_dice_roll</dt>
@@ -356,6 +365,33 @@ all the tiles</p>
 <dd>The number of seconds to roll the dice for before choosing a number</dd>
 <dt>dice_color – hsbk dictionary – default 200, 1, 1, 3500</dt>
 <dd>The color of the dots on the dice</dd>
+</dl>
+</dd>
+<dt>tile_balls</dt>
+<dd><p class="first">Bouncing balls around the box that your tiles form.</p>
+<p>When two balls collide they are turned white and removed. Two new balls will
+take their place.</p>
+<p>The following are options available for this animation:</p>
+<dl class="last docutils">
+<dt>num_iterations – int – default -1</dt>
+<dd>How many iterations before we stop. -1 means never stop</dd>
+<dt>random_orientations – bool – default false</dt>
+<dd>If true then we will choose a random orientation for each tile</dd>
+<dt>num_balls – int – default 5</dt>
+<dd>The number of balls to have on your tiles at any one time.</dd>
+<dt>ball_hues – null or list of strings or csv – default “rainbow”</dt>
+<dd><p class="first">A string or a list of strings where each string is a comma separated range
+where the range is either ‘&lt;min&gt;-&lt;max&gt;’ or the word ‘rainbow’.</p>
+<p>Every time a new ball is made the color will be from one of these ranges.</p>
+<p class="last">For example, to have just red and green balls you would say “0,100”</p>
+</dd>
+<dt>fade_amount – integer – default 0.02</dt>
+<dd>This controls how quickly the lines made by the balls fade. A smaller number
+makes the lines longer.</dd>
+<dt>min_speed - float – default 0.6</dt>
+<dd>The minimum amount of pixels to fall every tick of the animation</dd>
+<dt>max_speed - float – default 0.8</dt>
+<dd>The maximum amount of pixels to fall every tick of the animation</dd>
 </dl>
 </dd>
 </dl>

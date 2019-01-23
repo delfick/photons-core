@@ -285,6 +285,20 @@ how those colors are displayed on the device.</p>
 <p>If there are no colors we return white.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="photons_themes.theme.ThemeColor.cache_key">
+<code class="descname">cache_key</code><a class="headerlink" href="#photons_themes.theme.ThemeColor.cache_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return as tuple of tuples</p>
+<p>This is used by the tile_paint module to use as a key for caching</p>
+<p>It is essentially the same as tuple(sorted(color.as_dict().items()))</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_themes.theme.ThemeColor.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_themes.theme.ThemeColor.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return another ThemeColor with the same hsbk values</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="photons_themes.theme.ThemeColor.limit_distance_to">
 <code class="descname">limit_distance_to</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_themes.theme.ThemeColor.limit_distance_to" title="Permalink to this definition">¶</a></dt>
