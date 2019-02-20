@@ -263,6 +263,46 @@
 <col width="100%" />
 </colgroup>
 <thead valign="bottom">
+<tr class="row-odd"><th class="head">tile_effect</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">Set an animation on your tile!</p>
+<p><code class="docutils literal"><span class="pre">lan:tile_effect</span> <span class="pre">d073d5000001</span> <span class="pre">&lt;type&gt;</span> <span class="pre">--</span> <span class="pre">'{&lt;options&gt;}'</span></code></p>
+<p>Where type is one of the available effect types:</p>
+<dl class="docutils">
+<dt>OFF</dt>
+<dd>Turn of the animation off</dd>
+<dt>MOVE</dt>
+<dd>No supported on tile</dd>
+<dt>MORPH</dt>
+<dd>Move through a perlin noise map, assigning pixel values from a
+16-color palette</dd>
+<dt>FLAME</dt>
+<dd>Behaviour TBD</dd>
+<dt>RIPPLE</dt>
+<dd>Behaviour TBD</dd>
+</dl>
+<p>For effects that take in a palette option, you may specify palette as
+<code class="docutils literal"><span class="pre">[{&quot;hue&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;kelvin&quot;:</span> <span class="pre">2500},</span> <span class="pre">...]</span></code></p>
+<p>or as <code class="docutils literal"><span class="pre">[[0,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">2500],</span> <span class="pre">...]</span></code> or as <code class="docutils literal"><span class="pre">[[0,</span> <span class="pre">1,</span> <span class="pre">1],</span> <span class="pre">...]</span></code></p>
+<p class="last">or as <code class="docutils literal"><span class="pre">[&quot;red&quot;,</span> <span class="pre">&quot;hue:100</span> <span class="pre">saturation:1&quot;,</span> <span class="pre">&quot;blue&quot;]</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
 <tr class="row-odd"><th class="head">set_zones</th>
 </tr>
 </thead>
@@ -274,7 +314,14 @@
 </ul>
 </td>
 </tr>
-<tr class="row-odd"><td>Set the zones colors on a light strip</td>
+<tr class="row-odd"><td><p class="first">Set the zones colors on a light strip</p>
+<p>Usage looks like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">set_zones</span> <span class="n">d073d5000001</span> <span class="o">--</span> <span class="s1">&#39;{&quot;color_ranges&quot;: [[&quot;red&quot;, 10], [&quot;blue&quot;, 3], [&quot;green&quot;, 5]]}&#39;</span>
+</pre></div>
+</div>
+<p class="last">In that example the strip will have the first 10 zones set to red, then 3
+blue zones and then 5 green zones</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -413,6 +460,39 @@ and send that to the device.</p>
 <col width="100%" />
 </colgroup>
 <thead valign="bottom">
+<tr class="row-odd"><th class="head">multizone_effect</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">Set an animation on your strip!</p>
+<p><code class="docutils literal"><span class="pre">lan:multizone_effect</span> <span class="pre">d073d5000001</span> <span class="pre">&lt;type&gt;</span> <span class="pre">--</span> <span class="pre">'{&lt;options&gt;}'</span></code></p>
+<p>Where type is one of the available effect types:</p>
+<dl class="docutils">
+<dt>OFF</dt>
+<dd>Turn of the animation off</dd>
+<dt>MOVE</dt>
+<dd>A moving animation</dd>
+</dl>
+<p class="last">Options include:
+- offset
+- speed
+- duration</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
 <tr class="row-odd"><th class="head">get_zones</th>
 </tr>
 </thead>
@@ -446,6 +526,24 @@ and send that to the device.</p>
 </tr>
 <tr class="row-odd"><td><p class="first">Get the positions of the tiles in your chain.</p>
 <p class="last"><code class="docutils literal"><span class="pre">lan:get_tile_positions</span> <span class="pre">d073d5f09124</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">get_effects</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -515,6 +613,49 @@ defined for the 1024 protocol and looks for <code class="docutils literal"><span
 <p class="last">So if you want the <code class="docutils literal"><span class="pre">color</span></code> attribute, it will look for the <code class="docutils literal"><span class="pre">GetColor</span></code>
 message and send that to the device and print out the reply packet we get
 back.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attr_actual</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Same as the attr command but prints out the actual values on the replies rather than transformed values</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attr</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">Send a message to your bulb and print out all the replies.</p>
+<p>This is the same as the get_attr and set_attr commands but doesn’t prefix the wanted message with get or set</p>
+<p class="last"><code class="docutils literal"><span class="pre">target:attr</span> <span class="pre">d073d5000000</span> <span class="pre">get_host_firmware</span></code></p>
 </td>
 </tr>
 </tbody>
@@ -699,9 +840,14 @@ means that we support an <code class="docutils literal"><span class="pre">effect
 <span id="multizone-helpers"></span><h2>Multizone Helpers<a class="headerlink" href="#module-photons_control.multizone" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="photons_control.multizone.zones_from_reference">
-<em class="property">await </em><code class="descclassname">photons_control.multizone.</code><code class="descname">zones_from_reference</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.zones_from_reference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary of {serial: [(zone_index, colors), …]} for the provided reference</p>
-<p>We assume all the devices support multizone</p>
+<em class="property">await </em><code class="descclassname">photons_control.multizone.</code><code class="descname">zones_from_reference</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.zones_from_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield {serial: [(zone, color), …]} for each multizone device that is found</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.multizone.find_multizone">
+<em class="property">async for ... in </em><code class="descclassname">photons_control.multizone.</code><code class="descname">find_multizone</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.find_multizone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield (serial, has_extended_multizone) for all multizone products found in this reference</p>
 </dd></dl>
 
 </div>

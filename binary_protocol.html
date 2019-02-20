@@ -165,6 +165,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#getcolorzones">502 - GetColorZones</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#statezone">503 - StateZone</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#statemultizone">506 - StateMultiZone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getmultizoneeffect">507 - GetMultiZoneEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setmultizoneeffect">508 - SetMultiZoneEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statemultizoneeffect">509 - StateMultiZoneEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setextendedcolorzones">510 - SetExtendedColorZones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getextendedcolorzones">511 - GetExtendedColorZones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stateextendedcolorzones">512 - StateExtendedColorZones</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#tilemessages">TileMessages</a><ul>
@@ -174,6 +180,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#getstate64">707 - GetState64</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#state64">711 - State64</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setstate64">715 - SetState64</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gettileeffect">718 - GetTileEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settileeffect">719 - SetTileEffect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statetileeffect">720 - StateTileEffect</a></li>
 </ul>
 </li>
 </ul>
@@ -726,6 +735,61 @@ is specific to each messages:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="getmultizoneeffect">
+<h3>507 - GetMultiZoneEffect<a class="headerlink" href="#getmultizoneeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.GetMultiZoneEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetMultiZoneEffect</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">507</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setmultizoneeffect">
+<h3>508 - SetMultiZoneEffect<a class="headerlink" href="#setmultizoneeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.SetMultiZoneEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetMultiZoneEffect</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">508</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">multi_zone_effect_settings</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statemultizoneeffect">
+<h3>509 - StateMultiZoneEffect<a class="headerlink" href="#statemultizoneeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.StateMultiZoneEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateMultiZoneEffect</span> <span class="o">=</span> <span class="n">SetMultiZoneEffect</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="mi">509</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setextendedcolorzones">
+<h3>510 - SetExtendedColorZones<a class="headerlink" href="#setextendedcolorzones" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.SetExtendedColorZones</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetExtendedColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">510</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">duration_type</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="o">.</span><span class="n">enum</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">MultiZoneExtendedApplicationRequest</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">MultiZoneExtendedApplicationRequest</span><span class="o">.</span><span class="n">APPLY</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;zone_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">82</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Color</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getextendedcolorzones">
+<h3>511 - GetExtendedColorZones<a class="headerlink" href="#getextendedcolorzones" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.GetExtendedColorZones</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetExtendedColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">511</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stateextendedcolorzones">
+<h3>512 - StateExtendedColorZones<a class="headerlink" href="#stateextendedcolorzones" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.MultiZoneMessages.StateExtendedColorZones</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateExtendedColorZones</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">512</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;zones_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;zone_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">82</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Color</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="tilemessages">
 <h2>TileMessages<a class="headerlink" href="#tilemessages" title="Permalink to this headline">¶</a></h2>
@@ -795,6 +859,37 @@ is specific to each messages:</p>
     <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">.</span><span class="n">duration_type</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;colors&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Color</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gettileeffect">
+<h3>718 - GetTileEffect<a class="headerlink" href="#gettileeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.GetTileEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetTileEffect</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">718</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved6&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved7&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settileeffect">
+<h3>719 - SetTileEffect<a class="headerlink" href="#settileeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.SetTileEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetTileEffect</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">719</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved8&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved9&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_effect_settings</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statetileeffect">
+<h3>720 - StateTileEffect<a class="headerlink" href="#statetileeffect" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.StateTileEffect</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateTileEffect</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">720</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved8&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+    <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_effect_settings</span>
     <span class="p">)</span>
 </pre></div>
 </div>

@@ -263,6 +263,13 @@ to get these objects.</p>
 
     <span class="n">min_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2500</span><span class="p">)</span>
     <span class="n">max_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
+    <span class="n">min_extended_fw</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">NullableField</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">has_extended_multizone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_build</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="n">firmware_build</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">firmware_build</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -302,13 +309,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘Original 1000’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>1</td>
 </tr>
 </tbody>
@@ -350,13 +360,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘Color 650’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>3</td>
 </tr>
 </tbody>
@@ -398,13 +411,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>6500</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘White 800’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>10</td>
 </tr>
 </tbody>
@@ -446,13 +462,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>6500</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘White 800’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>11</td>
 </tr>
 </tbody>
@@ -494,13 +513,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>6500</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘White 900 BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>18</td>
 </tr>
 </tbody>
@@ -542,13 +564,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘Color 1000 BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>20</td>
 </tr>
 </tbody>
@@ -590,13 +615,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘Color 1000’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>22</td>
 </tr>
 </tbody>
@@ -638,13 +666,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX A19’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>27</td>
 </tr>
 </tbody>
@@ -686,13 +717,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>28</td>
 </tr>
 </tbody>
@@ -734,13 +768,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX+ A19’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>29</td>
 </tr>
 </tbody>
@@ -782,13 +819,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX+ BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>30</td>
 </tr>
 </tbody>
@@ -830,13 +870,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Z’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>31</td>
 </tr>
 </tbody>
@@ -845,8 +888,8 @@ to get these objects.</p>
 <dt>LCM2_Z</dt>
 <dd><table border="1" class="first last docutils">
 <colgroup>
-<col width="74%" />
-<col width="26%" />
+<col width="70%" />
+<col width="30%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">attr</th>
@@ -878,13 +921,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>1532997580</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Z’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>32</td>
 </tr>
 </tbody>
@@ -926,13 +972,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX DOWNLIGHT O’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>36</td>
 </tr>
 </tbody>
@@ -974,13 +1023,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX DOWNLIGHT N’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>37</td>
 </tr>
 </tbody>
@@ -1022,13 +1074,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>1532997580</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Beam’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>38</td>
 </tr>
 </tbody>
@@ -1070,13 +1125,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX A19’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>43</td>
 </tr>
 </tbody>
@@ -1118,13 +1176,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>44</td>
 </tr>
 </tbody>
@@ -1166,13 +1227,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX+ A19’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>45</td>
 </tr>
 </tbody>
@@ -1214,13 +1278,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX+ BR30’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>46</td>
 </tr>
 </tbody>
@@ -1262,13 +1329,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini Color’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>49</td>
 </tr>
 </tbody>
@@ -1310,13 +1380,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>4000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>1500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini Day Dusk’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>50</td>
 </tr>
 </tbody>
@@ -1358,13 +1431,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini Day’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>51</td>
 </tr>
 </tbody>
@@ -1406,13 +1482,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX GU10 Color’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>52</td>
 </tr>
 </tbody>
@@ -1454,13 +1533,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Tile’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>55</td>
 </tr>
 </tbody>
@@ -1502,13 +1584,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>9000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini Color’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>59</td>
 </tr>
 </tbody>
@@ -1550,13 +1635,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>4000</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>1500</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini Day Dusk’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>60</td>
 </tr>
 </tbody>
@@ -1598,13 +1686,16 @@ to get these objects.</p>
 <tr class="row-odd"><td>max_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-even"><td>min_kelvin</td>
+<tr class="row-even"><td>min_extended_fw</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>min_kelvin</td>
 <td>2700</td>
 </tr>
-<tr class="row-odd"><td>name</td>
+<tr class="row-even"><td>name</td>
 <td>‘LIFX Mini White’</td>
 </tr>
-<tr class="row-even"><td>product_id</td>
+<tr class="row-odd"><td>product_id</td>
 <td>61</td>
 </tr>
 </tbody>
