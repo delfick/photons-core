@@ -193,8 +193,7 @@ a script that uses that virtualenv.</p>
 </div>
 <p>Now that we have a virtualenv, we can use it to run some code, so let’s start
 our <code class="docutils literal"><span class="pre">my_script</span></code> file.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">#/bin/sh</span>
-<span class="s2">&quot;exec&quot;</span> <span class="s2">&quot;`dirname $0`/.lifx/bin/python&quot;</span> <span class="s2">&quot;$0&quot;</span> <span class="s2">&quot;$@&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python -cos=__import__(&quot;os&quot;);sys=__import__(&quot;sys&quot;);python=os.path.join(os.path.dirname(sys.argv[1]),&quot;.lifx/bin/python&quot;);os.execv(python,sys.argv)</span>
 
 <span class="kn">from</span> <span class="nn">photons_app.actions</span> <span class="kn">import</span> <span class="n">an_action</span>
 
@@ -231,23 +230,10 @@ our <code class="docutils literal"><span class="pre">my_script</span></code> fil
 let’s go over the different parts of this file and what they are for and what
 they do.</p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">#/bin/sh</span></code></dt>
-<dd><p class="first">This the shebang and tells your shell to run this file as a bash script.</p>
-<p class="last">We do this because we use the second line to run the file with the python
-interpreter from our virtualenv.</p>
-</dd>
-<dt><code class="docutils literal"><span class="pre">&quot;exec&quot;</span> <span class="pre">&quot;`dirname</span> <span class="pre">$0`/.lifx/bin/python&quot;</span> <span class="pre">&quot;$0&quot;</span> <span class="pre">&quot;$&#64;&quot;</span></code></dt>
-<dd>Find the python in our virtualenv and execute this file using it.</dd>
-</dl>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>The shebang and exec line are only necessary so you don’t have to
-activate the virtualenv yourself. You can always activate the virtualenv and
-run the script with the python from your virtualenv.</p>
-<p class="last">For example, <code class="docutils literal"><span class="pre">source</span> <span class="pre">.lifx/bin/activate</span> <span class="pre">&amp;&amp;</span> <span class="pre">python</span> <span class="pre">my_script</span></code> instead of just
-<code class="docutils literal"><span class="pre">./my_script</span></code></p>
-</div>
-<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">#!/usr/bin/env</span> <span class="pre">python</span> <span class="pre">-cos=__import__(&quot;os&quot;);sys=__import__(&quot;sys&quot;);python=os.path.join(os.path.dirname(sys.argv[1]),&quot;.lifx/bin/python&quot;);os.execv(python,sys.argv)</span></code></dt>
+<dd>This shebang means that when you say <code class="docutils literal"><span class="pre">./my_script</span></code> you are actually saying
+<code class="docutils literal"><span class="pre">./.lifx/bin/python</span> <span class="pre">./my_script</span></code> so that you are running the script
+with the python in the virtualenv you created when you ran <code class="docutils literal"><span class="pre">./setup_venv</span></code></dd>
 <dt><code class="docutils literal"><span class="pre">option_merge_addon_hook</span></code></dt>
 <dd><p class="first">This function registers this module and is used to specify what other
 modules should be loaded.</p>
