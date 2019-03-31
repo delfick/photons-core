@@ -856,9 +856,40 @@ means that we support an <code class="docutils literal"><span class="pre">effect
 <dl class="function">
 <dt id="photons_control.tile.tiles_from">
 <code class="descclassname">photons_control.tile.</code><code class="descname">tiles_from</code><span class="sig-paren">(</span><em>state_pkt</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.tile.tiles_from" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a StateTile packet, return the tile devices that are valid.</p>
-<p>This works by taking into account <code class="docutils literal"><span class="pre">total_count</span></code> and <code class="docutils literal"><span class="pre">start_index</span></code>
+<dd><p>Given a Tile State packet, return the tile devices that are valid.</p>
+<p>This works by taking into account <code class="docutils literal"><span class="pre">tile_devices_count</span></code> and <code class="docutils literal"><span class="pre">start_index</span></code>
 on the packet.</p>
+</dd></dl>
+
+<span class="target" id="module-photons_control.orientation"></span><dl class="class">
+<dt id="photons_control.orientation.Orientation">
+<em class="property">class </em><code class="descclassname">photons_control.orientation.</code><code class="descname">Orientation</code><a class="headerlink" href="#photons_control.orientation.Orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The different available orientations</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.orientation.nearest_orientation">
+<code class="descclassname">photons_control.orientation.</code><code class="descname">nearest_orientation</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.orientation.nearest_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine which orientation maps to the provided x, y, z</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.orientation.reorient">
+<code class="descclassname">photons_control.orientation.</code><code class="descname">reorient</code><span class="sig-paren">(</span><em>colors</em>, <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.orientation.reorient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the colors in the different order given our orientation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.orientation.reverse_orientation">
+<code class="descclassname">photons_control.orientation.</code><code class="descname">reverse_orientation</code><span class="sig-paren">(</span><em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.orientation.reverse_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the reverse orientation</p>
+<p>Useful for mapping current colours into RightSideUp</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.orientation.rotated_index">
+<code class="descclassname">photons_control.orientation.</code><code class="descname">rotated_index</code><span class="sig-paren">(</span><em>i</em>, <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.orientation.rotated_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give new index for i given our orientation</p>
 </dd></dl>
 
 </div>

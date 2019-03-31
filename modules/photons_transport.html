@@ -298,14 +298,8 @@ you won’t have to instantiate it yourself.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photons_transport.target.target.TransportTarget.find">
-<code class="descname">find</code><span class="sig-paren">(</span><em>args_for_run</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.find" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a function that may be used to find a device on this args_for_run</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="photons_transport.target.target.TransportTarget.get_list">
-<em class="property">await </em><code class="descname">get_list</code><span class="sig-paren">(</span><em>args_for_run</em>, <em>broadcast=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.get_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">get_list</code><span class="sig-paren">(</span><em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.get_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return us the targets that we can find from this bridge</p>
 </dd></dl>
 
@@ -398,14 +392,19 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 </dd></dl>
 
 <dl class="method">
-<dt id="photons_transport.target.bridge.TransportBridge.find">
-<em class="property">await </em><code class="descname">find</code><span class="sig-paren">(</span><em>target</em>, <em>broadcast=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.find" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find all the devices we can</p>
+<dt id="photons_transport.target.bridge.TransportBridge.find_devices">
+<em class="property">await </em><code class="descname">find_devices</code><span class="sig-paren">(</span><em>*</em>, <em>ignore_lost=False</em>, <em>raise_on_none=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.find_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for finding devices</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="photons_transport.target.bridge.TransportBridge.find_specific_serials">
+<em class="property">await </em><code class="descname">find_specific_serials</code><span class="sig-paren">(</span><em>serials</em>, <em>ignore_lost=False</em>, <em>raise_on_none=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.find_specific_serials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="photons_transport.target.bridge.TransportBridge.make_writer">
-<em class="property">await </em><code class="descname">make_writer</code><span class="sig-paren">(</span><em>original</em>, <em>packet</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.make_writer" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">make_writer</code><span class="sig-paren">(</span><em>services</em>, <em>original</em>, <em>packet</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.make_writer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make an object for writing to this bridge</p>
 </dd></dl>
 
@@ -436,10 +435,9 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 </dd></dl>
 
 <dl class="last method">
-<dt id="photons_transport.target.bridge.TransportBridge.find_devices">
-<em class="property">await </em><code class="descname">find_devices</code><span class="sig-paren">(</span><em>broadcast</em>, <em>ignore_lost=False</em>, <em>raise_on_none=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge.find_devices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hook for finding devices</p>
-</dd></dl>
+<dt id="photons_transport.target.bridge.TransportBridge._find_specific_serials">
+<em class="property">await </em><code class="descname">_find_specific_serials</code><span class="sig-paren">(</span><em>serials</em>, <em>ignore_lost=False</em>, <em>raise_on_none=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.bridge.TransportBridge._find_specific_serials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd>
 </dl>
@@ -452,6 +450,12 @@ not have a <code class="docutils literal"><span class="pre">pack</span></code> m
 <dt id="photons_transport.target.item.Done">
 <em class="property">class </em><code class="descclassname">photons_transport.target.item.</code><code class="descname">Done</code><a class="headerlink" href="#photons_transport.target.item.Done" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used to specify when we should close a queue</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="photons_transport.target.item.NoLimit">
+<em class="property">class </em><code class="descclassname">photons_transport.target.item.</code><code class="descname">NoLimit</code><a class="headerlink" href="#photons_transport.target.item.NoLimit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used when we don’t have a limit semaphore to impose no limit on concurrent access</p>
 </dd></dl>
 
 <dl class="class">
@@ -498,8 +502,8 @@ to each device</dd>
 <dd>timeout for finding devices</dd>
 <dt>connect_timeout</dt>
 <dd>timeout for connecting to devices</dd>
-<dt>timeout</dt>
-<dd>timeout for writing messages</dd>
+<dt>message_timeout</dt>
+<dd>A per message timeout for receiving replies for that message</dd>
 <dt>found</dt>
 <dd><p class="first">A dictionary of
 <code class="docutils literal"><span class="pre">{targetHex:</span> <span class="pre">(set([(ServiceType,</span> <span class="pre">addr),</span> <span class="pre">(ServiceType,</span> <span class="pre">addr),</span> <span class="pre">...]),</span> <span class="pre">broadcastAddr)}</span></code></p>
@@ -517,6 +521,25 @@ any error is raised as is. Otherwise we raise a
 <code class="docutils literal"><span class="pre">photons_app.errors.RunErrors</span></code>, with all the errors in a list on
 the <code class="docutils literal"><span class="pre">errors</span></code> property of the RunErrors exception.</p>
 </dd>
+<dt>no_retry</dt>
+<dd>If True then the messages being sent will have no automatic retry. This defaults
+to False and retry rates are determined by the target you are using.</dd>
+<dt>require_all_devices</dt>
+<dd>Defaults to False. If True then we will not send any messages if we haven’t
+found all the devices we want to send messages to. Otherwise we will send messages
+to the devices we have found and add photons_transport.errors.FailedToFindDevice errors
+for each device that wasn’t found.</dd>
+<dt>limit</dt>
+<dd><p class="first">An async context manager used to limit inflight messages. So for each message, we do</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">limit</span><span class="p">:</span>
+    <span class="n">send_and_wait_for_reply</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, an <code class="docutils literal"><span class="pre">asyncio.Semaphore(30)</span></code></p>
+<p class="last">Note that if you saying <code class="docutils literal"><span class="pre">target.script(msgs).run_with(....)</span></code> then limit will be set
+to a semaphore with max 30 by default. You may specify just a number and it will turn it
+into a semaphore.</p>
+</dd>
 </dl>
 <ul class="simple">
 <li>First we make the packets.</li>
@@ -528,7 +551,7 @@ the <code class="docutils literal"><span class="pre">errors</span></code> proper
 
 <dl class="method">
 <dt id="photons_transport.target.item.TransportItem.search">
-<em class="property">await </em><code class="descname">search</code><span class="sig-paren">(</span><em>afr</em>, <em>found</em>, <em>packets</em>, <em>broadcast_address</em>, <em>find_timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.search" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">search</code><span class="sig-paren">(</span><em>afr</em>, <em>found</em>, <em>accept_found</em>, <em>packets</em>, <em>broadcast_address</em>, <em>find_timeout</em>, <em>kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search for the devices we want to send to</p>
 </dd></dl>
 
@@ -542,7 +565,7 @@ in which case, we just return packet as is</p>
 
 <dl class="method">
 <dt id="photons_transport.target.item.TransportItem.write_messages">
-<em class="property">async for ... in </em><code class="descname">write_messages</code><span class="sig-paren">(</span><em>packets</em>, <em>check_packet</em>, <em>make_writer</em>, <em>make_waiter</em>, <em>timeout</em>, <em>error_catcher</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.write_messages" title="Permalink to this definition">¶</a></dt>
+<em class="property">async for ... in </em><code class="descname">write_messages</code><span class="sig-paren">(</span><em>packets</em>, <em>check_packet</em>, <em>make_writer</em>, <em>make_waiter</em>, <em>message_timeout</em>, <em>error_catcher</em>, <em>limit=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.TransportItem.write_messages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a bunch of writers and then use them to create waiters</p>
 </dd></dl>
 
@@ -554,12 +577,18 @@ in which case, we just return packet as is</p>
 <dd><p>Throw the errors from our error catcher</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="photons_transport.target.item.timeout_task">
+<code class="descclassname">photons_transport.target.item.</code><code class="descname">timeout_task</code><span class="sig-paren">(</span><em>task</em>, <em>errf</em>, <em>serial</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.item.timeout_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to cancel sending a messages and record a timed out exception</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-photons_transport.target.waiter">
 <span id="the-waiter"></span><h3>The waiter<a class="headerlink" href="#module-photons_transport.target.waiter" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="photons_transport.target.waiter.Waiter">
-<em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">Waiter</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>writer</em>, <em>retry_options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.waiter.</code><code class="descname">Waiter</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>writer</em>, <em>retry_options</em>, <em>no_retry=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.waiter.Waiter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keep writing till we get a response!</p>
 <p>It’s up to the caller to cancel this if we take too long</p>
 <p>This object is a future, the result of which is the final response from our
@@ -616,7 +645,7 @@ is passed in.</p>
 </div>
 <dl class="method">
 <dt id="photons_transport.target.writer.Writer.determine_addr">
-<em class="property">await </em><code class="descname">determine_addr</code><span class="sig-paren">(</span><em>target</em>, <em>serial</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.determine_addr" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">determine_addr</code><span class="sig-paren">(</span><em>serial</em>, <em>services</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.determine_addr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use <code class="docutils literal"><span class="pre">self.bridge.find</span></code> to find the address of our target</p>
 </dd></dl>
 
@@ -628,7 +657,7 @@ is passed in.</p>
 
 <dl class="method">
 <dt id="photons_transport.target.writer.Writer.make">
-<em class="property">await </em><code class="descname">make</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.make" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">make</code><span class="sig-paren">(</span><em>services</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.make" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return an asynchronous callable that when called and awaited returns a pair of futures
 representing the acknowledgement and result from sending this packet
 to the device</p>
@@ -643,7 +672,7 @@ to the device</p>
 
 <dl class="method">
 <dt id="photons_transport.target.writer.Writer.prepare">
-<em class="property">await </em><code class="descname">prepare</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.prepare" title="Permalink to this definition">¶</a></dt>
+<em class="property">await </em><code class="descname">prepare</code><span class="sig-paren">(</span><em>services</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.writer.Writer.prepare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used by <code class="docutils literal"><span class="pre">make</span></code> to get us the <code class="docutils literal"><span class="pre">Executor</span></code> instance that’ll be used to
 do the writing</p>
 </dd></dl>
@@ -731,8 +760,41 @@ received anything yet</p>
 <div class="section" id="module-photons_transport.target.retry_options">
 <span id="retry-options"></span><h3>Retry options<a class="headerlink" href="#module-photons_transport.target.retry_options" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
+<dt id="photons_transport.target.retry_options.RetryIterator">
+<em class="property">class </em><code class="descclassname">photons_transport.target.retry_options.</code><code class="descname">RetryIterator</code><span class="sig-paren">(</span><em>end_at</em>, <em>get_next_time</em>, <em>min_wait=0.1</em>, <em>get_now=&lt;built-in function time&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.retry_options.RetryIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>An async generator to help with retries.</p>
+<p>usage is like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">retries</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">get_next_time</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">retries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">retries</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">retries</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">end_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="n">min_wait</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+<span class="n">async</span> <span class="k">for</span> <span class="n">time_left</span><span class="p">,</span> <span class="n">time_till_next_retry</span> <span class="ow">in</span> <span class="n">RetryIterator</span><span class="p">(</span><span class="n">end_at</span><span class="p">,</span> <span class="n">get_next_time</span><span class="p">):</span>
+    <span class="c1"># Do something that will take up to time_till_next_retry seconds</span>
+</pre></div>
+</div>
+<p>The recommended way of creating one of these is via a RetryOptions object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">for</span> <span class="n">time_left</span><span class="p">,</span> <span class="n">time_till_next_retry</span> <span class="ow">in</span> <span class="n">RetryOptions</span><span class="p">()</span><span class="o">.</span><span class="n">iterator</span><span class="p">(</span><span class="n">end_after</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># Do something that will take up to time_till_next_retry seconds</span>
+</pre></div>
+</div>
+<p>The async generator will use get_next_time to determine the minimum amount of time to wait before
+letting the body of the loop run again. So let’s say time_till_next_retry is 3 seconds and the
+body takes only 1 second, then we will wait 2 seconds before letting the body run again.</p>
+<p>You may also provided min_wait (defaults to 0.1). We will stop iteration if the time left till
+we should end is less than this amount. We will also use get_next_time() again if the time between
+now and the next time is less than min_wait</p>
+</dd></dl>
+
+<dl class="class">
 <dt id="photons_transport.target.retry_options.RetryOptions">
-<em class="property">class </em><code class="descclassname">photons_transport.target.retry_options.</code><code class="descname">RetryOptions</code><a class="headerlink" href="#photons_transport.target.retry_options.RetryOptions" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.target.retry_options.</code><code class="descname">RetryOptions</code><span class="sig-paren">(</span><em>timeouts=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.retry_options.RetryOptions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options for working out how long to wait for replies to our messages</p>
 <dl class="docutils">
 <dt>finish_multi_gap</dt>

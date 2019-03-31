@@ -348,7 +348,7 @@ with the newest updated_at option.</dd>
 like <code class="docutils literal"><span class="pre">10-30</span></code>, which would match any device with a hsbk value between 10
 and 30 (inclusive).</dd>
 <dt>firmware_version</dt>
-<dd>The version of the HostFirmware as a float.</dd>
+<dd>The version of the HostFirmware as a string of “{major}.{minor}”.</dd>
 <dt>product_id</dt>
 <dd>The product id of the device as an integer. You can see the hex product id
 of each device type in the <code class="docutils literal"><span class="pre">photons_products_registry</span></code> module.</dd>
@@ -374,16 +374,16 @@ you can filter them both by saying
 <dt id="photons_device_finder.Filter">
 <em class="property">class </em><code class="descclassname">photons_device_finder.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>brightness</em>, <em>cap</em>, <em>firmware_version</em>, <em>force_refresh</em>, <em>group_id</em>, <em>group_name</em>, <em>hue</em>, <em>kelvin</em>, <em>label</em>, <em>location_id</em>, <em>location_name</em>, <em>power</em>, <em>product_id</em>, <em>product_identifier</em>, <em>saturation</em>, <em>serial</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_device_finder.Filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>The options for a filter. Usage looks like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">FieldSpec</span><span class="p">()</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="mf">1.22</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">FieldSpec</span><span class="p">()</span><span class="o">.</span><span class="n">empty_normalise</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="s2">&quot;1.22&quot;</span><span class="p">)</span>
 
 <span class="c1"># or</span>
-<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_json_str</span><span class="p">(</span><span class="s1">&#39;{&quot;force_refresh&quot;: true, &quot;firmware_version&quot;: 1.22}&#39;</span><span class="p">)</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_json_str</span><span class="p">(</span><span class="s1">&#39;{&quot;force_refresh&quot;: true, &quot;firmware_version&quot;: &quot;1.22&quot;}&#39;</span><span class="p">)</span>
 
 <span class="c1"># or</span>
-<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_options</span><span class="p">({</span><span class="s2">&quot;force_refresh&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s2">&quot;firmware_version&quot;</span><span class="p">:</span> <span class="mf">1.22</span><span class="p">})</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_options</span><span class="p">({</span><span class="s2">&quot;force_refresh&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s2">&quot;firmware_version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.22&quot;</span><span class="p">})</span>
 
 <span class="c1"># or</span>
-<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_kwargs</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="mf">1.22</span><span class="p">)</span>
+<span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_kwargs</span><span class="p">(</span><span class="n">force_refresh</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">firmware_version</span><span class="o">=</span><span class="s2">&quot;1.22&quot;</span><span class="p">)</span>
 
 <span class="c1"># or</span>
 <span class="n">filtr</span> <span class="o">=</span> <span class="n">Filter</span><span class="o">.</span><span class="n">from_key_value_str</span><span class="p">(</span><span class="s2">&quot;force_refresh=true firmware_version=1.22&quot;</span><span class="p">)</span>

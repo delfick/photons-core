@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Script Mechanism</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sending-multiple-packets">Sending multiple packets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inflight-limit">Inflight limit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-afr">The AFR</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run-with-vs-run-with-all">run_with vs run_with_all</a></li>
 </ul>
@@ -218,8 +219,8 @@ to each device</dd>
 <dd>timeout for finding devices</dd>
 <dt>connect_timeout</dt>
 <dd>timeout for connecting to devices</dd>
-<dt>timeout</dt>
-<dd>timeout for writing messages</dd>
+<dt>message_timeout</dt>
+<dd>A per message timeout for receiving replies for that message</dd>
 <dt>found</dt>
 <dd><p class="first">A dictionary of
 <code class="docutils literal"><span class="pre">{targetHex:</span> <span class="pre">(set([(ServiceType,</span> <span class="pre">addr),</span> <span class="pre">(ServiceType,</span> <span class="pre">addr),</span> <span class="pre">...]),</span> <span class="pre">broadcastAddr)}</span></code></p>
@@ -236,6 +237,25 @@ messages have been yielded.</p>
 any error is raised as is. Otherwise we raise a
 <code class="docutils literal"><span class="pre">photons_app.errors.RunErrors</span></code>, with all the errors in a list on
 the <code class="docutils literal"><span class="pre">errors</span></code> property of the RunErrors exception.</p>
+</dd>
+<dt>no_retry</dt>
+<dd>If True then the messages being sent will have no automatic retry. This defaults
+to False and retry rates are determined by the target you are using.</dd>
+<dt>require_all_devices</dt>
+<dd>Defaults to False. If True then we will not send any messages if we haven’t
+found all the devices we want to send messages to. Otherwise we will send messages
+to the devices we have found and add photons_transport.errors.FailedToFindDevice errors
+for each device that wasn’t found.</dd>
+<dt>limit</dt>
+<dd><p class="first">An async context manager used to limit inflight messages. So for each message, we do</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">limit</span><span class="p">:</span>
+    <span class="n">send_and_wait_for_reply</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, an <code class="docutils literal"><span class="pre">asyncio.Semaphore(30)</span></code></p>
+<p class="last">Note that if you saying <code class="docutils literal"><span class="pre">target.script(msgs).run_with(....)</span></code> then limit will be set
+to a semaphore with max 30 by default. You may specify just a number and it will turn it
+into a semaphore.</p>
 </dd>
 </dl>
 <ul class="simple">
@@ -269,6 +289,42 @@ them for all of the serials specified and collect all the responses.</p>
 <p class="last">You most likely don’t want res_required for Set messages as the device
 will return the state before the message is applied. Note that ack_required
 defaults to True, so photons will still know to retry if we don’t get an ack</p>
+</div>
+</div>
+<div class="section" id="inflight-limit">
+<h2>Inflight limit<a class="headerlink" href="#inflight-limit" title="Permalink to this headline">¶</a></h2>
+<p>When you call run_with, photons will default to ensuring there’s only 30 messages
+being sent at any one time. This means for that run_with, the 31st message will
+be sent once the first message to get replies does so.</p>
+<p>You can change the limit by specifying the limit option. For example, to limit
+to only 3 messages being sent at any one time, you could say:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You may also specify no limit by passing in limit as None:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or you may share a limit between multiple run_with calls by sharing an
+asyncio.Semaphore object. This makes sense if you’re doing multiple run_withs
+at the same time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_app</span> <span class="kn">import</span> <span class="n">helpers</span> <span class="k">as</span> <span class="n">hp</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+
+<span class="n">limit</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">ts</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">hp</span><span class="o">.</span><span class="n">async_as_background</span><span class="p">(</span><span class="n">send</span><span class="p">(</span><span class="n">limit</span><span class="p">))</span>
+    <span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">async_as_background</span><span class="p">(</span><span class="n">send</span><span class="p">(</span><span class="n">limit</span><span class="p">))</span>
+    <span class="p">]</span>
+
+<span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="the-afr">

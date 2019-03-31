@@ -3,6 +3,83 @@
 ChangeLog
 =========
 
+0.12.0 - 31 March 2019
+    * Moved tile orientation logic into photons_control instead of being in
+      photons_tile_paint
+
+    * The find method on SpecialReference objects will now return even if we
+      didn't find all the serials we were looking for. The pattern is now:
+
+      .. code-block:: python
+        
+        found, serials = reference.find(afr, afr.default_broadcast, timeout=30)
+        missing = reference.missing(found)
+
+      Or:
+
+      .. code-block:: python
+        
+        found, serials = reference.find(afr, timeout=30)
+        reference.raise_on_missing(found)
+
+    * Reworked the internal API for discovery so that if we are trying to find
+      known serials, we don't spam the network with too many discovery packets.
+
+    * Changed the api for finding devices such that timeout must now be a keyword
+      argument and broadcast is not necessary to specify.
+
+      So, if you have a special reference:
+
+      .. code-block:: python
+
+        # before
+        found, serials = await special_reference.find(afr, True, 30)
+
+        # after
+        found, serials = await special_reference.find(afr, timeout=30)
+
+      And if you are using find_devices on the afr:
+
+      .. code-block:: python
+
+        # before
+        found = await afr.find_devices(True)
+
+        # after
+        found = await afr.find_devices()
+
+      Note that if you know what serials you are searching for you can ask the
+      afr to find them specifically by saying:
+
+      .. code-block:: python
+
+         serials = ["d073d5000001", "d073d5000002"]
+         found, missing = await afr.find_specific_serials(serials, timeout=20)
+
+      This method is much less spammy on the network than calling find_devices
+      till you have all your devices.
+
+0.11.0 - 20 March 2019
+    * Implemented a limit on inflight messages per run_with call
+
+      * As part of this, the timeout option to run_with is now message_timeout
+        and represents the timeout for each message rather than the whole
+        run_with call
+
+    * Updated the protocol definition
+
+      * Biggest change is StateHostFirmware and StateWifiFirmware now represent
+        the firmware version as two Uint16 instead of one Uint32. The two numbers
+        represent the major and minor component of the version
+      * TileMessages.SetState64 and TileMessages.GetState64 are now Set64 and
+        Get64 respectively
+
+    * We now determine if we have extended multizone using version_major and
+      version_minor instead of build on the StateHostFirmware
+
+0.10.2 - 3 March 2019
+    * Fixed a bug when applying a theme to multiple devices
+
 0.10.1 - 20 February 2019
     * Added messages for Extended multizone and firmware effects
     * Made photons_products_registry aware of extended multizone

@@ -177,9 +177,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#getdevicechain">701 - GetDeviceChain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#statedevicechain">702 - StateDeviceChain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setuserposition">703 - SetUserPosition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getstate64">707 - GetState64</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get64">707 - Get64</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#state64">711 - State64</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setstate64">715 - SetState64</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set64">715 - Set64</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gettileeffect">718 - GetTileEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#settileeffect">719 - SetTileEffect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#statetileeffect">720 - StateTileEffect</a></li>
@@ -349,7 +349,8 @@ is specific to each messages:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateHostFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">15</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved6&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">version_number</span><span class="p">())</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version_minor&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version_major&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -386,7 +387,8 @@ is specific to each messages:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateWifiFirmware</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">19</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint64</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;reserved6&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Reserved</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint32</span><span class="o">.</span><span class="n">version_number</span><span class="p">())</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version_minor&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;version_major&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint16</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -806,7 +808,7 @@ is specific to each messages:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">StateDeviceChain</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">702</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;start_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_devices&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Bytes</span><span class="p">(</span><span class="mi">440</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">many</span><span class="p">(</span><span class="k">lambda</span> <span class="n">pkt</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Tile</span><span class="p">))</span>
-    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;total_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_devices_count&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">)</span>
 </pre></div>
 </div>
@@ -823,10 +825,10 @@ is specific to each messages:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="getstate64">
-<h3>707 - GetState64<a class="headerlink" href="#getstate64" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.GetState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">GetState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span>
+<div class="section" id="get64">
+<h3>707 - Get64<a class="headerlink" href="#get64" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.Get64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Get64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">707</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>
@@ -850,10 +852,10 @@ is specific to each messages:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="setstate64">
-<h3>715 - SetState64<a class="headerlink" href="#setstate64" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.SetState64</span></code></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SetState64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">715</span>
+<div class="section" id="set64">
+<h3>715 - Set64<a class="headerlink" href="#set64" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">photons_messages.TileMessages.Set64</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Set64</span> <span class="o">=</span> <span class="n">msg</span><span class="p">(</span><span class="mi">715</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;tile_index&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">Uint8</span><span class="p">)</span>
     <span class="p">,</span> <span class="o">*</span><span class="n">fields</span><span class="o">.</span><span class="n">tile_buffer_rect</span>

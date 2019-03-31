@@ -263,13 +263,14 @@ to get these objects.</p>
 
     <span class="n">min_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2500</span><span class="p">)</span>
     <span class="n">max_kelvin</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">9000</span><span class="p">)</span>
-    <span class="n">min_extended_fw</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">NullableField</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">)</span>
+    <span class="n">min_extended_fw</span> <span class="o">=</span> <span class="n">dictobj</span><span class="o">.</span><span class="n">NullableField</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">tuple_spec</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">(),</span> <span class="n">sb</span><span class="o">.</span><span class="n">integer_spec</span><span class="p">()))</span>
 
-    <span class="k">def</span> <span class="nf">has_extended_multizone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_build</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">has_extended_multizone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version_major</span><span class="p">,</span> <span class="n">version_minor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">thing</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span><span class="p">,</span> <span class="n">version_major</span><span class="p">,</span> <span class="n">version_minor</span><span class="p">)):</span>
             <span class="k">return</span> <span class="bp">False</span>
 
-        <span class="k">return</span> <span class="n">firmware_build</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">firmware_build</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span>
+        <span class="n">desired_major</span><span class="p">,</span> <span class="n">desired_minor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_extended_fw</span>
+        <span class="k">return</span> <span class="n">version_major</span> <span class="o">&gt;=</span> <span class="n">desired_major</span> <span class="ow">and</span> <span class="n">version_minor</span> <span class="o">&gt;=</span> <span class="n">desired_minor</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -888,8 +889,8 @@ to get these objects.</p>
 <dt>LCM2_Z</dt>
 <dd><table border="1" class="first last docutils">
 <colgroup>
-<col width="70%" />
-<col width="30%" />
+<col width="74%" />
+<col width="26%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">attr</th>
@@ -922,7 +923,7 @@ to get these objects.</p>
 <td>9000</td>
 </tr>
 <tr class="row-even"><td>min_extended_fw</td>
-<td>1532997580</td>
+<td>(2, 77)</td>
 </tr>
 <tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>
@@ -1075,7 +1076,7 @@ to get these objects.</p>
 <td>9000</td>
 </tr>
 <tr class="row-even"><td>min_extended_fw</td>
-<td>1532997580</td>
+<td>(2, 77)</td>
 </tr>
 <tr class="row-odd"><td>min_kelvin</td>
 <td>2500</td>

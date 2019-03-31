@@ -192,27 +192,47 @@ objects that dynamically work out what devices to send the messages to.</p>
 <dl class="class">
 <dt id="photons_app.special.SpecialReference">
 <em class="property">class </em><code class="descclassname">photons_app.special.</code><code class="descname">SpecialReference</code><a class="headerlink" href="#photons_app.special.SpecialReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subclasses of this implement an await find_serials(afr, broadcast, find_timeout)
+<dd><p>Subclasses of this implement an await <code class="docutils literal"><span class="pre">find_serials(afr,</span> <span class="pre">*,</span> <span class="pre">timeout,</span> <span class="pre">broadcast=True)</span></code>
 that returns the serials to send messages to</p>
-<p>If broadcast is a boolean then we use afr.default_broadcast
+<p>If broadcast is a boolean (True or False) then we use afr.default_broadcast
 if broadcast is a falsey value then we use afr.default_broadcast
 else we use broadcast as is as the broadcast address</p>
 <p>find must be an async function that returns <code class="docutils literal"><span class="pre">(found,</span> <span class="pre">serials)</span></code>
 where serials is <code class="docutils literal"><span class="pre">[&quot;d073d500001&quot;,</span> <span class="pre">&quot;d073d500002&quot;,</span> <span class="pre">...]</span></code>
 and found is <code class="docutils literal"><span class="pre">{target:</span> <span class="pre">{(service,</span> <span class="pre">(ip,</span> <span class="pre">port)),</span> <span class="pre">...},</span> <span class="pre">...}</span></code></p>
-<p>This class exposes:</p>
-<dl class="docutils">
-<dt>async find(afr, broadcast, find_timeout)</dt>
-<dd><p class="first">calls <code class="docutils literal"><span class="pre">await</span> <span class="pre">self.find_serials(afr,</span> <span class="pre">broadcast,</span> <span class="pre">find_timeout)</span></code>, then determines
+<dl class="method">
+<dt id="photons_app.special.SpecialReference.find">
+<em class="property">await </em><code class="descname">find</code><span class="sig-paren">(</span><em>afr</em>, <em>*</em>, <em>timeout</em>, <em>broadcast=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.special.SpecialReference.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls <code class="docutils literal"><span class="pre">await</span> <span class="pre">self.find_serials(afr,</span> <span class="pre">timeout=timeout,</span> <span class="pre">broadcast=broadcast)</span></code>, then determines
 the list of serials from the result and memoizes <code class="docutils literal"><span class="pre">(found,</span> <span class="pre">serials)</span></code></p>
-<p class="last">So that we only call it once regardless how many times find is called.
+<p>So that we only call it once regardless how many times find is called.
 The reset function is used to remove the cache</p>
-</dd>
-<dt>reset()</dt>
-<dd>Reset our cache from calling find</dd>
-<dt>async find_serials(afr, broadcast, find_timeout)</dt>
-<dd>Must be implemented by the subclass, return <code class="docutils literal"><span class="pre">found</span></code> from this function</dd>
-</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.special.SpecialReference.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.special.SpecialReference.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset our cache from calling find</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.special.SpecialReference.find_serials">
+<em class="property">await </em><code class="descname">find_serials</code><span class="sig-paren">(</span><em>afr</em>, <em>*</em>, <em>timeout</em>, <em>broadcast=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.special.SpecialReference.find_serials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must be implemented by the subclass, return <code class="docutils literal"><span class="pre">found</span></code> from this function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.special.SpecialReference.missing">
+<code class="descname">missing</code><span class="sig-paren">(</span><em>found</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.special.SpecialReference.missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook for saying if anything is missing from found</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photons_app.special.SpecialReference.raise_on_missing">
+<code class="descname">raise_on_missing</code><span class="sig-paren">(</span><em>found</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.special.SpecialReference.raise_on_missing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to raise an exception if there are missing serials in found</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
