@@ -327,6 +327,26 @@ don’t have an address</p>
         <span class="n">await</span> <span class="n">device</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Note that if you want to either not have the cost of talking over udp sockets
+or want to do something async in the response to a message you can do the same
+but the following differences:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Tell the device you don&#39;t want to start a udp socket</span>
+<span class="n">device1</span> <span class="o">=</span> <span class="n">MyDevice</span><span class="p">(</span><span class="s2">&quot;d073d5000001&quot;</span><span class="p">,</span> <span class="n">protocol_register</span><span class="p">,</span> <span class="n">use_sockets</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># Use MemoryTarget instead of MemorySocketTarget</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">MemoryTarget</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this scenario you can override async_got_messages to do something when you
+get a message, like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyDevice</span><span class="p">(</span><span class="n">FakeDevice</span><span class="p">):</span>
+    <span class="n">async</span> <span class="k">def</span> <span class="nf">async_got_message</span><span class="p">(</span><span class="n">pkt</span><span class="p">):</span>
+        <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">some_delay</span><span class="p">)</span>
+
+        <span class="n">async</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">async_got_message</span><span class="p">(</span><span class="n">pkt</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">msg</span>
+</pre></div>
+</div>
 <p>If you want a device to not appear when the target finds devices then
 set <code class="docutils literal"><span class="pre">device.online</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p>
 </div>

@@ -664,65 +664,47 @@ back.</p>
 <div class="section" id="module-photons_control.script">
 <span id="script-helpers"></span><h2>Script helpers<a class="headerlink" href="#module-photons_control.script" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="photons_control.script.Decider">
-<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Decider</code><span class="sig-paren">(</span><em>getter</em>, <em>decider</em>, <em>wanted</em>, <em>simplifier=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Decider" title="Permalink to this definition">¶</a></dt>
-<dd><p>This one is a complex beast used for determining what to do based on the
-response from a particular message.</p>
-<dl class="docutils">
-<dt>getter</dt>
-<dd>A list of messages that are sent to each <code class="docutils literal"><span class="pre">reference</span></code>.</dd>
-<dt>decider</dt>
-<dd>A function that takes in <code class="docutils literal"><span class="pre">(reference,</span> <span class="pre">received1,</span> <span class="pre">received2,</span> <span class="pre">...)</span></code> where
-each <code class="docutils literal"><span class="pre">received</span></code> is a reply from <code class="docutils literal"><span class="pre">getter</span></code> and yields messages to send
-to that reference.</dd>
-<dt>wanted</dt>
-<dd>A list of messages that we want to get back from the <code class="docutils literal"><span class="pre">getter</span></code>. Any
-reply that doesn’t match this message type is dropped before we call
-<code class="docutils literal"><span class="pre">decider</span></code></dd>
-</dl>
-<dl class="method">
-<dt id="photons_control.script.Decider.run_with">
-<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>references</em>, <em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Decider.run_with" title="Permalink to this definition">¶</a></dt>
-<dd><p>For each msg in <code class="docutils literal"><span class="pre">getter</span></code>, run it against all the references and
-collect all the reply packets per reference for all the packets that
-match the <code class="docutils literal"><span class="pre">wanted</span></code> message types.</p>
-<p>For each reference that has results from <code class="docutils literal"><span class="pre">getter</span></code>, call <code class="docutils literal"><span class="pre">decider</span></code> with
-the reference and the replies from <code class="docutils literal"><span class="pre">getter</span></code>. This function yields
-messages which we simplify and send.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The messages from decider must already have a target set on them</p>
+<dt id="photons_control.script.FromGenerator">
+<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">FromGenerator</code><span class="sig-paren">(</span><em>generator</em>, <em>*</em>, <em>reference_override=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>FromGenerator let’s you determine what messages to send in an async generator.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">gen</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">get_power</span> <span class="o">=</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetPower</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">afr</span><span class="o">.</span><span class="n">transport_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">get_power</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">StatePower</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">level</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">65535</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">pkt</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">pkt</span><span class="o">.</span><span class="n">serial</span><span class="p">)</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="n">FromGenerator</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="s2">&quot;d073d5000001&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
-<p>Any errors are collected and if they have a serial, will be returned
-with the results.</p>
-<p>We raise the errors we find that don’t have an associated serial.</p>
+<p>Note that all messages you yield from the generator must already have target
+set on them.</p>
+<p>The generator function receives the reference supplied to the run_with as well
+as the afr object and any keyword arguments that were passed into run_with.</p>
+<p>All messages that are yielded from the generator are sent in parallel</p>
+<p>The return value from yield will be a future that resolves to True if the
+message(s) were sent without error, and False if they were sent with error.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<em class="property">async for ... in </em><code class="descname">run_with</code><span class="sig-paren">(</span><em>references</em>, <em>args_for_run</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
-<dd><p>For each msg in <code class="docutils literal"><span class="pre">getter</span></code>, run it against all the references and
-collect all the reply packets per reference for all the packets that
-match the <code class="docutils literal"><span class="pre">wanted</span></code> message types.</p>
-<p>For each reference that has results from <code class="docutils literal"><span class="pre">getter</span></code>, call <code class="docutils literal"><span class="pre">decider</span></code> with
-the reference and the replies from <code class="docutils literal"><span class="pre">getter</span></code>. This function yields
-messages which we simplify and send.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The messages from decider must already have a target set on them</p>
-</div>
-<p>Any errors are collected and if they have a serial, will be returned
-with the results.</p>
-<p>We raise the errors we find that don’t have an associated serial.</p>
+<dl class="function">
+<dt id="photons_control.script.FromGeneratorPerSerial">
+<code class="descclassname">photons_control.script.</code><code class="descname">FromGeneratorPerSerial</code><span class="sig-paren">(</span><em>inner_gen</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGeneratorPerSerial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as a FromGenerator except it will call your inner_gen per serial in
+the reference given to run_with.</p>
+<p>This handles resolving the reference into serials and complaining if a serial
+does not exist</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="class">
+<dl class="function">
 <dt id="photons_control.script.Pipeline">
-<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>*children</em>, <em>spread=0</em>, <em>short_circuit_on_error=False</em>, <em>synchronized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Pipeline" title="Permalink to this definition">¶</a></dt>
-<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will send and wait for multiple
-messages to each <code class="docutils literal"><span class="pre">reference</span></code>.</p>
+<code class="descclassname">photons_control.script.</code><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>*children</em>, <em>spread=0</em>, <em>short_circuit_on_error=False</em>, <em>synchronized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows you to send messages in order, so that each message isn’t sent
+until the previous message gets a reply or times out.</p>
 <p>For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
 <span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
@@ -765,47 +747,65 @@ the next message.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="function">
 <dt id="photons_control.script.Repeater">
-<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">Repeater</code><span class="sig-paren">(</span><em>msg</em>, <em>min_loop_time=30</em>, <em>on_done_loop=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Repeater" title="Permalink to this definition">¶</a></dt>
-<dd><p>This Provides a <code class="docutils literal"><span class="pre">run_with</span></code> method that will repeat it’s messages forever</p>
+<code class="descclassname">photons_control.script.</code><code class="descname">Repeater</code><span class="sig-paren">(</span><em>msg</em>, <em>min_loop_time=30</em>, <em>on_done_loop=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.Repeater" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will send the provided msg in an infinite loop</p>
 <p>For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg1</span> <span class="o">=</span> <span class="n">MessageOne</span><span class="p">()</span>
 <span class="n">msg2</span> <span class="o">=</span> <span class="n">MessageTwo</span><span class="p">()</span>
 
-<span class="n">reference1</span> <span class="o">=</span> <span class="s2">&quot;d073d500000&quot;</span>
-<span class="n">reference2</span> <span class="o">=</span> <span class="s2">&quot;d073d500001&quot;</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;d073d500000&quot;</span><span class="p">,</span> <span class="s2">&quot;d073d500001&quot;</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">error_catcher</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
 <span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
     <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">msg1</span><span class="p">,</span> <span class="n">msg2</span><span class="p">,</span> <span class="n">spread</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">Repeater</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">min_loop_time</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">,</span> <span class="n">reference2</span><span class="p">],</span> <span class="n">afr</span><span class="p">,</span> <span class="n">error_catcher</span><span class="o">=</span><span class="n">error_catcher</span><span class="p">):</span>
+    <span class="n">repeater</span> <span class="o">=</span> <span class="n">Repeater</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">min_loop_time</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">repeater</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">error_catcher</span><span class="o">=</span><span class="n">error_catcher</span><span class="p">):</span>
         <span class="o">....</span>
 </pre></div>
 </div>
 <p>Is equivalent to:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="n">reference1</span><span class="p">],</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">async</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">):</span>
             <span class="o">...</span>
-        <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span> <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Note that if references is a photons_app.special.SpecialReference then we call reset on it after every loop.</p>
-<p>Also error_catcher <em>must</em> be specified and be a callable that takes each error as they happen.</p>
+<p>Note that if references is a photons_app.special.SpecialReference then we
+call reset on it after every loop.</p>
+<p>Also it is highly recommended that error_catcher is a callable that takes
+each error as they happen.</p>
 <p>Repeater takes in the following keyword arguments:</p>
 <dl class="docutils">
 <dt>min_loop_time</dt>
 <dd><p class="first">The minimum amount of time a loop should take, in seconds.</p>
-<p class="last">So if min_loop_time is 30 and the loop takes 10 seconds, then we’ll wait 20 seconds before going again</p>
+<p class="last">So if min_loop_time is 30 and the loop takes 10 seconds, then we’ll wait
+20 seconds before going again</p>
 </dd>
 <dt>on_done_loop</dt>
-<dd><p class="first">An async callable that is called with no arguments when a loop completes (before any sleep from min_loop_time)</p>
-<p class="last">Note that if you raise <code class="docutils literal"><span class="pre">Repeater.Stop()</span></code> in this function then the Repeater will stop.</p>
+<dd><p class="first">An async callable that is called with no arguments when a loop completes
+(before any sleep from min_loop_time)</p>
+<p class="last">Note that if you raise <code class="docutils literal"><span class="pre">Repeater.Stop()</span></code> in this function then the
+Repeater will stop.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.script.find_serials">
+<em class="property">await </em><code class="descclassname">photons_control.script.</code><code class="descname">find_serials</code><span class="sig-paren">(</span><em>reference</em>, <em>args_for_run</em>, <em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.find_serials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return (serials, missing) for all the serials that can be found in the
+provided reference</p>
+<p>If the reference is an empty string, a single underscore or None then we
+find all devices on the network</p>
+<p>if it is a string or a list of strings, we treat those strings as the serials
+to find.</p>
+<p>Otherwise we assume it’s a special reference</p>
 </dd></dl>
 
 </div>
@@ -823,16 +823,15 @@ transformation</p>
 </div>
 <p>If there are no color related attributes specified then we just generate a
 message to set the power on or off as specified.</p>
-<p>If we have <code class="docutils literal"><span class="pre">keep_brightness=True</span></code> or <code class="docutils literal"><span class="pre">power=on</span></code>; and <code class="docutils literal"><span class="pre">color</span></code> options
-then we first ask the devices what their current colour is and use that to
-make the transition to the new state smooth. Essentially when turning a
-light on from off we first set it’s brightness to 0 in the new color, then
-turn the light on, then turn the brightness up to the desired level. The
-<code class="docutils literal"><span class="pre">keep_brightness</span></code> option will ensure the light stays the same brightness
-regardless of the <code class="docutils literal"><span class="pre">color</span></code> options.</p>
+<p>If we are turning the light on and have color options then we will first
+ask the device what it’s current state is. Lights that are off will be set
+to brightness 0 on the new color and on, and then the brightness will be
+changed to match the end result.</p>
 <p>For the color options we use <code class="docutils literal"><span class="pre">photons_colour.Parser</span></code> to create the
 <code class="docutils literal"><span class="pre">SetWaveformOptional</span></code> message that is needed to change the device. This
 means that we support an <code class="docutils literal"><span class="pre">effect</span></code> option for setting different waveforms.</p>
+<p>If keep_brightness is True then we do not change the brightness of the device
+despite any brightness options in the color options.</p>
 </dd></dl>
 
 </div>
