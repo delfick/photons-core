@@ -306,18 +306,23 @@ you won’t have to instantiate it yourself.</p>
 <dl class="method">
 <dt id="photons_transport.target.target.TransportTarget.script">
 <code class="descname">script</code><span class="sig-paren">(</span><em>raw</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.script" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return us a ScriptRunnerIterator for the given <cite>raw</cite> against this <cite>target</cite></p>
+<dd><p>Return us a ScriptRunnerfor the given <cite>raw</cite> against this <cite>target</cite></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="photons_transport.target.target.TransportTarget.simplify">
-<em class="property">for ... in </em><code class="descname">simplify</code><span class="sig-paren">(</span><em>script_part</em>, <em>chain=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.simplify" title="Permalink to this definition">¶</a></dt>
+<em class="property">for ... in </em><code class="descname">simplify</code><span class="sig-paren">(</span><em>script_part</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.target.target.TransportTarget.simplify" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used by <code class="docutils literal"><span class="pre">self.script</span></code> to convert <code class="docutils literal"><span class="pre">raw</span></code> into TransportItems</p>
+<p>For each item that is found:</p>
+<ul class="simple">
+<li>Use as is if it already has a run_with method on it</li>
+<li>Use item.simplified(self.simplify) if it has a simplified method</li>
+<li>Otherwise, provide to self.item_kls</li>
+</ul>
 <p>For each leaf child that is found, we gather messages into groups of
-messages with a <code class="docutils literal"><span class="pre">pack</span></code> method and yield <code class="docutils literal"><span class="pre">self.item_kls()(group)</span></code> with
-messages that don’t have a <code class="docutils literal"><span class="pre">pack</span></code> method yield as is.</p>
-<p>For example, let’s say we have <code class="docutils literal"><span class="pre">[p1,</span> <span class="pre">p2,</span> <span class="pre">m1,</span> <span class="pre">p3]</span></code> where <code class="docutils literal"><span class="pre">m1</span></code> does
-not have a <code class="docutils literal"><span class="pre">pack</span></code> method and the others do, we’ll yield:</p>
+messages without a <code class="docutils literal"><span class="pre">run_with</span></code> method and yield <code class="docutils literal"><span class="pre">self.item_kls()(group)</span></code>.</p>
+<p>For example, let’s say we have <code class="docutils literal"><span class="pre">[p1,</span> <span class="pre">p2,</span> <span class="pre">m1,</span> <span class="pre">p3]</span></code> where <code class="docutils literal"><span class="pre">m1</span></code> has
+a <code class="docutils literal"><span class="pre">run_with</span></code> method on it and the others don’t, we’ll yield:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">self.item_kls()([p1,</span> <span class="pre">p2])</span></code></li>
 <li><code class="docutils literal"><span class="pre">m1</span></code></li>
