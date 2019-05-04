@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../planner.html">Planner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
@@ -112,6 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="photons_colour.html">photons_colour</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">photons_control</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tasks">Tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planner">Planner</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.script">Script helpers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.transform">Transformer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-photons_control.multizone">Multizone Helpers</a></li>
@@ -280,15 +282,11 @@
 <dl class="docutils">
 <dt>OFF</dt>
 <dd>Turn of the animation off</dd>
-<dt>MOVE</dt>
-<dd>No supported on tile</dd>
 <dt>MORPH</dt>
 <dd>Move through a perlin noise map, assigning pixel values from a
 16-color palette</dd>
 <dt>FLAME</dt>
-<dd>Behaviour TBD</dd>
-<dt>RIPPLE</dt>
-<dd>Behaviour TBD</dd>
+<dd>A flame effect</dd>
 </dl>
 <p>For effects that take in a palette option, you may specify palette as
 <code class="docutils literal"><span class="pre">[{&quot;hue&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;kelvin&quot;:</span> <span class="pre">2500},</span> <span class="pre">...]</span></code></p>
@@ -316,7 +314,7 @@
 </tr>
 <tr class="row-odd"><td><p class="first">Set the zones colors on a light strip</p>
 <p>Usage looks like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">set_zones</span> <span class="n">d073d5000001</span> <span class="o">--</span> <span class="s1">&#39;{&quot;color_ranges&quot;: [[&quot;red&quot;, 10], [&quot;blue&quot;, 3], [&quot;green&quot;, 5]]}&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">set_zones</span> <span class="n">d073d5000001</span> <span class="o">--</span> <span class="s1">&#39;{&quot;colors&quot;: [[&quot;red&quot;, 10], [&quot;blue&quot;, 3], [&quot;green&quot;, 5]]}&#39;</span>
 </pre></div>
 </div>
 <p class="last">In that example the strip will have the first 10 zones set to red, then 3
@@ -476,7 +474,7 @@ and send that to the device.</p>
 <p>Where type is one of the available effect types:</p>
 <dl class="docutils">
 <dt>OFF</dt>
-<dd>Turn of the animation off</dd>
+<dd>Turn the animation off</dd>
 <dt>MOVE</dt>
 <dd>A moving animation</dd>
 </dl>
@@ -660,6 +658,30 @@ back.</p>
 </tr>
 </tbody>
 </table>
+<span class="target" id="module-photons_control.attributes"></span><dl class="function">
+<dt id="photons_control.attributes.make_color">
+<code class="descclassname">photons_control.attributes.</code><code class="descname">make_color</code><span class="sig-paren">(</span><em>specifier</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.attributes.make_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return {“hue”, “saturation”, “brightness”, “kelvin”} dictionary for this specifier.</p>
+<p>If it’s a string, use photons_colour.Parser.hsbk</p>
+<p>If it’s a list, then take h, s, b, k from the list and default to 0, 0, 1, 3500
+The list can be 0 to 4 items long</p>
+<p>If it’s a dictionary, get hue, saturation, brightness, kelvin from it
+values default to 0, 0, 1, 3500</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.attributes.make_colors">
+<em class="property">for ... in </em><code class="descclassname">photons_control.attributes.</code><code class="descname">make_colors</code><span class="sig-paren">(</span><em>colors</em>, <em>overrides=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.attributes.make_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>yield [{“hue”, “saturation”, “brightness”, “kelvin”}, …] colors for these colors and overrides</p>
+<p>Colors must be an array of [[specifier, length], …]</p>
+<p>We use make_color with each specifier and apply overrides to the result and then
+yield length amount of the resulting dictionary for each specifier.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="planner">
+<h2>Planner<a class="headerlink" href="#planner" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../planner.html#planner"><span class="std std-ref">Planner</span></a>.</p>
 </div>
 <div class="section" id="module-photons_control.script">
 <span id="script-helpers"></span><h2>Script helpers<a class="headerlink" href="#module-photons_control.script" title="Permalink to this headline">¶</a></h2>
@@ -839,14 +861,95 @@ despite any brightness options in the color options.</p>
 <span id="multizone-helpers"></span><h2>Multizone Helpers<a class="headerlink" href="#module-photons_control.multizone" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="photons_control.multizone.zones_from_reference">
-<em class="property">await </em><code class="descclassname">photons_control.multizone.</code><code class="descname">zones_from_reference</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.zones_from_reference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yield {serial: [(zone, color), …]} for each multizone device that is found</p>
+<em class="property">async for ... in </em><code class="descclassname">photons_control.multizone.</code><code class="descname">zones_from_reference</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em>, <em>gatherer=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.zones_from_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield (serial, [(zone, color), …]) for each multizone device that is found</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="photons_control.multizone.find_multizone">
-<em class="property">async for ... in </em><code class="descclassname">photons_control.multizone.</code><code class="descname">find_multizone</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.find_multizone" title="Permalink to this definition">¶</a></dt>
+<em class="property">async for ... in </em><code class="descclassname">photons_control.multizone.</code><code class="descname">find_multizone</code><span class="sig-paren">(</span><em>target</em>, <em>reference</em>, <em>afr</em>, <em>gatherer=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.find_multizone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield (serial, has_extended_multizone) for all multizone products found in this reference</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.multizone.SetZonesPlan">
+<code class="descclassname">photons_control.multizone.</code><code class="descname">SetZonesPlan</code><span class="sig-paren">(</span><em>*args</em>, <em>refresh=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.SetZonesPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return messages used to apply a color range to multizone devices</p>
+<p>Takes in:</p>
+<dl class="docutils">
+<dt>colors - [[color_specifier, length], …]</dt>
+<dd>For example, [[“red”, 1], [“blue”, 3], [“hue:100 saturation:0.5”, 5]]</dd>
+<dt>zone_index - default 0</dt>
+<dd>An integer representing where on the strip to start the colors</dd>
+<dt>duration - default 1</dt>
+<dd>Application duration</dd>
+<dt>overrides - default None</dt>
+<dd>A dictionary containing hue, saturation, brightness and kelvin for
+overriding colors with</dd>
+</dl>
+<p>For devices that aren’t a multizone, info will be Skip, otherwise it’ll be
+appropriate messages respective to the device supporting extended multizone
+or not.</p>
+<p>Usage is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_control.planner</span> <span class="kn">import</span> <span class="n">Gatherer</span><span class="p">,</span> <span class="n">Skip</span>
+
+<span class="n">gatherer</span> <span class="o">=</span> <span class="n">Gatherer</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="n">plans</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;set_zones&quot;</span><span class="p">:</span> <span class="n">SetZonesPlan</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span>
+
+<span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+    <span class="n">async</span> <span class="k">for</span> <span class="n">serial</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">messages</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">plans</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">messages</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Skip</span><span class="p">:</span>
+            <span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span> <span class="n">afr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this example code will do one strip at a time, if you want to
+change all strips at the same time, just use the SetZones msg in a normal
+run_with script.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.multizone.SetZones">
+<code class="descclassname">photons_control.multizone.</code><code class="descname">SetZones</code><span class="sig-paren">(</span><em>colors</em>, <em>gatherer=None</em>, <em>power_on=True</em>, <em>reference=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.SetZones" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set colors on all found multizone devices. Uses SetZonesPlan to generate the
+messages to set the zones on the device and so keyword arguments to this
+messages are passed directly to the plan.</p>
+<p>Usage looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="n">SetZones</span><span class="p">([[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">]],</span> <span class="n">zone_index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You may also pass in a Gatherer instance to SetZones if you already have
+one of those.</p>
+<p>By default the devices will be powered on. If you don’t want this to happen
+then pass in power_on=False</p>
+<p>If you want to target a particular device or devices, pass in reference as a
+run_with reference.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.multizone.SetZonesEffect">
+<code class="descclassname">photons_control.multizone.</code><code class="descname">SetZonesEffect</code><span class="sig-paren">(</span><em>effect</em>, <em>gatherer=None</em>, <em>power_on=True</em>, <em>power_on_duration=1</em>, <em>reference=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.multizone.SetZonesEffect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an effect on your strips</p>
+<p>Where effect is one of the available effect types:</p>
+<dl class="docutils">
+<dt>OFF</dt>
+<dd>Turn the animation off</dd>
+<dt>MOVE</dt>
+<dd>A moving animation</dd>
+</dl>
+<p>Options include:
+- offset
+- speed
+- duration</p>
+<p>Usage looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="n">SetZonesEffect</span><span class="p">(</span><span class="s2">&quot;MOVE&quot;</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default the devices will be powered on. If you don’t want this to happen
+then pass in power_on=False</p>
+<p>If you want to target a particular device or devices, pass in reference as a
+run_with reference.</p>
 </dd></dl>
 
 </div>
@@ -858,6 +961,39 @@ despite any brightness options in the color options.</p>
 <dd><p>Given a Tile State packet, return the tile devices that are valid.</p>
 <p>This works by taking into account <code class="docutils literal"><span class="pre">tile_devices_count</span></code> and <code class="docutils literal"><span class="pre">start_index</span></code>
 on the packet.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photons_control.tile.orientations_from">
+<code class="descclassname">photons_control.tile.</code><code class="descname">orientations_from</code><span class="sig-paren">(</span><em>pkt</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.tile.orientations_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="photons_control.tile.SetTileEffect">
+<code class="descclassname">photons_control.tile.</code><code class="descname">SetTileEffect</code><span class="sig-paren">(</span><em>effect</em>, <em>gatherer=None</em>, <em>power_on=True</em>, <em>power_on_duration=1</em>, <em>reference=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.tile.SetTileEffect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an effect on your tiles</p>
+<p>Where effect is one of the available effect types:</p>
+<dl class="docutils">
+<dt>OFF</dt>
+<dd>Turn the animation off</dd>
+<dt>FLAME</dt>
+<dd>A flame effect</dd>
+<dt>MORPH</dt>
+<dd>A Morph effect</dd>
+</dl>
+<p>Options include:
+- speed
+- duration
+- palette</p>
+<p>Usage looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="n">SetTileEffect</span><span class="p">(</span><span class="s2">&quot;MORPH&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">])</span>
+<span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default the devices will be powered on. If you don’t want this to happen
+then pass in power_on=False</p>
+<p>If you want to target a particular device or devices, pass in reference as a
+run_with reference.</p>
 </dd></dl>
 
 <span class="target" id="module-photons_control.orientation"></span><dl class="class">

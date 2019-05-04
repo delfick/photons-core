@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
@@ -334,15 +335,11 @@ your script enables the module it comes from.</p>
 <dl class="docutils">
 <dt>OFF</dt>
 <dd>Turn of the animation off</dd>
-<dt>MOVE</dt>
-<dd>No supported on tile</dd>
 <dt>MORPH</dt>
 <dd>Move through a perlin noise map, assigning pixel values from a
 16-color palette</dd>
 <dt>FLAME</dt>
-<dd>Behaviour TBD</dd>
-<dt>RIPPLE</dt>
-<dd>Behaviour TBD</dd>
+<dd>A flame effect</dd>
 </dl>
 <p>For effects that take in a palette option, you may specify palette as
 <code class="docutils literal"><span class="pre">[{&quot;hue&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;kelvin&quot;:</span> <span class="pre">2500},</span> <span class="pre">...]</span></code></p>
@@ -370,7 +367,7 @@ your script enables the module it comes from.</p>
 </tr>
 <tr class="row-odd"><td><p class="first">Set the zones colors on a light strip</p>
 <p>Usage looks like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">set_zones</span> <span class="n">d073d5000001</span> <span class="o">--</span> <span class="s1">&#39;{&quot;color_ranges&quot;: [[&quot;red&quot;, 10], [&quot;blue&quot;, 3], [&quot;green&quot;, 5]]}&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">set_zones</span> <span class="n">d073d5000001</span> <span class="o">--</span> <span class="s1">&#39;{&quot;colors&quot;: [[&quot;red&quot;, 10], [&quot;blue&quot;, 3], [&quot;green&quot;, 5]]}&#39;</span>
 </pre></div>
 </div>
 <p class="last">In that example the strip will have the first 10 zones set to red, then 3
@@ -530,7 +527,7 @@ and send that to the device.</p>
 <p>Where type is one of the available effect types:</p>
 <dl class="docutils">
 <dt>OFF</dt>
-<dd>Turn of the animation off</dd>
+<dd>Turn the animation off</dd>
 <dt>MOVE</dt>
 <dd>A moving animation</dd>
 </dl>

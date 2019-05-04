@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
@@ -471,6 +472,8 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="planner.html#photons_control.planner.gatherer.Gatherer">Gatherer (class in photons_control.planner.gatherer)</a>
+</li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.get">get() (photons_themes.canvas.Canvas method)</a>
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.target.TransportTarget.get_list">get_list() (photons_transport.target.target.TransportTarget method)</a>
@@ -553,9 +556,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_transport.html#photons_transport.target.writer.Writer.make">make() (photons_transport.target.writer.Writer method)</a>
 </li>
+      <li><a href="modules/photons_control.html#photons_control.attributes.make_color">make_color() (in module photons_control.attributes)</a>
+</li>
+      <li><a href="modules/photons_control.html#photons_control.attributes.make_colors">make_colors() (in module photons_control.attributes)</a>
+</li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.make_integer_spec">make_integer_spec() (photons_protocol.types.Type method)</a>
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.item.TransportItem.make_packets">make_packets() (photons_transport.target.item.TransportItem method)</a>
+</li>
+      <li><a href="planner.html#photons_control.planner.plans.make_plans">make_plans() (in module photons_control.planner.plans)</a>
 </li>
       <li><a href="modules/photons_socket.html#photons_socket.connection.Sockets.make_socket">make_socket() (photons_socket.connection.Sockets method)</a>
 </li>
@@ -565,10 +574,10 @@
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.bridge.TransportBridge.make_writer">make_writer() (photons_transport.target.bridge.TransportBridge method)</a>
 </li>
-      <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.many">many() (photons_protocol.types.Type method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.many">many() (photons_protocol.types.Type method)</a>
+</li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.many_wrapper">many_wrapper() (photons_protocol.types.Type method)</a>
 </li>
       <li><a href="modules/photons_device_finder.html#photons_device_finder.Filter.matches">matches() (photons_device_finder.Filter method)</a>
@@ -600,6 +609,8 @@
       <li><a href="modules/photons_transport.html#photons_transport.target.retry_options.RetryOptions.next_time">next_time (photons_transport.target.retry_options.RetryOptions attribute)</a>
 </li>
       <li><a href="modules/photons_transport.html#photons_transport.target.item.NoLimit">NoLimit (class in photons_transport.target.item)</a>
+</li>
+      <li><a href="planner.html#photons_control.planner.plans.NoMessages">NoMessages (class in photons_control.planner.plans)</a>
 </li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.noncancelled_results_from_futs">noncancelled_results_from_futs() (in module photons_app.helpers)</a>
 </li>
@@ -639,9 +650,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.optional">optional() (photons_protocol.types.Type method)</a>
 </li>
+      <li><a href="modules/photons_control.html#photons_control.orientation.Orientation">Orientation (class in photons_control.orientation)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/photons_control.html#photons_control.orientation.Orientation">Orientation (class in photons_control.orientation)</a>
+      <li><a href="modules/photons_control.html#photons_control.tile.orientations_from">orientations_from() (in module photons_control.tile)</a>
 </li>
       <li><a href="modules/photons_protocol.html#photons_protocol.types.Type.override">override() (photons_protocol.types.Type method)</a>
 </li>
@@ -685,9 +698,13 @@
 </li>
       <li><a href="modules/photons_control.html#module-photons_control">photons_control (module)</a>
 </li>
+      <li><a href="modules/photons_control.html#module-photons_control.attributes">photons_control.attributes (module)</a>
+</li>
       <li><a href="modules/photons_control.html#module-photons_control.multizone">photons_control.multizone (module)</a>
 </li>
       <li><a href="modules/photons_control.html#module-photons_control.orientation">photons_control.orientation (module)</a>
+</li>
+      <li><a href="planner.html#module-photons_control.planner">photons_control.planner (module)</a>
 </li>
       <li><a href="modules/photons_control.html#module-photons_control.script">photons_control.script (module)</a>
 </li>
@@ -762,6 +779,8 @@
       <li><a href="photons_app/collector.html#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.TargetRegister">PhotonsAppSpec.TargetRegister (class in photons_app.option_spec.photons_app_spec)</a>
 </li>
       <li><a href="modules/photons_control.html#photons_control.script.Pipeline">Pipeline() (in module photons_control.script)</a>
+</li>
+      <li><a href="planner.html#photons_control.planner.plans.Plan">Plan (class in photons_control.planner.plans)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.points_for_tile">points_for_tile() (photons_themes.canvas.Canvas method)</a>
 </li>
@@ -849,7 +868,15 @@
 </li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ThreadToAsyncQueue.set_futures">set_futures() (photons_app.helpers.ThreadToAsyncQueue method)</a>
 </li>
+      <li><a href="modules/photons_control.html#photons_control.tile.SetTileEffect">SetTileEffect() (in module photons_control.tile)</a>
+</li>
       <li><a href="photons_app/helpers.html#photons_app.helpers.ThreadToAsyncQueue.setup">setup() (photons_app.helpers.ThreadToAsyncQueue method)</a>
+</li>
+      <li><a href="modules/photons_control.html#photons_control.multizone.SetZones">SetZones() (in module photons_control.multizone)</a>
+</li>
+      <li><a href="modules/photons_control.html#photons_control.multizone.SetZonesEffect">SetZonesEffect() (in module photons_control.multizone)</a>
+</li>
+      <li><a href="modules/photons_control.html#photons_control.multizone.SetZonesPlan">SetZonesPlan() (in module photons_control.multizone)</a>
 </li>
       <li><a href="modules/photons_themes.html#photons_themes.canvas.Canvas.shuffle_points">shuffle_points() (photons_themes.canvas.Canvas method)</a>
 </li>
@@ -865,11 +892,13 @@
       </ul></li>
       <li><a href="modules/photons_transport.html#photons_transport.target.item.TransportItem.simplify_parts">simplify_parts() (photons_transport.target.item.TransportItem method)</a>
 </li>
-      <li><a href="modules/photons_colour.html#photons_colour.Effects.sine">sine() (photons_colour.Effects method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/photons_colour.html#photons_colour.Effects.sine">sine() (photons_colour.Effects method)</a>
+</li>
       <li><a href="modules/photons_protocol.html#photons_protocol.packets.PacketSpecMixin.size_bits">size_bits() (photons_protocol.packets.PacketSpecMixin method)</a>
+</li>
+      <li><a href="planner.html#photons_control.planner.plans.Skip">Skip (class in photons_control.planner.plans)</a>
 </li>
       <li><a href="modules/photons_socket.html#photons_socket.target.SocketBridge">SocketBridge (class in photons_socket.target)</a>
 </li>

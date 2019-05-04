@@ -100,6 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
@@ -174,6 +175,16 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.13.4 - 4 May 2019</dt>
+<dd><ul class="first last simple">
+<li>Tiny fix to how we determine if we have enough multizone messages that
+shouldn’t make a difference in practice.</li>
+<li>Implemented a new “Planner” API for gathering information from devices</li>
+<li>Making code in photons_control.multizone easier to re-use</li>
+<li>Added a photons_control.tile.SetTileEffect helper for easily setting tile
+effects</li>
+</ul>
+</dd>
 <dt>0.13.3 - 23 April 2019</dt>
 <dd><ul class="first last simple">
 <li>Fixed a bug with giving an array of complex messgaes to target.script where
