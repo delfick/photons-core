@@ -673,6 +673,40 @@ back.</p>
 <col width="100%" />
 </colgroup>
 <thead valign="bottom">
+<tr class="row-odd"><th class="head">find_devices</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">List the devices that can be found on the network:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">find_devices</span>
+</pre></div>
+</div>
+<p>You can specify a different broadcast address by saying:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">find_devices</span> <span class="n">_</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span>
+</pre></div>
+</div>
+<p>Otherwise it will use the default broadcast address for the target you are
+using. (i.e. the lan target by default broadcasts to 255.255.255.255)</p>
+<p>You can find specific devices by specifying a reference:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">find_devices</span> <span class="n">match</span><span class="p">:</span><span class="n">label</span><span class="o">=</span><span class="n">kitchen</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
 <tr class="row-odd"><th class="head">attr_actual</th>
 </tr>
 </thead>
@@ -955,33 +989,6 @@ back.</p>
 </td>
 </tr>
 <tr class="row-odd"><td>Bouncing balls</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<p>From <code class="docutils literal"><span class="pre">photons_transport</span></code></p>
-<blockquote>
-<div><table border="1" class="docutils">
-<colgroup>
-<col width="100%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">find_devices</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><ul class="first last simple">
-<li>Needs a target to be specified</li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td><p class="first">List the devices that can be found on the network</p>
-<p><code class="docutils literal"><span class="pre">target:find_devices</span> <span class="pre">&lt;broadcast&gt;</span></code></p>
-<p>If you specify a broadcast (i.e. 192.168.0.255) then it will broadcast the
-discovery messages to that address.</p>
-<p class="last">Otherwise it will use the default broadcast address for the target you are
-using. (i.e. the lan target by default broadcasts to 255.255.255.255)</p>
-</td>
 </tr>
 </tbody>
 </table>

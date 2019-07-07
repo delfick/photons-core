@@ -195,9 +195,6 @@ objects that dynamically work out what devices to send the messages to.</p>
 <em class="property">class </em><code class="descclassname">photons_app.special.</code><code class="descname">SpecialReference</code><a class="headerlink" href="#photons_app.special.SpecialReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subclasses of this implement an await <code class="docutils literal"><span class="pre">find_serials(afr,</span> <span class="pre">*,</span> <span class="pre">timeout,</span> <span class="pre">broadcast=True)</span></code>
 that returns the serials to send messages to</p>
-<p>If broadcast is a boolean (True or False) then we use afr.default_broadcast
-if broadcast is a falsey value then we use afr.default_broadcast
-else we use broadcast as is as the broadcast address</p>
 <p>find must be an async function that returns <code class="docutils literal"><span class="pre">(found,</span> <span class="pre">serials)</span></code>
 where serials is <code class="docutils literal"><span class="pre">[&quot;d073d500001&quot;,</span> <span class="pre">&quot;d073d500002&quot;,</span> <span class="pre">...]</span></code>
 and found is <code class="docutils literal"><span class="pre">{target:</span> <span class="pre">{(service,</span> <span class="pre">(ip,</span> <span class="pre">port)),</span> <span class="pre">...},</span> <span class="pre">...}</span></code></p>
