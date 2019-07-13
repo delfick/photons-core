@@ -187,7 +187,7 @@ against the serials of your devices:</p>
 
 <span class="n">script</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">GetPower</span><span class="p">())</span>
 
-<span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sent_to</span> <span class="ow">in</span> <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="s2">&quot;d073d5000000&quot;</span><span class="p">,</span> <span class="s2">&quot;d073d5000001&quot;</span><span class="p">]):</span>
+<span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">original</span> <span class="ow">in</span> <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">([</span><span class="s2">&quot;d073d5000000&quot;</span><span class="p">,</span> <span class="s2">&quot;d073d5000001&quot;</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">pkt</span> <span class="o">|</span> <span class="n">DeviceMessages</span><span class="o">.</span><span class="n">StatePower</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span> <span class="n">pkt</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
 </pre></div>
@@ -198,20 +198,21 @@ and then sent those messages to our devices and got back <code class="docutils l
 <p>Photons knows that the returned <code class="docutils literal"><span class="pre">pkt</span></code> objects are for our messages because
 they have the same <code class="docutils literal"><span class="pre">target</span></code>, <code class="docutils literal"><span class="pre">source</span></code> and <code class="docutils literal"><span class="pre">sequence_id</span></code> of the messages
 that were sent.</p>
-<p>The return of <code class="docutils literal"><span class="pre">run_with</span></code> is a list of <code class="docutils literal"><span class="pre">[(pkt,</span> <span class="pre">addr,</span> <span class="pre">sent_to),</span> <span class="pre">...)]</span></code> where
+<p>The return of <code class="docutils literal"><span class="pre">run_with</span></code> is a list of <code class="docutils literal"><span class="pre">[(pkt,</span> <span class="pre">addr,</span> <span class="pre">original),</span> <span class="pre">...)]</span></code> where
 <code class="docutils literal"><span class="pre">pkt</span></code> is the Packet object representing the packet the device sent back; <code class="docutils literal"><span class="pre">addr</span></code>
-is a tuple of the ip address and port of the device; and <code class="docutils literal"><span class="pre">sent_to</span></code> is the
-address that was sent to (i.e. the broadcast address if the message was broadcast,
-or the ip of the device if it was unicast).</p>
+is a tuple of the ip address and port of the device; and <code class="docutils literal"><span class="pre">original</span></code> is the
+original message that was sent.</p>
 <p>This mechanism is responsible for timeouts and retries, which are configured by
 options to <code class="docutils literal"><span class="pre">run_with</span></code>.</p>
 <p>For example, the lan target <code class="docutils literal"><span class="pre">run_with</span></code> takes in:</p>
 <dl class="method">
 <dt>
-<em class="property">async for ... in </em><code class="descclassname">TransportItem.</code><code class="descname">run_with</code><span class="sig-paren">(</span><em>serials</em>, <em>args_for_run</em>, <em>broadcast=False</em>, <em>accept_found=False</em>, <em>found=None</em>, <em>error_catcher=None</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<em class="property">async for ... in </em><code class="descclassname">Item.</code><code class="descname">run_with</code><span class="sig-paren">(</span><em>reference</em>, <em>afr</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
 <dd><p>Entry point to this item, the idea is you create a <cite>script</cite> with the
 target and call <cite>run_with</cite> on the script, which ends up calling this</p>
-<p>We acknowledge the following keyword arguments.</p>
+<p>This is an async generator that yields the results from sending packets to the devices
+it is responsible for finding devices and gathering all the responses.</p>
+<p>This accepts the following keyword arguments.</p>
 <dl class="docutils">
 <dt>broadcast</dt>
 <dd>Whether we are broadcasting these messages or just unicasting directly
@@ -244,9 +245,7 @@ the <code class="docutils literal"><span class="pre">errors</span></code> proper
 to False and retry rates are determined by the target you are using.</dd>
 <dt>require_all_devices</dt>
 <dd>Defaults to False. If True then we will not send any messages if we haven’t
-found all the devices we want to send messages to. Otherwise we will send messages
-to the devices we have found and add photons_transport.errors.FailedToFindDevice errors
-for each device that wasn’t found.</dd>
+found all the devices we want to send messages to.</dd>
 <dt>limit</dt>
 <dd><p class="first">An async context manager used to limit inflight messages. So for each message, we do</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">with</span> <span class="n">limit</span><span class="p">:</span>
@@ -259,12 +258,6 @@ to a semaphore with max 30 by default. You may specify just a number and it will
 into a semaphore.</p>
 </dd>
 </dl>
-<ul class="simple">
-<li>First we make the packets.</li>
-<li>Then we find the devices (unless found is supplied)</li>
-<li>Then we send the packets to the devices</li>
-<li>Then we gather results and errors</li>
-</ul>
 </dd></dl>
 
 <div class="section" id="sending-multiple-packets">
@@ -356,7 +349,7 @@ on every run.</p>
 <h2>run_with vs run_with_all<a class="headerlink" href="#run-with-vs-run-with-all" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">run_with</span></code> function on a lan target is an async iterator and so you call
 it like so:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">sent_to</span> <span class="ow">in</span> <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">references</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">original</span> <span class="ow">in</span> <span class="n">script</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="n">references</span><span class="p">):</span>
     <span class="o">...</span>
 </pre></div>
 </div>

@@ -183,7 +183,7 @@ a script that uses that virtualenv.</p>
 
 <span class="kn">from</span> <span class="nn">venvstarter</span> <span class="kn">import</span> <span class="n">ignite</span>
 <span class="n">ignite</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="s2">&quot;lifx&quot;</span>
-    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.13.5&quot;</span><span class="p">]</span>
+    <span class="p">,</span> <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lifx-photons-core==0.20.0&quot;</span><span class="p">]</span>
     <span class="p">,</span> <span class="n">min_python_version</span> <span class="o">=</span> <span class="mf">3.6</span>
     <span class="p">)</span>
 </pre></div>
@@ -205,7 +205,7 @@ our <code class="docutils literal"><span class="pre">my_script</span></code> fil
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;my_script&quot;</span><span class="p">)</span>
 
 <span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">extras</span><span class="o">=</span><span class="p">[</span>
-      <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;socket&quot;</span><span class="p">)</span>
+      <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;transport&quot;</span><span class="p">)</span>
     <span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lifx.photons&quot;</span><span class="p">,</span> <span class="s2">&quot;messages&quot;</span><span class="p">)</span>
     <span class="p">])</span>
 <span class="k">def</span> <span class="nf">__lifx__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -273,7 +273,7 @@ the <code class="docutils literal"><span class="pre">do_turn_off</span></code> t
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ ./my_script
 15:11:04 INFO    option_merge.collector Adding configuration from /Users/stephenmoore/.photons_apprc.yml
 15:11:04 INFO    option_merge.addons Found lifx.photons.__main__ addon
-15:11:04 INFO    option_merge.addons Found lifx.photons.socket addon
+15:11:04 INFO    option_merge.addons Found lifx.photons.transport addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.protocol addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.transport addon
 15:11:04 INFO    option_merge.addons Found lifx.photons.messages addon
