@@ -193,10 +193,10 @@
 <em class="property">class </em><code class="descclassname">photons_app.registers.</code><code class="descname">MessagesRegister</code><a class="headerlink" href="#photons_app.registers.MessagesRegister" title="Permalink to this definition">¶</a></dt>
 <dd><p>A register for Photons Protocol Messages classes.</p>
 <p>These classes hold different message types for a particular protocol.</p>
-<p>Usage is typically in an addon’s option_merge hook, via the protocol register:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+<p>Usage is typically in an addon’s hook, via the protocol register:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">delfick_project.addons</span> <span class="kn">import</span> <span class="n">addon_hook</span>
 
-<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nd">@addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="p">[</span><span class="o">..</span><span class="p">]</span>
     <span class="n">prot_register</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span>
@@ -210,10 +210,10 @@
 <em class="property">class </em><code class="descclassname">photons_app.registers.</code><code class="descname">ProtocolRegister</code><a class="headerlink" href="#photons_app.registers.ProtocolRegister" title="Permalink to this definition">¶</a></dt>
 <dd><p>A register for Photons Protocol Messages classes.</p>
 <p>These classes hold different message types for a particular protocol.</p>
-<p>Usage is typically in an addon’s option_merge hook.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+<p>Usage is typically in an addon’s hook.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">delfick_project.addons</span> <span class="kn">import</span> <span class="n">addon_hook</span>
 
-<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nd">@addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="p">[</span><span class="o">..</span><span class="p">]</span>
     <span class="n">prot_register</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;protocol_register&quot;</span><span class="p">]</span>
@@ -226,10 +226,10 @@
 <dt id="photons_app.registers.ReferenceResolerRegister">
 <em class="property">class </em><code class="descclassname">photons_app.registers.</code><code class="descname">ReferenceResolerRegister</code><a class="headerlink" href="#photons_app.registers.ReferenceResolerRegister" title="Permalink to this definition">¶</a></dt>
 <dd><p>A register for special reference resolvers</p>
-<p>Usage is typically in an addon’s option_merge hook.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+<p>Usage is typically in an addon’s hook.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">delfick_project.addons</span> <span class="kn">import</span> <span class="n">addon_hook</span>
 
-<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nd">@addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="p">[</span><span class="o">..</span><span class="p">]</span>
     <span class="n">register</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;reference_resolver_register&quot;</span><span class="p">]</span>
@@ -261,10 +261,10 @@ use the target_register instead.</p>
 <dt id="photons_app.registers.TargetRegister">
 <em class="property">class </em><code class="descclassname">photons_app.registers.</code><code class="descname">TargetRegister</code><span class="sig-paren">(</span><em>collector</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.registers.TargetRegister" title="Permalink to this definition">¶</a></dt>
 <dd><p>A register of target types and concrete instances of those targets.</p>
-<p>Usage is typically in an addon’s option_merge hook:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+<p>Usage is typically in an addon’s hook:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">delfick_project.addons</span> <span class="kn">import</span> <span class="n">addon_hook</span>
 
-<span class="nd">@option_merge_addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nd">@addon_hook</span><span class="p">(</span><span class="n">post_register</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">__lifx_post__</span><span class="p">(</span><span class="n">collector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span>
           <span class="s2">&quot;my_amazing_target&quot;</span>

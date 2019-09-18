@@ -203,7 +203,7 @@ information about the different groups and fields on the packet.</p>
 <p>It is comprised of a mixin class providing functionality for the packet and a
 meta class for making the <code class="docutils literal"><span class="pre">Meta</span></code>.</p>
 <p>Usage looks like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">input_algorithms.dictobj</span> <span class="kn">import</span> <span class="n">dictobj</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">delfick_project.norms</span> <span class="kn">import</span> <span class="n">dictobj</span>
 
 <span class="k">class</span> <span class="nc">MyPacket</span><span class="p">(</span><span class="n">dictobj</span><span class="o">.</span><span class="n">PacketSpec</span><span class="p">):</span>
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
@@ -271,8 +271,8 @@ field. See <code class="docutils literal"><span class="pre">photons_protocol.typ
 <dt id="photons_protocol.packets.PacketSpecMixin.clone">
 <code class="descname">clone</code><span class="sig-paren">(</span><em>overrides=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.packets.PacketSpecMixin.clone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Efficiently create a shallow copy of this packet without going
-through input_algorithms</p>
-<p>The exception is anything in overrides will go through input_algorithms</p>
+through delfick_project.norms</p>
+<p>The exception is anything in overrides will go through delfick_project.norms</p>
 </dd></dl>
 
 <dl class="method">
@@ -321,7 +321,7 @@ through input_algorithms</p>
 <dl class="method">
 <dt id="photons_protocol.packets.PacketSpecMixin.spec">
 <em class="property">classmethod </em><code class="descname">spec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.packets.PacketSpecMixin.spec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an <code class="docutils literal"><span class="pre">input_algorithms</span></code> specification that creates an instance
+<dd><p>Return an <code class="docutils literal"><span class="pre">delfick_project.norms</span></code> specification that creates an instance
 of this class from a dictionary of values</p>
 <p>If this is a parent_packet with a group having message_type of 0 then that field
 is added to the spec and requires a T.Bytes</p>
@@ -521,7 +521,7 @@ payload if we don’t have a payload class, or if we raise an error</dd>
 <p class="last"><code class="docutils literal"><span class="pre">None</span></code> represents treating the field as just bytes</p>
 </dd>
 <dt>conversion</dt>
-<dd>A input_algorithms spec or a type representing what form the value should take in Python land</dd>
+<dd>A delfick_project.norms spec or a type representing what form the value should take in Python land</dd>
 </dl>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -530,7 +530,7 @@ representing the number of <code class="docutils literal"><span class="pre">bits
 </div>
 <dl class="method">
 <dt id="photons_protocol.types.Type.S">
-<code class="descname">S</code><span class="sig-paren">(</span><em>size_bits</em>, <em>left=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.S" title="Permalink to this definition">¶</a></dt>
+<code class="descname">S</code><span class="sig-paren">(</span><em>size_bits</em>, <em>left=&lt;class 'delfick_project.norms.spec_base.NotSpecified'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.S" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a new instance with a different size_bits</p>
 </dd></dl>
 
@@ -590,7 +590,7 @@ representing the number of <code class="docutils literal"><span class="pre">bits
 
 <dl class="method">
 <dt id="photons_protocol.types.Type.many">
-<code class="descname">many</code><span class="sig-paren">(</span><em>manyiser</em>, <em>sizer=&lt;class 'input_algorithms.spec_base.NotSpecified'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.many" title="Permalink to this definition">¶</a></dt>
+<code class="descname">many</code><span class="sig-paren">(</span><em>manyiser</em>, <em>sizer=&lt;class 'delfick_project.norms.spec_base.NotSpecified'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.many" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set options to convert this field into a list of items</p>
 <p>manyiser is a function that takes in the packet and returns the class to use for the list.</p>
 <p>sizer is either a number, which is the number of bits used by each item in the list
@@ -621,7 +621,7 @@ by manyiser</p>
 <dl class="method">
 <dt id="photons_protocol.types.Type.spec">
 <code class="descname">spec</code><span class="sig-paren">(</span><em>pkt</em>, <em>unpacking=False</em>, <em>transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.spec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an input_algorithms spec object for normalising values before and
+<dd><p>Return a delfick_project.norms spec object for normalising values before and
 after packing/unpacking</p>
 <p>This spec has the default and override on the class applied to it</p>
 <p>Where override and default are called with <code class="docutils literal"><span class="pre">pkt</span></code> before being used.</p>

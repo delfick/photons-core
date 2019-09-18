@@ -186,7 +186,8 @@
             
   <div class="section" id="module-photons_app.errors">
 <span id="photons-error-classes"></span><span id="photons-app-errors"></span><h1>Photons Error Classes<a class="headerlink" href="#module-photons_app.errors" title="Permalink to this headline">¶</a></h1>
-<p>Photons makes heavy use of <a class="reference external" href="https://delfick-error.readthedocs.io">delfick errors</a>
+<p>Photons makes heavy use of
+<a class="reference external" href="https://delfick-project.readthedocs.io/en/latest/api/errors.html">delfick errors</a>
 and so should you!</p>
 <p>Just base your error classes on <code class="docutils literal"><span class="pre">PhotonsAppError</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_app.errors</span> <span class="kn">import</span> <span class="n">PhotonsAppError</span>
@@ -197,8 +198,8 @@ and so should you!</p>
 <span class="k">raise</span> <span class="n">MyAmazingError</span><span class="p">(</span><span class="s2">&quot;The world exploded&quot;</span><span class="p">,</span> <span class="n">info_one</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">info_two</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <a class="reference external" href="https://delfick-app.readthedocs.io">delfick_app</a> integration will catch
-these errors and display them relatively nicely.</p>
+<p>The <a class="reference external" href="https://delfick-project.readthedocs.io/en/latest/api/app.html">app</a>
+integration will catch these errors and display them relatively nicely.</p>
 <dl class="class">
 <dt id="photons_app.errors.ApplicationCancelled">
 <em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">ApplicationCancelled</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.ApplicationCancelled" title="Permalink to this definition">¶</a></dt>
@@ -221,12 +222,6 @@ these errors and display them relatively nicely.</p>
 <dt id="photons_app.errors.BadOption">
 <em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadOption</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadOption" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bad Option</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="photons_app.errors.BadOptionFormat">
-<em class="property">class </em><code class="descclassname">photons_app.errors.</code><code class="descname">BadOptionFormat</code><span class="sig-paren">(</span><em>message=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.errors.BadOptionFormat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bad option format</p>
 </dd></dl>
 
 <dl class="class">

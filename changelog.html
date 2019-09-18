@@ -175,6 +175,37 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.21.0 - 18 September 2019</dt>
+<dd><ul class="first last">
+<li><p class="first">Migrated to <a class="reference external" href="https://delfick-project.readthedocs.io/">delfick_project</a></p>
+</li>
+<li><p class="first">this essentially means the following imports change from:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>   <span class="kn">from</span> <span class="nn">option_merge_addons</span> <span class="kn">import</span> <span class="n">option_merge_addon_hook</span>
+   <span class="kn">from</span> <span class="nn">input_algorithms.spec_base</span> <span class="kn">import</span> <span class="n">NotSpecified</span>
+   <span class="kn">from</span> <span class="nn">input_algorithms</span> <span class="kn">import</span> <span class="n">spec_base</span> <span class="k">as</span> <span class="n">sb</span>
+   <span class="kn">from</span> <span class="nn">input_algorithms.dictobj</span> <span class="kn">import</span> <span class="n">dictobj</span>
+   <span class="kn">from</span> <span class="nn">input_algorithms.meta</span> <span class="kn">import</span> <span class="n">Meta</span>
+   <span class="kn">from</span> <span class="nn">option_merge</span> <span class="kn">import</span> <span class="n">MergedOptions</span>
+
+<span class="n">into</span><span class="p">:</span>
+
+<span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+
+   <span class="kn">from</span> <span class="nn">delfick_project.option_merge</span> <span class="kn">import</span> <span class="n">MergedOptions</span>
+   <span class="kn">from</span> <span class="nn">delfick_project.norms</span> <span class="kn">import</span> <span class="n">dictobj</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="n">Meta</span>
+   <span class="kn">from</span> <span class="nn">delfick_project.addons</span> <span class="kn">import</span> <span class="n">addon_hook</span>
+
+   <span class="n">NotSpecified</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NotSpecified</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>0.20.5 - 11 September 2019</dt>
+<dd><ul class="first last simple">
+<li>Fix tile animations</li>
+</ul>
+</dd>
 <dt>0.20.4 - 2 September 2019</dt>
 <dd><ul class="first last simple">
 <li>Photons code is now formatted by the black project</li>
