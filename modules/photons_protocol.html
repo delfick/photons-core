@@ -589,24 +589,6 @@ representing the number of <code class="docutils literal"><span class="pre">bits
 </dd></dl>
 
 <dl class="method">
-<dt id="photons_protocol.types.Type.many">
-<code class="descname">many</code><span class="sig-paren">(</span><em>manyiser</em>, <em>sizer=&lt;class 'delfick_project.norms.spec_base.NotSpecified'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.many" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set options to convert this field into a list of items</p>
-<p>manyiser is a function that takes in the packet and returns the class to use for the list.</p>
-<p>sizer is either a number, which is the number of bits used by each item in the list
-or a function that takes in <code class="docutils literal"><span class="pre">(pkt,</span> <span class="pre">item)</span></code> and returns the size of bits for that item in the list</p>
-<p>If sizer is not specified, then the length of each item will be the size_bits of the kls returned
-by manyiser</p>
-<p>We convert the field into a list of instances of that kls.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="photons_protocol.types.Type.many_wrapper">
-<code class="descname">many_wrapper</code><span class="sig-paren">(</span><em>spec</em>, <em>pkt</em>, <em>unpacking=False</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.many_wrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper to convert to and from list fields</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="photons_protocol.types.Type.optional">
 <code class="descname">optional</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.optional" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the _optional option</p>
@@ -620,7 +602,7 @@ by manyiser</p>
 
 <dl class="method">
 <dt id="photons_protocol.types.Type.spec">
-<code class="descname">spec</code><span class="sig-paren">(</span><em>pkt</em>, <em>unpacking=False</em>, <em>transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.spec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">spec</code><span class="sig-paren">(</span><em>pkt</em>, <em>unpacking=False</em>, <em>transform=True</em>, <em>multiple=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.types.Type.spec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a delfick_project.norms spec object for normalising values before and
 after packing/unpacking</p>
 <p>This spec has the default and override on the class applied to it</p>
