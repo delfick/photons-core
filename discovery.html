@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Device Discovery &mdash; Photons 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Photons 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Finding Serials" href="finding_serials.html"/>
+        <link rel="prev" title="Config file" href="config_file.html"/>
+   
+	<link rel="stylesheet" href="_static/css/styles.css" type="text/css"/>
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Photons
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="lifx_script.html">LIFX script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Making a Photons Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">Using Photons as a library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config_file.html">Config file</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Device Discovery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#discovery-options">Discovery options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#target-options">Target options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#programmatically-telling-photons-where-a-device-is">Programmatically telling photons where a device is</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">ChangeLog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="photons_app/index.html">photons_app</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary_protocol.html">LIFX Binary protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_modules.html">Available Photons Modules</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Photons</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Device Discovery</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/discovery.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="device-discovery">
+<span id="discovery"></span><h1>Device Discovery<a class="headerlink" href="#device-discovery" title="Permalink to this headline">¶</a></h1>
+<p>LIFX devices are found on the network by broadcasting a GetService message and
+interpreting the StateService messages devices on the network send back.</p>
+<p>However, on networks with a large amount of devices or where broadcast is
+disabled, this method of discovery either doesn’t work or is unreliable. For these
+environments, photons can be given hard coded discovery information and serial
+filters.</p>
+<div class="section" id="discovery-options">
+<span id="id1"></span><h2>Discovery options<a class="headerlink" href="#discovery-options" title="Permalink to this headline">¶</a></h2>
+<p>In your <a class="reference internal" href="config_file.html#config-file"><span class="std std-ref">configuration</span></a> you can specify something like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">discovery_options</span><span class="p">:</span>
+  <span class="nt">hardcoded_discovery</span><span class="p">:</span>
+    <span class="nt">d073d5000001</span><span class="p">:</span> <span class="s">&quot;192.168.0.1&quot;</span>
+    <span class="nt">d073d5000002</span><span class="p">:</span> <span class="s">&quot;192.168.0.2&quot;</span>
+</pre></div>
+</div>
+<p>And photons will use those ip addresses for those serials. By specifying
+hardcoded_discovery, photons will not attempt to do broadcast discovery and will
+only know about the serials you have specified.</p>
+<p>You may also specify serial_filter:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">discovery_options</span><span class="p">:</span>
+  <span class="nt">serial_filter</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">d073d5001337</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">d073d5001338</span>
+</pre></div>
+</div>
+<p>In this case, broadcast discovery will be used, but it will only discover those
+two serials and ignore all other devices. This is handy if you want to use
+the <a class="reference internal" href="modules/photons_device_finder.html#photons-device-finder"><span class="std std-ref">photons_device_finder</span></a> and have a large number of devices on your
+network.</p>
+<p>You can also combine serial_filter and hardcoded_discovery.</p>
+<p>You can override what is configured with environment variables. For example,
+regardless of what you have in configuration, if you say something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export HARDCODED_DISCOVERY=&#39;{&quot;d073d5111111&quot;: &quot;192.168.0.1&quot;}&#39;
+$ lifx lan:get_attr _ color
+</pre></div>
+</div>
+<p>Will only care about d073d5111111 and assume it’s at 192.168.0.1</p>
+<p>And/Or you may specify SERIAL_FILTER:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export SERIAL_FILTER=d073d500001,d073d5111111
+$ lifx lan:get_attr _ color
+</pre></div>
+</div>
+<p>This will do a broadcast discovery, but only care about d073d5000001 and d073d5111111</p>
+<p>If you want to turn off discovery options via environment variables you may
+specify them as null. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ export HARDCODED_DISCOVERY=null
+$ export SERIAL_FILTER=null
+$ lifx lan get_attr _ color
+</pre></div>
+</div>
+</div>
+<div class="section" id="target-options">
+<span id="id2"></span><h2>Target options<a class="headerlink" href="#target-options" title="Permalink to this headline">¶</a></h2>
+<p>You may also define your own <code class="docutils literal"><span class="pre">lan</span></code> targets that have their own discovery options
+and broadcast address.</p>
+<p>For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">targets</span><span class="p">:</span>
+   <span class="nt">my_target</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+        <span class="nt">default_broadcast</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.255</span>
+</pre></div>
+</div>
+<p>Then when you say something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ lifx my_target:get_attr _ color
+</pre></div>
+</div>
+<p>It will use 192.168.0.255 as the broadcast address instead of the default
+255.255.255.255.</p>
+<p>You can also add discovery_options to your target:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">targets</span><span class="p">:</span>
+   <span class="nt">my_target</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+       <span class="nt">discovery_options</span><span class="p">:</span>
+         <span class="nt">hardcoded_discovery</span><span class="p">:</span>
+           <span class="nt">d073d5001337</span><span class="p">:</span> <span class="s">&quot;192.168.0.1&quot;</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal"><span class="pre">my_target</span></code> will only ever see d073d5001337 instead of doing
+broadcast discovery. Note that environment variables mentioned above will also
+override per target options.</p>
+<p>You can add to global discovery_options per target, for example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">discovery_options</span><span class="p">:</span>
+  <span class="nt">hardcoded_discovery</span><span class="p">:</span>
+    <span class="nt">d073d5000001</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.1</span>
+
+<span class="nt">targets</span><span class="p">:</span>
+   <span class="nt">target_one</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+       <span class="nt">discovery_options</span><span class="p">:</span>
+         <span class="nt">hardcoded_discovery</span><span class="p">:</span>
+           <span class="nt">d073d5000002</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.2</span>
+
+   <span class="nt">target_two</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+       <span class="nt">discovery_options</span><span class="p">:</span>
+         <span class="nt">hardcoded_discovery</span><span class="p">:</span>
+           <span class="nt">d073d5000003</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.0.3</span>
+</pre></div>
+</div>
+<p>In this scenario, target_one knows about d073d5000001 and d073d5000002. Whilst
+target_two knows about d073d5000001 and d073d5000003.</p>
+<p>You may also override serial_filter, for example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">discovery_options</span><span class="p">:</span>
+  <span class="nt">serial_filter</span><span class="p">:</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">d073d5000001</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">d073d5000002</span>
+
+<span class="nt">targets</span><span class="p">:</span>
+   <span class="nt">target_one</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+       <span class="nt">discovery_options</span><span class="p">:</span>
+         <span class="nt">serial_filter</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">d073d5000003</span>
+
+   <span class="nt">target_two</span><span class="p">:</span>
+     <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lan</span>
+     <span class="nt">options</span><span class="p">:</span>
+       <span class="nt">discovery_options</span><span class="p">:</span>
+         <span class="nt">serial_filter</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+</pre></div>
+</div>
+<p>In this case, all targets will do broadcast discovery, but the default lan target
+will only see d073d5000001 and d073d5000002, whilst the target_one will only
+see d073d5000003 and target_two will see all devices on the network.</p>
+</div>
+<div class="section" id="programmatically-telling-photons-where-a-device-is">
+<h2>Programmatically telling photons where a device is<a class="headerlink" href="#programmatically-telling-photons-where-a-device-is" title="Permalink to this headline">¶</a></h2>
+<p>You can tell photons where a device is uses <code class="docutils literal"><span class="pre">afr.add_service</span></code>, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_app.executor</span> <span class="kn">import</span> <span class="n">library_setup</span>
+
+<span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">LightMessages</span><span class="p">,</span> <span class="n">Services</span>
+
+<span class="kn">from</span> <span class="nn">delfick_project.logging</span> <span class="kn">import</span> <span class="n">setup_logging</span>
+
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">doit</span><span class="p">(</span><span class="n">collector</span><span class="p">):</span>
+   <span class="n">lan_target</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;lan&quot;</span><span class="p">)</span>
+
+   <span class="n">async</span> <span class="k">with</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
+      <span class="c1"># Use add_service to tell photons where this device is</span>
+      <span class="c1"># The run_with mechanism will know that it already has this serial when we</span>
+      <span class="c1"># send messages to it, and so it won&#39;t try to do any discovery</span>
+      <span class="n">await</span> <span class="n">afr</span><span class="o">.</span><span class="n">add_service</span><span class="p">(</span><span class="s2">&quot;d073d533137a&quot;</span><span class="p">,</span> <span class="n">Services</span><span class="o">.</span><span class="n">UDP</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;192.168.0.18&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">56700</span><span class="p">)</span>
+
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">LightMessages</span><span class="o">.</span><span class="n">GetColor</span><span class="p">()</span>
+      <span class="n">async</span> <span class="k">for</span> <span class="n">pkt</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">lan_target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">run_with</span><span class="p">(</span><span class="s2">&quot;d073d533137a&quot;</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0}: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">serial</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pkt</span><span class="o">.</span><span class="n">payload</span><span class="p">)))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+   <span class="n">setup_logging</span><span class="p">()</span>
+   <span class="n">collector</span> <span class="o">=</span> <span class="n">library_setup</span><span class="p">()</span>
+   <span class="n">collector</span><span class="o">.</span><span class="n">run_coro_as_main</span><span class="p">(</span><span class="n">doit</span><span class="p">(</span><span class="n">collector</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="finding_serials.html" class="btn btn-neutral float-right" title="Finding Serials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="config_file.html" class="btn btn-neutral" title="Config file" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stephen Moore.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

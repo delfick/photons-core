@@ -102,6 +102,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
@@ -610,6 +612,31 @@ defined for the 1024 protocol and looks for <code class="docutils literal"><span
 <p class="last">So if you want the <code class="docutils literal"><span class="pre">color</span></code> attribute, it will look for the <code class="docutils literal"><span class="pre">GetColor</span></code>
 message and send that to the device and print out the reply packet we get
 back.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">find_ips</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Needs a target to be specified</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">List the ips of the devices that can be found on the network</p>
+<blockquote>
+<div>lifx lan:find_ips</div></blockquote>
+<p>You can specify a different broadcast address by saying:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">lifx</span> <span class="n">lan</span><span class="p">:</span><span class="n">find_ips</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span>
+</pre></div>
+</div>
 </td>
 </tr>
 </tbody>

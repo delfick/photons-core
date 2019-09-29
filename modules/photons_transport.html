@@ -101,6 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
@@ -204,7 +206,7 @@ or more connections to your devices that it uses to send a receive messages.</p>
 then talking to them over that medium.</p>
 <dl class="class">
 <dt id="photons_transport.targets.LanTarget">
-<em class="property">class </em><code class="descclassname">photons_transport.targets.</code><code class="descname">LanTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>final_future</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.targets.LanTarget" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_transport.targets.</code><code class="descname">LanTarget</code><span class="sig-paren">(</span><em>default_broadcast</em>, <em>description</em>, <em>discovery_options</em>, <em>final_future</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_transport.targets.LanTarget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Knows how to talk to a device over the local network. It’s one configuration
 option is default_broadcast which says what address to broadcast discovery
 if broadcast is given to run_with calls as True.</p>

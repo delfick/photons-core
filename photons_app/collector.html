@@ -102,6 +102,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
@@ -194,6 +196,17 @@ modules.</p>
 <dd><p>This is based off the delfick project
 <a class="reference external" href="https://delfick-project.readthedocs.io/en/latest/api/option_merge/api/collector.html">Collector</a></p>
 <p>It overrides the following:</p>
+<dl class="method">
+<dt id="photons_app.collector.Collector.run_coro_as_main">
+<code class="descname">run_coro_as_main</code><span class="sig-paren">(</span><em>coro</em>, <em>catch_delfick_error=True</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.run_coro_as_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run this coroutine as the mainline of your program.</p>
+<p>It is assumed that when this coroutine ends that the entire program will
+end.</p>
+<p>If you want to wait “forever”, then wait on
+<code class="docutils literal"><span class="pre">self.configuration[&quot;photons_app&quot;].final_future</span></code> as this future will
+be cancelled on SIGTERM, SIGINT and the end of the coroutine.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="photons_app.collector.Collector.extra_prepare">
 <code class="descname">extra_prepare</code><span class="sig-paren">(</span><em>configuration</em>, <em>args_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.collector.Collector.extra_prepare" title="Permalink to this definition">¶</a></dt>

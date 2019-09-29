@@ -101,6 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packets.html">Packets</a></li>
@@ -181,29 +183,12 @@ the collector with <code class="docutils literal"><span class="pre">photons_app.
 
 <span class="kn">from</span> <span class="nn">photons_messages</span> <span class="kn">import</span> <span class="n">DeviceMessages</span>
 
+<span class="kn">from</span> <span class="nn">delfick_project.logging</span> <span class="kn">import</span> <span class="n">setup_logging</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
-<span class="c1"># Create the collector with default options</span>
-<span class="c1"># This will load all the modules under the lifx.photons entry_point namespace</span>
-<span class="c1"># You can load only particular entry_points by</span>
-<span class="c1"># setting find_all_photons_modules to False</span>
-<span class="c1"># and core_modules to a list like [&quot;transport&quot;, &quot;color&quot;]</span>
-<span class="n">collector</span> <span class="o">=</span> <span class="n">library_setup</span><span class="p">()</span>
+<span class="n">async</span> <span class="k">def</span> <span class="nf">doit</span><span class="p">(</span><span class="n">collector</span><span class="p">):</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;lan&quot;</span><span class="p">)</span>
 
-<span class="c1"># We can get a loop from the photons_app object</span>
-<span class="c1"># This just gets a normal asyncio event loop</span>
-<span class="c1"># And sets debug on it if photons_app.debug is set</span>
-<span class="n">loop</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;photons_app&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loop</span>
-
-<span class="c1"># Or we can do something like</span>
-<span class="c1"># import asyncio</span>
-<span class="c1"># loop = asyncio.new_event_loop()</span>
-<span class="c1"># asyncio.set_event_loop(loop)</span>
-
-<span class="c1"># Then we get our lan target</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">collector</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;target_register&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">&quot;lan&quot;</span><span class="p">)</span>
-
-<span class="n">async</span> <span class="k">def</span> <span class="nf">doit</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
         <span class="c1"># Determine the reference somehow, should be a string of the serial (i.e. d073d5000001)</span>
         <span class="c1"># Or you can import ``photons_app.special.FoundSerials``</span>
@@ -211,7 +196,19 @@ the collector with <code class="docutils literal"><span class="pre">photons_app.
         <span class="c1"># Which will search for all the serials it can find and send our messages to them all</span>
         <span class="n">await</span> <span class="n">target</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">DeviceMessages</span><span class="o">.</span><span class="n">SetPower</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">run_with_all</span><span class="p">([</span><span class="n">reference</span><span class="p">])</span>
 
-<span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">doit</span><span class="p">())</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Setup logging handlers</span>
+    <span class="n">setup_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+    <span class="c1"># Create the collector with default options</span>
+    <span class="c1"># This will load all the modules under the lifx.photons entry_point namespace</span>
+    <span class="c1"># You can load only particular entry_points by</span>
+    <span class="c1"># setting find_all_photons_modules to False</span>
+    <span class="c1"># and core_modules to a list like [&quot;transport&quot;, &quot;color&quot;]</span>
+    <span class="n">collector</span> <span class="o">=</span> <span class="n">library_setup</span><span class="p">()</span>
+
+    <span class="c1"># Run our doit function and handle stopping correctly</span>
+    <span class="n">collector</span><span class="o">.</span><span class="n">run_coro_as_main</span><span class="p">(</span><span class="n">doit</span><span class="p">(</span><span class="n">collector</span><span class="p">))</span>
 </pre></div>
 </div>
 <dl class="function">

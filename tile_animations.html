@@ -101,8 +101,11 @@
 <li class="toctree-l1"><a class="reference internal" href="venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tile Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-tile-animation-on-a-noisy-network">Running a tile animation on a noisy network</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#starting-an-animation-programmatically">Starting an animation programmatically</a></li>
 </ul>
 </li>
@@ -396,11 +399,39 @@ makes the lines longer.</dd>
 </dl>
 </dd>
 </dl>
+<div class="section" id="running-a-tile-animation-on-a-noisy-network">
+<span id="tile-animation-noisy"></span><h2>Running a tile animation on a noisy network<a class="headerlink" href="#running-a-tile-animation-on-a-noisy-network" title="Permalink to this headline">¶</a></h2>
+<p>By default tile animations will not throttle the sending of messages to the tiles
+which means in a noisy enough environment, there can be a delay of messages
+reaching the tile, which results in a very bad animation.</p>
+<p>In such an environment, you can tell photons to throttle the messages that are
+sent to the tiles.</p>
+<p>You can do this via <a class="reference internal" href="config_file.html#config-file"><span class="std std-ref">configuration</span></a> or via environment variables.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="nt">animation_options</span><span class="p">:</span>
+   <span class="nt">noisy_network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+   <span class="nt">inflight_limit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</div>
+<p>You can override configuration with the following two environment variables:</p>
+<dl class="docutils">
+<dt>NOISY_NETWORK</dt>
+<dd>If this environment variable is defined, then the noisy network code will be
+used</dd>
+<dt>ANIMATION_INFLIGHT_MESSAGE_LIMIT</dt>
+<dd>This needs to be the max number of unacknowledged frames that can be inflight
+at any point</dd>
+</dl>
+<p>So if I set NOISY_NETWORK on and set the inflight limit to 2, then  when it comes
+to sending the next frame, if we have two frames that haven’t been acknowledged
+yet, then we won’t send anything for this frame.</p>
+</div>
 <div class="section" id="starting-an-animation-programmatically">
 <h2>Starting an animation programmatically<a class="headerlink" href="#starting-an-animation-programmatically" title="Permalink to this headline">¶</a></h2>
 <p>You can start the animation in a script by doing something like the following
 assuming you already have a lan target object:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span><span class="p">,</span> <span class="n">GlobalOptions</span>
 
 <span class="kn">import</span> <span class="nn">asyncio</span>
 
@@ -410,11 +441,14 @@ assuming you already have a lan target object:</p>
 <span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
     <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello there&quot;</span><span class="p">}</span>
     <span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;d073d5000001&quot;</span>
-    <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="n">global_options</span> <span class="o">=</span> <span class="n">GlobalOptions</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+    <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span>
+        <span class="p">,</span> <span class="n">global_options</span> <span class="o">=</span> <span class="n">global_options</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 <p>You can also pause if it if you pass in an asyncio.Condition and acquire it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_tile_paint.addon</span> <span class="kn">import</span> <span class="n">Animations</span><span class="p">,</span> <span class="n">GlobalOptions</span>
 
 <span class="kn">from</span> <span class="nn">photons_app</span> <span class="kn">import</span> <span class="n">helpers</span> <span class="k">as</span> <span class="n">hp</span>
 
@@ -440,8 +474,10 @@ assuming you already have a lan target object:</p>
 <span class="n">async</span> <span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">afr</span><span class="p">:</span>
     <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;hello there&quot;</span><span class="p">}</span>
     <span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;d073d5000001&quot;</span>
+    <span class="n">global_options</span> <span class="o">=</span> <span class="n">GlobalOptions</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
     <span class="n">await</span> <span class="n">Animations</span><span class="o">.</span><span class="n">tile_marquee</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="n">final_future</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">options</span>
         <span class="p">,</span> <span class="n">pauser</span> <span class="o">=</span> <span class="n">pauser</span>
+        <span class="p">,</span> <span class="n">global_options</span> <span class="o">=</span> <span class="n">global_options</span>
         <span class="p">)</span>
 </pre></div>
 </div>

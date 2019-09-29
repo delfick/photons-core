@@ -102,6 +102,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../venvstarter.html">Using Venvstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../script_mechanism.html">The Script Mechanism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../planner.html">Planner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config_file.html">Config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery.html">Device Discovery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../finding_serials.html">Finding Serials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tile_animations.html">Tile Animations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../packets.html">Packets</a></li>
@@ -366,11 +368,14 @@ is the lines that make up it’s definition. This is used for <code class="docut
 <em class="property">class </em><code class="descclassname">photons_protocol.messages.</code><code class="descname">MessagesMixin</code><a class="headerlink" href="#photons_protocol.messages.MessagesMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality for a collection of Protocol Messages</p>
 <dl class="method">
-<dt id="photons_protocol.messages.MessagesMixin.get_message_type">
-<em class="property">classmethod </em><code class="descname">get_message_type</code><span class="sig-paren">(</span><em>data</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.messages.MessagesMixin.get_message_type" title="Permalink to this definition">¶</a></dt>
+<dt id="photons_protocol.messages.MessagesMixin.get_packet_type">
+<em class="property">classmethod </em><code class="descname">get_packet_type</code><span class="sig-paren">(</span><em>data</em>, <em>protocol_register</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.messages.MessagesMixin.get_packet_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a ProtocolRegister and some data (bytes or dictionary)
-return <code class="docutils literal"><span class="pre">(pkt_type,</span> <span class="pre">Packet,</span> <span class="pre">kls,</span> <span class="pre">pkt)</span></code></p>
+return <code class="docutils literal"><span class="pre">(protocol,</span> <span class="pre">pkt_type,</span> <span class="pre">Packet,</span> <span class="pre">kls,</span> <span class="pre">data)</span></code></p>
 <dl class="docutils">
+<dt>protocol</dt>
+<dd>The number specifying the “protocol” of this message. This is
+likely to always be 1024.</dd>
 <dt>pkt_type</dt>
 <dd>The number assigned to this payload type. This code assumes the
 unpacked data has a <code class="docutils literal"><span class="pre">pkt_type</span></code> property that is retrieved for this.</dd>
@@ -380,9 +385,12 @@ unpacked data has a <code class="docutils literal"><span class="pre">pkt_type</s
 <p class="last">Use this number in protocol register to find the <code class="docutils literal"><span class="pre">parent_packet</span></code>.</p>
 </dd>
 <dt>kls</dt>
-<dd>The payload class representing this protocol and pkt_type.</dd>
-<dt>pkt</dt>
-<dd>An instance of the <code class="docutils literal"><span class="pre">parent_packet</span></code> from the data.</dd>
+<dd><p class="first">The payload class representing this protocol and pkt_type.</p>
+<p class="last">This is None if the protocol/pkt_type pair is unknown</p>
+</dd>
+<dt>data</dt>
+<dd>If the data was a dictionary, bytes or bitarray then returned as is
+if the data was a str, then we return it as unhexlified bytes</dd>
 </dl>
 </dd></dl>
 
@@ -397,7 +405,7 @@ packing.</p>
 
 <dl class="method">
 <dt id="photons_protocol.messages.MessagesMixin.pack_payload">
-<em class="property">classmethod </em><code class="descname">pack_payload</code><span class="sig-paren">(</span><em>message_type</em>, <em>data</em>, <em>messages_register=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.messages.MessagesMixin.pack_payload" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">pack_payload</code><span class="sig-paren">(</span><em>pkt_type</em>, <em>data</em>, <em>messages_register=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.messages.MessagesMixin.pack_payload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given some payload data as a dictionary and it’s <code class="docutils literal"><span class="pre">pkt_type</span></code>, return a
 hexlified string of the payload.</p>
 </dd></dl>
@@ -411,13 +419,6 @@ hexlified string of the payload.</p>
 <dd>Whether we return an instance of the parent_packet with unresolved
 payload if we don’t have a payload class, or if we raise an error</dd>
 </dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="photons_protocol.messages.MessagesMixin.unpack_pkt">
-<em class="property">classmethod </em><code class="descname">unpack_pkt</code><span class="sig-paren">(</span><em>PacketKls</em>, <em>pkt</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_protocol.messages.MessagesMixin.unpack_pkt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new instance of PacketKls and transfer values from pkt onto it</p>
-<p>Then unpack the payload on pkt and set on the new instance of PacketKls</p>
 </dd></dl>
 
 </dd></dl>
