@@ -121,7 +121,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="photons_messages.html">photons_messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="photons_products_registry.html">photons_products_registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="photons_products.html">photons_products</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_protocol.html">photons_protocol</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_themes.html">photons_themes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="photons_tile_paint.html">photons_tile_paint</a></li>
@@ -353,14 +353,14 @@ and 30 (inclusive).</dd>
 <dd>The version of the HostFirmware as a string of “{major}.{minor}”.</dd>
 <dt>product_id</dt>
 <dd>The product id of the device as an integer. You can see the hex product id
-of each device type in the <code class="docutils literal"><span class="pre">photons_products_registry</span></code> module.</dd>
+of each device type in the <code class="docutils literal"><span class="pre">photons_products</span></code> module.</dd>
 <dt>product_identifier</dt>
 <dd>A string identifying the product type of the device. You can find these in
-the <code class="docutils literal"><span class="pre">photons_products_registry</span></code> module.</dd>
+the <code class="docutils literal"><span class="pre">photons_products</span></code> module.</dd>
 <dt>cap</dt>
 <dd><p class="first">A list of strings of capabilities this device has.</p>
-<p class="last">Capabilities include <code class="docutils literal"><span class="pre">ir</span></code>, <code class="docutils literal"><span class="pre">color</span></code>, <code class="docutils literal"><span class="pre">chain</span></code>, <code class="docutils literal"><span class="pre">multizone</span></code>, <code class="docutils literal"><span class="pre">variable_color_temp</span></code>
-and <code class="docutils literal"><span class="pre">not_ir</span></code>, <code class="docutils literal"><span class="pre">not_color</span></code>, <code class="docutils literal"><span class="pre">not_chain</span></code>, <code class="docutils literal"><span class="pre">not_multizone</span></code>, <code class="docutils literal"><span class="pre">not_variable_color_temp</span></code></p>
+<p class="last">Capabilities include <code class="docutils literal"><span class="pre">ir</span></code>, <code class="docutils literal"><span class="pre">color</span></code>, <code class="docutils literal"><span class="pre">chain</span></code>, <code class="docutils literal"><span class="pre">matrix</span></code>, <code class="docutils literal"><span class="pre">multizone</span></code>, <code class="docutils literal"><span class="pre">variable_color_temp</span></code>
+and <code class="docutils literal"><span class="pre">not_ir</span></code>, <code class="docutils literal"><span class="pre">not_color</span></code>, <code class="docutils literal"><span class="pre">not_chain</span></code>, <code class="docutils literal"><span class="pre">not_matrix</span></code>, <code class="docutils literal"><span class="pre">not_multizone</span></code>, <code class="docutils literal"><span class="pre">not_variable_color_temp</span></code></p>
 </dd>
 </dl>
 <p>When a property in the filter is an array, it will match any device that matches

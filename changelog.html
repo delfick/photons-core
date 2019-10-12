@@ -177,6 +177,71 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.23.0 - 12 October 2019</dt>
+<dd><ul class="first last">
+<li><p class="first">Added large_font and speed options to the tile_marquee animation which
+allows a 16x16 font across two tile sets.</p>
+</li>
+<li><p class="first">Changed photons_control.multizone.find_multizone to yield
+<code class="docutils literal"><span class="pre">(serial,</span> <span class="pre">capability)</span></code> instead of <code class="docutils literal"><span class="pre">(serial,</span> <span class="pre">has_extended_multizone)</span></code>.
+You can get <code class="docutils literal"><span class="pre">has_extended_multizone</span></code> by saying <code class="docutils literal"><span class="pre">capability.has_extended_multizone</span></code></p>
+</li>
+<li><p class="first">Changed the Capability plan to yield <code class="docutils literal"><span class="pre">{&quot;product&quot;:</span> <span class="pre">&lt;Product&gt;,</span> <span class="pre">&quot;cap&quot;:</span> <span class="pre">&lt;capability&gt;}</span></code>
+instead of also yielding a <code class="docutils literal"><span class="pre">has_extended_multizone</span></code> field. You may get this
+by saying <code class="docutils literal"><span class="pre">info[&quot;cap&quot;].has_extended_multizone</span></code></p>
+</li>
+<li><p class="first">You should identify whether a product supports Tile messages by looking at
+the <code class="docutils literal"><span class="pre">has_matrix</span></code> capability instead of <code class="docutils literal"><span class="pre">has_chain</span></code>. We may rename the
+Tile messages to be Matrix messages in the future, but that change has yet
+to be properly thought out. The <code class="docutils literal"><span class="pre">has_matrix</span></code> capability says there is a
+2d array of LEDs on the device. The <code class="docutils literal"><span class="pre">has_chain</span></code> capability now means that
+there are multiple devices that appear as a single device on the network.</p>
+</li>
+<li><p class="first">Replaced the photons_products_registry module with the photons_products
+module. Essentially, you change code from first block to second block:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_products_registry</span> <span class="kn">import</span> <span class="n">capability_for_ids</span><span class="p">,</span> <span class="n">LIFIProductRegistry</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">LIFIProductRegistry</span><span class="o">.</span><span class="n">LCM3_TILE</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">vid</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">cap</span> <span class="o">=</span> <span class="n">capability_for_ids</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">vid</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">cap</span><span class="o">.</span><span class="n">has_chain</span>
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">LIFIProductRegistry</span><span class="o">.</span><span class="n">LCM2_Z</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">vid</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">cap</span> <span class="o">=</span> <span class="n">capability_for_ids</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">vid</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">cap</span><span class="o">.</span><span class="n">has_multizone</span>
+<span class="k">assert</span> <span class="n">cap</span><span class="o">.</span><span class="n">has_extended_multizone</span><span class="p">(</span><span class="n">firmware_major</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">firmware_minor</span><span class="o">=</span><span class="mi">77</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photons_products</span> <span class="kn">import</span> <span class="n">Products</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="n">Products</span><span class="o">.</span><span class="n">LCM3_TILE</span>
+<span class="c1"># or</span>
+<span class="n">product</span> <span class="o">=</span> <span class="n">Products</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+
+<span class="k">assert</span> <span class="n">product</span><span class="o">.</span><span class="n">cap</span><span class="o">.</span><span class="n">has_matrix</span>
+<span class="k">assert</span> <span class="n">product</span><span class="o">.</span><span class="n">cap</span><span class="o">.</span><span class="n">has_chain</span>
+
+<span class="c1"># Accessing a name on Products that doesn&#39;t exist will raise an error</span>
+<span class="c1"># But if you do say Prodcuts[1, 9001] it&#39;ll just return a product that</span>
+<span class="c1"># defaults to essentially no capabilities. As this means old versions of</span>
+<span class="c1"># photons won&#39;t break when it sees new devices it doesn&#39;t know about</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="n">Products</span><span class="o">.</span><span class="n">LCM2_Z</span>
+<span class="k">assert</span> <span class="n">cap</span><span class="o">.</span><span class="n">has_multizone</span>
+
+<span class="c1"># By default it&#39;ll assume firmware_major/firmware_minor of 0/0</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">cap</span><span class="o">.</span><span class="n">has_extended_multizone</span>
+
+<span class="c1"># But you can create a new capability object with different firmware</span>
+<span class="k">assert</span> <span class="n">cap</span><span class="p">(</span><span class="n">firmware_major</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">firmware_minor</span><span class="o">=</span><span class="mi">77</span><span class="p">)</span><span class="o">.</span><span class="n">has_extended_multizone</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
 <dt>0.22.1 - 29 September 2019</dt>
 <dd><ul class="first last simple">
 <li>Removed unnecessary errors from being written to the output when you

@@ -245,6 +245,13 @@ in a horizontal row.</dd>
 <dd>How many iterations before we stop. -1 means never stop</dd>
 <dt>direction – left or right – default left</dt>
 <dd>The direction the text goes in</dd>
+<dt>speed - int - default 1</dt>
+<dd>The number of pixels to progress each iteration of the loop</dd>
+<dt>large_font - bool - default false</dt>
+<dd>This uses a 16x16 font instead of an 8x8 font. Note that it only makes sense
+if you have two tiles and use <code class="docutils literal"><span class="pre">combine_tiles:</span> <span class="pre">true</span></code> in your options. Also
+the tiles need to have user_x and user_y properties such that they are both
+in horizontal lines on top of each other.</dd>
 </dl>
 </dd>
 <dt>tile_nyan</dt>
@@ -258,6 +265,8 @@ in a horizontal row.</dd>
 <dd>How many iterations before we stop. -1 means never stop</dd>
 <dt>random_orientations – bool – default false</dt>
 <dd>If true then we will choose a random orientation for each tile</dd>
+<dt>speed - int - default 1</dt>
+<dd>The number of pixels to progress each iteration of the loop</dd>
 </dl>
 </dd>
 <dt>tile_pacman</dt>
