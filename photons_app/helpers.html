@@ -328,6 +328,24 @@ when a new result is set.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="photons_app.helpers.TimedCache">
+<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">TimedCache</code><span class="sig-paren">(</span><em>creator</em>, <em>ttl=3600</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.TimedCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that caches a value from a function for a particular amount of time.</p>
+<p>Usage looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">TimedCache</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">expensive_operation</span><span class="p">(),</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span><span class="p">)</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
+<span class="o">....</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, if it’s been a day since the first creation, it will call the lambda
+we passed in again to create a new value. Otherwise it will return the last created value.</p>
+<p>ttl is measured in seconds and the default is 3600 (one hour)</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="photons_app.helpers.a_temp_file">
 <em class="property">with </em><code class="descclassname">photons_app.helpers.</code><code class="descname">a_temp_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.a_temp_file" title="Permalink to this definition">¶</a></dt>

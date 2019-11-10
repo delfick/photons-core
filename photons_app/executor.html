@@ -219,7 +219,8 @@ and is responsible for several things:</p>
                     [--tcp-logging-address TCP_LOGGING_ADDRESS]
                     [--udp-logging-address UDP_LOGGING_ADDRESS]
                     [--syslog-address SYSLOG_ADDRESS] [--json-console-logs]
-                    [--version] [--dry-run] [--task PHOTONS_APP_CHOSEN_TASK]
+                    [--version] [--logging-handler-file LOGGING_HANDLER_FILE]
+                    [--dry-run] [--task PHOTONS_APP_CHOSEN_TASK]
                     [--artifact PHOTONS_APP_ARTIFACT]
                     [--reference PHOTONS_APP_REFERENCE]
                     [--config PHOTONS_APP_CONFIG]
@@ -245,6 +246,8 @@ optional arguments:
   --json-console-logs   If we haven&#39;t set other logging arguments, this will
                         mean we log json lines to the console
   --version             Print out the version!
+  --logging-handler-file LOGGING_HANDLER_FILE
+                        File to print logs to
   --dry-run             Should we take any real action or print out what is
                         intends to do
   --task PHOTONS_APP_CHOSEN_TASK
