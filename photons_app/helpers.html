@@ -236,15 +236,30 @@ when a new result is set.</p>
 <em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">ThreadToAsyncQueue</code><span class="sig-paren">(</span><em>stop_fut</em>, <em>num_threads</em>, <em>onerror</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Queue for requesting data from some thread:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyQueue</span><span class="p">(</span><span class="n">ThreadToAsyncQueue</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">start_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This is called for each thread that is started&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">create_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thread_number</span><span class="p">,</span> <span class="n">existing</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This is called once when the queue is started</span>
+
+<span class="sd">        and then subsequently before every request.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">existing</span><span class="p">:</span>
+            <span class="c1"># Assuming you have a way of seeing if you should refresh the args</span>
+            <span class="c1"># Then this gives you an opportunity to do any shutdown logic for</span>
+            <span class="c1"># existing args and create new, or just return what exists already</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">should_refresh</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">existing</span>
+
+            <span class="n">cleanup</span><span class="p">(</span><span class="n">existing</span><span class="p">)</span>
+
         <span class="n">my_thread_thing</span> <span class="o">=</span> <span class="n">THING</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">my_thread_thing</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">onerror</span><span class="p">(</span><span class="n">exc</span><span class="p">):</span>
-    <span class="c1"># Some unexpected error, do something with it here</span>
-    <span class="c1"># Like talk to bugsnag or sentry</span>
-    <span class="c1"># The return value is discarded</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function is passed into __init__ when you create the queue</span>
+<span class="sd">    it is called on unexpected errors.</span>
+<span class="sd">    the return of this function is ignored</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">pass</span>
 
 <span class="c1"># If stop_fut is cancelled or has a result, then the queue will stop</span>
@@ -261,6 +276,15 @@ when a new result is set.</p>
 </pre></div>
 </div>
 <dl class="method">
+<dt id="photons_app.helpers.ThreadToAsyncQueue.create_args">
+<code class="descname">create_args</code><span class="sig-paren">(</span><em>thread_number</em>, <em>existing</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.create_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook to return extra args to give to functions when the are requested</p>
+<p>This is called once when the queue is started</p>
+<p>and then subsequently before every request.</p>
+<p>It must return None or a tuple of arguments to pass into request functions</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="photons_app.helpers.ThreadToAsyncQueue.find_and_set_future">
 <code class="descname">find_and_set_future</code><span class="sig-paren">(</span><em>key</em>, <em>result</em>, <em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.find_and_set_future" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find and set future for this key to provided result or exception</p>
@@ -274,7 +298,7 @@ when a new result is set.</p>
 
 <dl class="method">
 <dt id="photons_app.helpers.ThreadToAsyncQueue.listener">
-<code class="descname">listener</code><span class="sig-paren">(</span><em>ready_fut</em>, <em>impl=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.listener" title="Permalink to this definition">¶</a></dt>
+<code class="descname">listener</code><span class="sig-paren">(</span><em>thread_number</em>, <em>ready_fut</em>, <em>impl=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.listener" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the thread!</p>
 </dd></dl>
 
@@ -315,35 +339,11 @@ when a new result is set.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="photons_app.helpers.ThreadToAsyncQueue.start_thread">
-<code class="descname">start_thread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.start_thread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hook to return extra args to give to functions when the are requested</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="photons_app.helpers.ThreadToAsyncQueue.wrap_request">
 <code class="descname">wrap_request</code><span class="sig-paren">(</span><em>proc</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.ThreadToAsyncQueue.wrap_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a function that will perform the work</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="class">
-<dt id="photons_app.helpers.TimedCache">
-<em class="property">class </em><code class="descclassname">photons_app.helpers.</code><code class="descname">TimedCache</code><span class="sig-paren">(</span><em>creator</em>, <em>ttl=3600</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.helpers.TimedCache" title="Permalink to this definition">¶</a></dt>
-<dd><p>An object that caches a value from a function for a particular amount of time.</p>
-<p>Usage looks like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">TimedCache</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">expensive_operation</span><span class="p">(),</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">3600</span> <span class="o">*</span> <span class="mi">24</span><span class="p">)</span>
-
-<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
-<span class="o">....</span>
-<span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>In this example, if it’s been a day since the first creation, it will call the lambda
-we passed in again to create a new value. Otherwise it will return the last created value.</p>
-<p>ttl is measured in seconds and the default is 3600 (one hour)</p>
 </dd></dl>
 
 <dl class="function">
