@@ -177,6 +177,30 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.24.4 - 6 January 2020</dt>
+<dd><blockquote class="first">
+<div><ul>
+<li><p class="first">Made it possible to override target options from the command line.</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ lifx &#39;lan(default_broadcast=&quot;10.1.1.255&quot;):get_attr&#39; _ color
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<ul class="last simple">
+<li>Added a default <code class="docutils literal"><span class="pre">chain</span></code> plan for the Gatherer to use for getting tile
+chain information</li>
+<li>FromGenerator can now be given a <code class="docutils literal"><span class="pre">error_catcher_override</span></code> option which
+is a function that takes in the <code class="docutils literal"><span class="pre">reference</span></code> being operated on and the
+original <code class="docutils literal"><span class="pre">error_catcher</span></code>. It must return an <code class="docutils literal"><span class="pre">error_catcher</span></code>. This can
+be used with say <code class="docutils literal"><span class="pre">FromGeneratorPerSerial</span></code> to generate an <code class="docutils literal"><span class="pre">error_catcher</span></code>
+specifically for each serial.</li>
+<li>Rewrote a few tasks to use Gatherer and FromGenerator objects to make
+them better</li>
+<li>Added more products to the product registry</li>
+</ul>
+</dd>
 <dt>0.24.3 - 18 December 2019</dt>
 <dd><ul class="first last simple">
 <li>Fixed a bug where response packets were matched to the wrong requests</li>

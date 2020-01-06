@@ -224,12 +224,16 @@ to a device.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p class="first">Apply a theme to specified device</p>
-<p><code class="docutils literal"><span class="pre">lan:apply_theme</span> <span class="pre">d073d5000001</span> <span class="pre">--</span> <span class="pre">`{&quot;colors&quot;:</span> <span class="pre">&lt;colors&gt;,</span> <span class="pre">&quot;theme&quot;:</span> <span class="pre">&quot;SPLOTCH&quot;}'</span></code></p>
-<p>If you don’t specify serials, then the theme will apply to all devices found on the network.</p>
-<p>colors must be an array of <code class="docutils literal"><span class="pre">{&quot;hue&quot;:</span> <span class="pre">&lt;hue&gt;,</span> <span class="pre">&quot;saturation&quot;:</span> <span class="pre">&lt;saturation&gt;,</span> <span class="pre">&quot;brightness&quot;:</span> <span class="pre">&lt;brightness&gt;,</span> <span class="pre">&quot;kelvin&quot;:</span> <span class="pre">&lt;kelvin&gt;}</span></code></p>
+<p><code class="docutils literal"><span class="pre">lan:apply_theme</span> <span class="pre">d073d5000001</span> <span class="pre">--</span> <span class="pre">`{&quot;colors&quot;:</span> <span class="pre">[&lt;color&gt;,</span> <span class="pre">&lt;color&gt;,</span> <span class="pre">...],</span> <span class="pre">&quot;theme&quot;:</span> <span class="pre">&quot;SPLOTCH&quot;,</span> <span class="pre">&quot;overrides&quot;:</span> <span class="pre">{&lt;hsbk</span> <span class="pre">dictionary&gt;}}'</span></code></p>
+<p>If you don’t specify serials, then the theme will apply to all devices found
+on the network.</p>
+<p>Colors may be words like “red”, “blue”, etc. Or may be [h, s, b, k] arrays
+where each part is optional.</p>
 <p>theme must be a valid theme type and defaults to SPLOTCH</p>
-<p>You may also specify <code class="docutils literal"><span class="pre">duration</span></code> which is how long to take to apply in seconds.</p>
-<p class="last">And you may also supply <code class="docutils literal"><span class="pre">hue</span></code>, <code class="docutils literal"><span class="pre">saturation</span></code>, <code class="docutils literal"><span class="pre">brightness</span></code> and <code class="docutils literal"><span class="pre">kelvin</span></code> to override the specified colors.</p>
+<p>You may also specify <code class="docutils literal"><span class="pre">duration</span></code> which is how long to take to apply in
+seconds.</p>
+<p class="last">And you may also supply <code class="docutils literal"><span class="pre">overrides</span></code> with <code class="docutils literal"><span class="pre">hue</span></code>, <code class="docutils literal"><span class="pre">saturation</span></code>,
+<code class="docutils literal"><span class="pre">brightness</span></code> and <code class="docutils literal"><span class="pre">kelvin</span></code> to override the specified colors.</p>
 </td>
 </tr>
 </tbody>

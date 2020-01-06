@@ -626,6 +626,8 @@ back.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><ul class="first last simple">
+<li>Can take in a special reference</li>
+<li>not specifying a reference will result in finding all devices on the network</li>
 <li>Needs a target to be specified</li>
 </ul>
 </td>
@@ -747,7 +749,7 @@ yield length amount of the resulting dictionary for each specifier.</p>
 <span id="script-helpers"></span><h2>Script helpers<a class="headerlink" href="#module-photons_control.script" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="photons_control.script.FromGenerator">
-<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">FromGenerator</code><span class="sig-paren">(</span><em>generator</em>, <em>*</em>, <em>reference_override=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGenerator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">photons_control.script.</code><code class="descname">FromGenerator</code><span class="sig-paren">(</span><em>generator</em>, <em>*</em>, <em>reference_override=None</em>, <em>error_catcher_override=None</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>FromGenerator let’s you determine what messages to send in an async generator.</p>
 <p>For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">async</span> <span class="k">def</span> <span class="nf">gen</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">afr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -775,7 +777,7 @@ message(s) were sent without error, and False if they were sent with error.</p>
 
 <dl class="function">
 <dt id="photons_control.script.FromGeneratorPerSerial">
-<code class="descclassname">photons_control.script.</code><code class="descname">FromGeneratorPerSerial</code><span class="sig-paren">(</span><em>inner_gen</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGeneratorPerSerial" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">photons_control.script.</code><code class="descname">FromGeneratorPerSerial</code><span class="sig-paren">(</span><em>inner_gen</em>, <em>**generator_kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_control.script.FromGeneratorPerSerial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Same as a FromGenerator except it will call your inner_gen per serial in
 the reference given to run_with.</p>
 <p>This handles resolving the reference into serials and complaining if a serial

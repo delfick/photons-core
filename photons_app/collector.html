@@ -243,13 +243,11 @@ scripts can use <code class="docutils literal"><span class="pre">addon_hook</spa
 <dd><p>Get us an instance of PhotonsApp:</p>
 <dl class="class">
 <dt id="photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp">
-<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>chosen_task</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>extra_files</em>, <em>reference</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">PhotonsApp</code><span class="sig-paren">(</span><em>artifact</em>, <em>cleaners</em>, <em>config</em>, <em>debug</em>, <em>default_activate_all_modules</em>, <em>extra</em>, <em>reference</em>, <em>task_specifier</em><span class="sig-paren">)</span><a class="headerlink" href="#photons_app.option_spec.photons_app_spec.PhotonsAppSpec.PhotonsApp" title="Permalink to this definition">¶</a></dt>
 <dd><p>The main photons_app object.</p>
 <dl class="docutils">
 <dt>artifact</dt>
 <dd>The artifact string from the commandline</dd>
-<dt>chosen_task</dt>
-<dd>The task that is being executed</dd>
 <dt>cleaners</dt>
 <dd>A list of functions to call when cleaning up at the end of the program</dd>
 <dt>config</dt>
@@ -260,12 +258,10 @@ scripts can use <code class="docutils literal"><span class="pre">addon_hook</spa
 <dd>The collector looks at this to determine if we should default to activating all photons modules</dd>
 <dt>extra</dt>
 <dd>The arguments after the <code class="docutils literal"><span class="pre">--</span></code> in the commandline</dd>
-<dt>extra_files</dt>
-<dd>Extra files to load</dd>
 <dt>reference</dt>
 <dd>The device(s) to send commands to</dd>
-<dt>target</dt>
-<dd>The target to use when executing the task</dd>
+<dt>task_specifier</dt>
+<dd>Used to determine chosen task and target</dd>
 </dl>
 </dd></dl>
 
