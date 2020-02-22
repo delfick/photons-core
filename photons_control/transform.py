@@ -138,11 +138,8 @@ class Transformer(object):
                 clone.brightness = 0
                 clone.set_brightness = True
 
-                clone.hue = 0 if transition_color else clone.hue
                 clone.set_hue = 0 if transition_color else clone.set_hue
-                clone.saturation = 0 if transition_color else clone.saturation
                 clone.set_saturation = 0 if transition_color else clone.set_saturation
-                clone.kelvin = 0 if transition_color else clone.kelvin
                 clone.set_kelvin = 0 if transition_color else clone.set_kelvin
 
                 clone.target = serial
