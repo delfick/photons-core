@@ -9,7 +9,7 @@ from photons_app.actions import an_action
 from photons_messages import LightMessages, DeviceMessages
 from photons_colour import Parser
 
-from delfick_project.norms import sb
+from delfick_project.norms import sb, Meta
 
 
 def PowerToggle(duration=1):
@@ -72,7 +72,7 @@ class Transformer(object):
     """
 
     @classmethod
-    def using(kls, state, keep_brightness=False, transition_color=False):
+    def using(kls, state, keep_brightness=False, transition_color=False, **kwargs):
         transformer = kls()
         has_color_options = transformer.has_color_options(state)
 
@@ -186,10 +186,30 @@ async def transform(collector, target, reference, **kwargs):
 
     It takes in ``color``, ``effect``, ``power`` and valid options for a
     ``SetWaveformOptional``.
+
+    You may also specify ``transform_options`` that change how the transform works.
+
+    keep_brightness
+        Ignore brightness options in the request
+
+    transition_color
+        If the light is off and we power on, setting this to True will mean the
+        color of the light is not set to the new color before we make it appear
+        to be on. This defaults to False, which means it will appear to turn on
+        with the new color
     """
-    msg = Transformer.using(collector.configuration["photons_app"].extra_as_json)
+    extra = collector.configuration["photons_app"].extra_as_json
+    extra = sb.dictionary_spec().normalise(Meta.empty(), extra)
+
+    transform_options = sb.set_options(transform_options=sb.dictionary_spec()).normalise(
+        Meta.empty(), extra
+    )["transform_options"]
+
+    msg = Transformer.using(extra, **transform_options)
+
     if not msg:
         raise PhotonsAppError(
             'Please specify valid options after --. For example ``transform -- \'{"power": "on", "color": "red"}\'``'
         )
+
     await target.script(msg).run_with_all(reference)
