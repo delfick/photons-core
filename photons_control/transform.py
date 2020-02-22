@@ -66,10 +66,13 @@ class Transformer(object):
 
     If keep_brightness is True then we do not change the brightness of the device
     despite any brightness options in the color options.
+
+    If transition_color is True then we do not change the color of the device prior to
+    turning it on, so that it transitions with the brightness.
     """
 
     @classmethod
-    def using(kls, state, keep_brightness=False):
+    def using(kls, state, keep_brightness=False, transition_color=False):
         transformer = kls()
         has_color_options = transformer.has_color_options(state)
 
@@ -77,7 +80,9 @@ class Transformer(object):
             return []
 
         if state.get("power") == "on" and has_color_options:
-            return transformer.power_on_and_color(state, keep_brightness=keep_brightness)
+            return transformer.power_on_and_color(
+                state, keep_brightness=keep_brightness, transition_color=transition_color
+            )
 
         msgs = []
         if "power" in state:
@@ -116,7 +121,7 @@ class Transformer(object):
             msg.set_brightness = False
         return msg
 
-    def power_on_and_color(self, state, keep_brightness=False):
+    def power_on_and_color(self, state, keep_brightness=False, transition_color=False):
         power_message = self.power_message(state)
         color_message = self.color_message(state, keep_brightness)
 
@@ -127,10 +132,19 @@ class Transformer(object):
             currently_off = current_state.power == 0
 
             if currently_off:
+
                 clone = color_message.clone()
                 clone.period = 0
                 clone.brightness = 0
                 clone.set_brightness = True
+
+                clone.hue = 0 if transition_color else clone.hue
+                clone.set_hue = 0 if transition_color else clone.set_hue
+                clone.saturation = 0 if transition_color else clone.saturation
+                clone.set_saturation = 0 if transition_color else clone.set_saturation
+                clone.kelvin = 0 if transition_color else clone.kelvin
+                clone.set_kelvin = 0 if transition_color else clone.set_kelvin
+
                 clone.target = serial
                 pipeline.append(clone)
 
