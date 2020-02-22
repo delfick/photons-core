@@ -323,14 +323,14 @@ describe "Transformer":
 
         async it "can retain previous color when powering on", runner:
             state = {"color": "blue", "brightness": 0.3, "power": "on", "duration": 10}
-            msg = Parser.color_to_msg("blue", overrides={"brightness": 0})
-            msg.set_hue = 0
-            msg.set_saturation = 0
-            msg.set_kelvin = 0
+            light1_reset = Parser.color_to_msg("blue", overrides={"brightness": 0})
+            light1_reset.set_hue = 0
+            light1_reset.set_saturation = 0
+            light1_reset.set_kelvin = 0
             expected = {
                 light1: [
                     LightMessages.GetColor(),
-                    msg,
+                    light1_reset,
                     LightMessages.SetLightPower(level=65535, duration=10),
                     Parser.color_to_msg("blue ", overrides={"brightness": 0.3, "duration": 10},),
                 ],
