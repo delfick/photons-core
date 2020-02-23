@@ -177,6 +177,16 @@
   <div class="section" id="changelog">
 <span id="id1"></span><h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>0.24.7 - 23 February 2020</dt>
+<dd><ul class="first last simple">
+<li>Introduced a <code class="docutils literal"><span class="pre">transition_color</span></code> option to the Transformer that says
+if we’re going from off to on, then don’t reset the color when we reset
+brightness before turning the device on. Many thanks to &#64;Djelibeybi</li>
+<li>The transform cli command now takes in <code class="docutils literal"><span class="pre">transform_options</span></code> so you can
+specify <code class="docutils literal"><span class="pre">keep_brightness</span></code> and <code class="docutils literal"><span class="pre">transition_color</span></code></li>
+<li>Improved cleanup of sockets.</li>
+</ul>
+</dd>
 <dt>0.24.6 - 16 February 2020</dt>
 <dd><ul class="first last simple">
 <li>Introduced the “colors” plan for getting the colors on devices with Single,

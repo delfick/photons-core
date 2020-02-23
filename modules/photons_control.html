@@ -256,8 +256,18 @@
 </tr>
 <tr class="row-odd"><td><p class="first">Do a http-api like transformation over whatever target you specify</p>
 <p><code class="docutils literal"><span class="pre">target:transform</span> <span class="pre">d073d5000000</span> <span class="pre">--</span> <span class="pre">'{&quot;color&quot;:</span> <span class="pre">&quot;red&quot;,</span> <span class="pre">&quot;effect&quot;:</span> <span class="pre">&quot;pulse&quot;}'</span></code></p>
-<p class="last">It takes in <code class="docutils literal"><span class="pre">color</span></code>, <code class="docutils literal"><span class="pre">effect</span></code>, <code class="docutils literal"><span class="pre">power</span></code> and valid options for a
+<p>It takes in <code class="docutils literal"><span class="pre">color</span></code>, <code class="docutils literal"><span class="pre">effect</span></code>, <code class="docutils literal"><span class="pre">power</span></code> and valid options for a
 <code class="docutils literal"><span class="pre">SetWaveformOptional</span></code>.</p>
+<p>You may also specify <code class="docutils literal"><span class="pre">transform_options</span></code> that change how the transform works.</p>
+<dl class="last docutils">
+<dt>keep_brightness</dt>
+<dd>Ignore brightness options in the request</dd>
+<dt>transition_color</dt>
+<dd>If the light is off and we power on, setting this to True will mean the
+color of the light is not set to the new color before we make it appear
+to be on. This defaults to False, which means it will appear to turn on
+with the new color</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -917,6 +927,8 @@ changed to match the end result.</p>
 means that we support an <code class="docutils literal"><span class="pre">effect</span></code> option for setting different waveforms.</p>
 <p>If keep_brightness is True then we do not change the brightness of the device
 despite any brightness options in the color options.</p>
+<p>If transition_color is True then we do not change the color of the device prior to
+turning it on, so that it transitions with the brightness.</p>
 </dd></dl>
 
 </div>
