@@ -8,7 +8,8 @@ to perform several tasks. If multiple tasks are required, consider
 creating a :ref:`script <scripts_root>` instead.
 
 To access these tasks, ensure the ``lifx`` command is in your ``PATH`` by
-:ref:`activating the virtual environment <activation>` into which Photons is installed.
+:ref:`activating the virtual environment <activation>` into which Photons is
+installed.
 
 A simple example of running a task with the ``lifx`` utility::
 
@@ -33,9 +34,9 @@ custom :ref:`configuration <configuration_root>`.
 To list all available tasks, run ``lifx help``. To get details about a specific
 task, run ``lifx help <task>``, e.g. ``lifx help transform``.
 
-.. note:: The ``options`` field must be valid JSON syntax which can be cumbersome
-   to provide directly on the command line. For ease of use, the ``lifx`` utility
-   accepts a `file://` path instead::
+.. note:: The ``options`` field must be valid JSON syntax which can be
+   cumbersome to provide directly on the command line. For ease of use, the
+   ``lifx`` utility accepts a `file://` path instead::
 
         $ lifx lan:transform -- file:///path/to/my/options.json
 

@@ -3,13 +3,13 @@
 References from the command line
 ================================
 
-:term:`References<reference>` in Photons are specified either as a single ``serial``,
-a list of ``serials`` or a ``special`` reference which defines how to find devices
-dynamically on the network.
+:term:`References<reference>` in Photons are specified either as a single
+``serial``, a list of ``serials`` or a ``special`` reference which defines how
+to find devices dynamically on the network.
 
 A ``serial`` is a 12-digit hexadecimal number in the format ``d073d5xxxxxx``,
-e.g. ``d073d5123456`` and is also the :term:`MAC address` of the device. The serial
-number is printed on the base of each bulb.
+e.g. ``d073d5123456`` and is also the :term:`MAC address` of the device. The
+serial number is printed on the base of each bulb.
 
 When Photons discovers devices, it associates an IP address with each serial and
 uses that to target packets for each device.
@@ -119,11 +119,11 @@ The ``match`` :term:`reference` has the following options:
          # Find devices that have either the chain and multizone capabilities
          "match:cap=chain&cap=multizone"
 
-      .. note:: combining different options uses a logical ``AND`` while combining
-          multiple values of the same option uses a logical ``OR``.
+      .. note:: combining different options uses a logical ``AND`` while
+         combining multiple values of the same option uses a logical ``OR``.
 
-      To match on a label with specicial characters, provide the URL encoded value
-      of the label. For example, to find a device with the label "Kitchen bench"
-      use the following match string::
+      To match on a label with specicial characters, provide the URL encoded
+      value of the label. For example, to find a device with the label "Kitchen
+      bench" use the following match string::
 
          "match:label=Kitchen%20bench"

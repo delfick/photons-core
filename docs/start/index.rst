@@ -17,7 +17,8 @@
 Photons
 =======
 
-Photons is an asynchronous Python3.6+ framework for interacting with LIFX devices.
+Photons is an asynchronous Python3.6+ framework for interacting with LIFX
+devices.
 
 Photons provides:
 

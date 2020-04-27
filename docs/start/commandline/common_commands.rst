@@ -19,9 +19,9 @@ A full list of available tasks is returned by running ``lifx help``.
         $ lifx lan:find_ips
 
 ``transform``
-    This task changes the power and colour of the target devices over an optionally
-    specified duration. It can also perform waveform-based transformations similar
-    to the `Breathe <https://api.developer.lifx.com/docs/breathe-effect>`_
+    This task changes the power and colour of the target devices over an
+    optionally specified duration. It can also perform waveform-based
+    transformations similar to the `Breathe <https://api.developer.lifx.com/docs/breathe-effect>`_
     and `Pulse <hthttps://api.developer.lifx.com/docs/pulse-effect>`_ effects
     available via the `LIFX HTTP API <https://api.developer.lifx.com/>`_.
 
@@ -33,8 +33,9 @@ A full list of available tasks is returned by running ``lifx help``.
 
         $ lifx lan:transform d073d5001337 -- '{"power": "on"}'
 
-    Power on a group of devices and set to the color to red and brightness to 100% followed
-    by a waveform to cycle between red and blue three times over three seconds at 50% brightness::
+    Power on a group of devices and set to the color to red and brightness to
+    100% followed by a waveform to cycle between red and blue three times over
+    three seconds at 50% brightness::
 
         $ lifx lan:transform match:group_name=kitchen -- '{"color": "red", "brightness": 1, "power": "on"}'
         $ lifx lan:transform match:group_name=kitchen -- '{"color": "blue", "brightness": 0.5, "effect": "SINE", "cycles": 3, "period": 1}'
@@ -92,8 +93,8 @@ A full list of available tasks is returned by running ``lifx help``.
           }
         }
 
-    .. note:: **Tip**: Pipe the output of the ``lifx unpack`` task through the ``jq`` utility to convert the JSON
-       into human-readable format.
+    .. note:: **Tip**: Pipe the output of the ``lifx unpack`` task through the
+    ``jq`` utility to convert the JSON into human-readable format.
 
 ``pack``
     This task translates a dictionary of values into a LIFX binary message in
@@ -112,17 +113,17 @@ A full list of available tasks is returned by running ``lifx help``.
         4400001401000000d073d522932200000000000000000301000000000000000018000000626173656d656e74000000000000000000000000000000000000000000000000
 
 ``get_effects``
-    Returns the currently running firmware effects on the specified devices. This only
-    applies to devices with firmware effects, i.e. the Tile, Candle, Strip and Beam.
-    Currently active waveforms are not considered an effect.
+    Returns the currently running firmware effects on the specified devices.
+    This only applies to devices with firmware effects, i.e. the Tile, Candle,
+    Strip and Beam. Currently active waveforms are not considered an effect.
 
 ``tile_effect``
     Starts a firmware effect on a Tile or Candle Colour device::
 
         $ lifx lan:tile_effect _ morph
 
-    In the case of a range of device types being returned by the provided reference,
-    only those with matrix firmware effects will be affected.
+    In the case of a range of device types being returned by the provided
+    reference, only those with matrix firmware effects will be affected.
 
     The available effects are ``morph``, ``flame`` and ``off``.
 
@@ -131,14 +132,14 @@ A full list of available tasks is returned by running ``lifx help``.
 
         $ lifx lan:multizone_effect _ move
 
-    In the case of a range of device types being returned by the provided reference,
-    only those with multizone firmware effects will be affected.
+    In the case of a range of device types being returned by the provided
+    reference, only those with multizone firmware effects will be affected.
 
     The available effects are ``move`` and ``off``.
 
 ``apply_theme``
-    Set a theme on your devices. By default, this applies a seven colour theme at 30%
-    brightness onto the device.
+    Set a theme on your devices. By default, this applies a seven colour theme
+    at 30% brightness onto the device.
 
     Apply the default theme to all devices::
 

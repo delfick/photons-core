@@ -82,5 +82,5 @@ Use ``argparse`` to parse command-line arguments:
 
 .. note:: ``run_coro_as_main`` is similar to the
     `asyncio.run <https://docs.python.org/3/library/asyncio-task.html#asyncio.run>`_
-    function in the Python standard library but does extra work to ensure the event loop
-    is shut down cleanly.
+    function in the Python standard library but does extra work to ensure the
+    event loop is shut down cleanly.

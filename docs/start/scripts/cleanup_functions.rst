@@ -3,7 +3,8 @@
 Cleanup Functions
 =================
 
-The ``photons_app`` object on the :ref:`collector <collector_root>` has an array of functions called ``cleaners``.
+The ``photons_app`` object on the :ref:`collector <collector_root>` has an
+array of functions called ``cleaners``.
 
 Add an async function to this array to include it when Photons shuts down.
 

@@ -18,7 +18,8 @@ method:
     if __name__ == "__main__":
         setup_logging(level=logging.INFO)
 
-Use the ``photons_app.helpers.lc`` function to log key/value pairs to the command line:
+Use the ``photons_app.helpers.lc`` function to log key/value pairs to the
+command line:
 
 .. code-block:: python
 
@@ -49,29 +50,35 @@ utility and any script that registers a Photons action.
     sent either syslog, UDP or TCP destinations.
 
 ``--tcp-logging-address TCP_LOGGING_ADDRESS:PORT``
-    Send JSON-formatted logs to ``TCP_LOGGING_ADDRESS`` on port ``PORT`` using TCP.
+    Send JSON-formatted logs to ``TCP_LOGGING_ADDRESS`` on port ``PORT``
+    using TCP.
 
 ``--udp-logging-address UDP_LOGGING_ADDRESS``
-    Send JSON-formatted logs to ``UDP_LOGGING_ADDRESS`` on port ``PORT`` using UDP.
+    Send JSON-formatted logs to ``UDP_LOGGING_ADDRESS`` on port ``PORT`` using
+    UDP.
 
 ``--syslog-address SYSLOG_ADDRESS``
-    Send JSON-formatted logs to the ``SYSLOG_ADDRESS`` file descriptor, e.g. ``/dev/log``.
+    Send JSON-formatted logs to the ``SYSLOG_ADDRESS`` file descriptor, e.g.
+    ``/dev/log``.
 
 ``--logging-handler-file LOGGING_HANDLER_FILE``
-    Write JSON-formatted logs to ``LOGGING_HANDLER_FILE``, e.g. ``/path/to/photons.log``.
+    Write JSON-formatted logs to ``LOGGING_HANDLER_FILE``, e.g.
+    ``/path/to/photons.log``.
 
 ``--json-console-logs``
-    Output JSON-formatted logs to the console. Ignored if another logging method is configured.
+    Output JSON-formatted logs to the console. Ignored if another logging method
+    is configured.
 
-.. note:: Logs are only output to a single destination. The order of precedence is syslog
-   followed by UDP then TCP. The console is only used if no alternative logging destination
-   is provided.
+.. note:: Logs are only output to a single destination. The order of precedence
+   is syslog followed by UDP then TCP. The console is only used if no
+   alternative logging destination is provided.
 
 The following example::
 
     $ lifx lan:attr _ GetColor --logging-program myprogram --udp-logging-address localhost:9999
 
-Will send the following JSON-formatted log message to ``localhost`` on port ``9999`` over UDP:
+Will send the following JSON-formatted log message to ``localhost`` on port
+``9999`` over UDP:
 
 .. code-block:: json
 
@@ -85,15 +92,16 @@ Will send the following JSON-formatted log message to ``localhost`` on port ``99
         "serial": "d073d514e733"
     }
 
-.. note:: The |setup_logging_func|_ has the same parameters available for scripts that
-   instantiate Photons using the ``library_setup`` method.
+.. note:: The |setup_logging_func|_ has the same parameters available for
+   scripts that instantiate Photons using the ``library_setup`` method.
 
 .. |setup_logging_func| replace:: ``setup_logging`` function
 .. _setup_logging_func: https://delfick-project.readthedocs.io/en/latest/api/logging.html
 
-When no logging target is configured, logs will be output to ``stderr``. Note that this
-only applies to anything logged using Python's ``logging`` module in the standard library.
+When no logging target is configured, logs will be output to ``stderr``. Note
+that this only applies to anything logged using Python's ``logging`` module in
+the standard library.
 
-Most built-in Photons actions that output data use the ``print()`` function to print
-data directly to ``stdout``. This output can be redirected to a file using standard
-shell techniques and will not contain any logging information.
+Most built-in Photons actions that output data use the ``print()`` function to
+print data directly to ``stdout``. This output can be redirected to a file using
+standard shell techniques and will not contain any logging information.

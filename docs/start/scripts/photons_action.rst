@@ -13,7 +13,9 @@ For example, the ``power_toggle`` action is defined as:
 .. code-block:: python
 
     from photons_app.actions import an_action
+
     from photons_control.transform import PowerToggle
+
 
     @an_action(needs_target=True, special_reference=True)
     async def power_toggle(collector, target, reference, artifact, **kwargs):
@@ -47,15 +49,17 @@ This definition is detailed as follows:
 * The JSON options string provided on the command line is available
   as the ``collector.photons_app.extra_as_json`` attribute.
 * All arguments to an action must be provided as keyword arguments. If
-  you do not specify a keyword, the unused arguments will be consumed by the
-  ``**kwargs`` argument.
+  you do not specify a keyword, the unused arguments will be consumed by
+  the ``**kwargs`` argument.
 
 Create a script that registers and runs an action:
 
 .. code-block:: python
 
     from photons_app.actions import an_action
+
     from photons_messages import DeviceMessages
+
 
     @an_action(needs_target=True, special_reference=True)
     async def display_label(collector, target, reference, **kwargs):
