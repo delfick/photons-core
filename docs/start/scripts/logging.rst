@@ -22,8 +22,9 @@ Use the ``photons_app.helpers.lc`` function to log key/value pairs to the comman
 
 .. code-block:: python
 
-    from delfick_project.logging import setup_logging
     from photons_app import helpers as hp
+
+    from delfick_project.logging import setup_logging
     import logging
 
     if __name__ == "__main__":
