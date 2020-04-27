@@ -10,9 +10,7 @@ A full list of available tasks is returned by running ``lifx help``.
     will be affected by the task used.
 
 ``find_devices`` and ``find_ips``
-    Find devices on the network::
-
-    List the serial numbers of all discovered devices on the local network
+        List the serial numbers of all discovered devices on the local network::
 
         $ lifx lan:find_devices
 

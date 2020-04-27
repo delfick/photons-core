@@ -2,7 +2,7 @@
     :hidden:
 
     philosophy.rst
-    installation.rst
+    Installation <installation/index.rst>
     commandline/index.rst
     scripts/index.rst
     collector/index.rst
@@ -38,6 +38,8 @@ Photons provides:
 * Useful :ref:`functionality <useful_helpers_root>` for common tasks while
   creating scripts.
 * Flexible :ref:`configuration <configuration_root>` capabilities.
+
+.. include:: installation/installation.inc
 
 Source code
 -----------
