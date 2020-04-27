@@ -48,7 +48,7 @@ This definition is detailed as follows:
   as the ``collector.photons_app.extra_as_json`` attribute.
 * All arguments to an action must be provided as keyword arguments. If
   you do not specify a keyword, the unused arguments will be consumed by the
-  ``**kwards`` argument.
+  ``**kwargs`` argument.
 
 Create a script that registers and runs an action:
 
