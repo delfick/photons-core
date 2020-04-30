@@ -80,7 +80,7 @@ The target can also be renamed:
         options:
           default_broadcast: 192.168.1.255
 
-If a custom target is configured, it replaces the ``lan`` target when using
+If a custom target is configured, it can be used instead of the ``lan`` target
 the ``lifx`` utility on the command line, e.g. instead of
 ``lifx lan:transform -- '{"power": "off"}'`` it becomes
 ``lifx home_network:transform -- '{"power": "off"}'``
