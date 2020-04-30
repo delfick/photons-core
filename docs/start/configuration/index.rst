@@ -68,7 +68,7 @@ more specific broadcast address.
         options:
           default_broadcast: 192.168.1.255
 
-The target can also be renamed:
+A custom target can also be defined:
 
 .. code-block:: yaml
 
