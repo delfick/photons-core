@@ -53,8 +53,8 @@ The ``serial_filter`` and ``hardcoded_discovery`` options can be combined.
 
 The ``HARDCODED_DISCOVERY`` environment variable sets or overrides any
 ``hardcoded_discovery`` configuration setting. In the following example, Photons
- will only discover a single device with the serial of ``d073d5111111`` if it
- has the IP address of ``192.168.0.1``:
+will only discover a single device with the serial of ``d073d5111111`` if it
+has the IP address of ``192.168.0.1``:
 
    $ export HARDCODED_DISCOVERY='{"d073d5111111": "192.168.0.1"}'
    $ lifx lan:get_attr _ color
