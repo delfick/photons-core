@@ -44,7 +44,7 @@ variable. This is best configured as a per-user setting in ``~/.photons_apprc.ym
 
     term_colors: light
 
-.. note:: log theme is set when the configuration is loaded when Photons starts.
+.. note:: log theme is set when the configuration is loaded after Photons starts.
 
 .. _configuration_targets:
 
