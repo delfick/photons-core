@@ -4,4 +4,15 @@ cd $(git rev-parse --show-toplevel)
 
 ./tools/black/setup_venv
 
-./tools/black/.black/bin/noy_black .
+./tools/black/.black/bin/noy_black modules apps/tile_arranger/tile_arranger apps/tile_arranger/tests
+
+if ! which prettier >/dev/null; then
+  echo "Couldn't find prettier, not formatting javascript files"
+else
+  echo ""
+  echo "==="
+  echo "--- Formatting javascript"
+  echo "==="
+  echo ""
+  prettier --write "apps/tile_arranger/tile_arranger/static/js/**"
+fi

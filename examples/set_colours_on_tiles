@@ -2,52 +2,14 @@
 
 from photons_app.actions import an_action
 
-from photons_messages import DeviceMessages, TileMessages
+from photons_canvas import Canvas, CanvasColor, Coords
 from photons_control.script import FromGenerator
+from photons_messages import DeviceMessages
 
-from delfick_project.addons import addon_hook
 import logging
 import random
 
 log = logging.getLogger("info")
-
-
-@addon_hook(
-    extras=[
-        ("lifx.photons", "transport"),
-        ("lifx.photons", "messages"),
-        ("lifx.photons", "control"),
-    ]
-)
-def __lifx__(collector, *args, **kwargs):
-    pass
-
-
-def make_set_64s(coords_and_sizes):
-    for index, (_, (width, height)) in enumerate(coords_and_sizes):
-        colors = []
-
-        for _ in range(width):
-            for _ in range(height):
-                colors.append(
-                    {
-                        "hue": random.randint(0, 360),
-                        "saturation": 1,
-                        "brightness": 0.2,
-                        "kelvin": 3500,
-                    }
-                )
-
-        yield TileMessages.Set64(
-            x=0,
-            y=0,
-            width=width,
-            length=1,
-            duration=2,
-            colors=colors,
-            tile_index=index,
-            res_required=False,
-        )
 
 
 @an_action(needs_target=True, special_reference=True)
@@ -67,20 +29,28 @@ async def tiles(collector, target, reference, **kwargs):
     def e(error):
         log.error(error)
 
+    def get_color(x, y):
+        return CanvasColor(random.randint(0, 360), 1, 0.2, 3500)
+
     async def gen(reference, sender, **kwargs):
         plans = sender.make_plans("capability", "chain")
-        async for serial, _, info in sender.gatherer.gather_per_serial(plans, reference, **kwargs):
-            if "chain" not in info:
+        async for serial, completed, info in sender.gatherer.gather_per_serial(
+            plans, reference, **kwargs
+        ):
+            if not completed:
                 continue
 
             if not info["capability"]["cap"].has_matrix:
                 continue
 
-            yield DeviceMessages.SetPower(level=65535, target=serial, res_required=False)
+            canvas = Canvas()
+            canvas.set_color_func(get_color)
 
-            for msg in make_set_64s(info["chain"]["coords_and_sizes"]):
-                msg.target = serial
-                yield msg
+            coords = Coords()
+            coords.add_device(serial, info["chain"]["chain"])
+
+            yield DeviceMessages.SetPower(level=65535, target=serial, res_required=False)
+            yield canvas.messages_for(coords, duration=2)
 
     await target.send(FromGenerator(gen), reference, error_catcher=e)
 

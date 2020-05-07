@@ -14,6 +14,7 @@ wanted = [
     "protocol",
     "control",
     "messages",
+    "canvas",
     "products",
     "protocol",
     "themes",

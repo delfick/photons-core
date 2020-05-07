@@ -54,7 +54,7 @@ class Options(dictobj.Spec):
 
 
 @an_action(needs_target=True, special_reference=True)
-async def apply_theme(collector, target, reference, artifact, **kwargs):
+async def apply_themeold(collector, target, reference, artifact, **kwargs):
     """
     Apply a theme to specified device
 

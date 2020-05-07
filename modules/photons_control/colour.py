@@ -108,10 +108,10 @@ def make_hsbk(specifier):
         k = specifier.get("kelvin", 3500)
 
     return {
-        "hue": h or 0,
-        "saturation": s or 0,
-        "brightness": b if b is not None else 1,
-        "kelvin": k if k is not None else 3500,
+        "hue": round(h or 0, 3),
+        "saturation": round(s or 0, 3),
+        "brightness": round(b if b is not None else 1, 3),
+        "kelvin": int(k) if k is not None else 3500,
     }
 
 
