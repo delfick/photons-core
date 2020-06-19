@@ -31,8 +31,8 @@ class TileChild(dictobj.Spec):
     accel_meas_x = dictobj.Field(sb.integer_spec, default=0)
     accel_meas_y = dictobj.Field(sb.integer_spec, default=0)
     accel_meas_z = dictobj.Field(sb.integer_spec, default=0)
-    user_x = dictobj.Field(sb.float_spec, default=0)
-    user_y = dictobj.Field(sb.float_spec, default=0)
+    user_x = dictobj.Field(sb.integer_spec, default=0)
+    user_y = dictobj.Field(sb.integer_spec, default=0)
     width = dictobj.Field(sb.integer_spec, default=8)
     height = dictobj.Field(sb.integer_spec, default=8)
     device_version_vendor = dictobj.Field(sb.integer_spec, default=1)
@@ -91,7 +91,7 @@ class LightStateResponder(Responder):
         return LightMessages.StateLightPower(level=device.attrs.power)
 
     def make_light_response(self, device):
-        return LightMessages.LightState.empty_normalise(
+        return LightMessages.LightState.create(
             label=device.attrs.label, power=device.attrs.power, **device.attrs.color.as_dict()
         )
 
@@ -192,7 +192,7 @@ class MatrixResponder(Responder):
                 yield msg
 
     def make_state_tile_effect(self, device, instanceid=sb.NotSpecified):
-        return TileMessages.StateTileEffect.empty_normalise(
+        return TileMessages.StateTileEffect.create(
             instanceid=instanceid,
             type=device.attrs.matrix_effect,
             palette_count=device.attrs.palette_count,
@@ -451,9 +451,7 @@ def default_responders(
     if cap.has_multizone:
         if zones is None:
             assert False, "Product has multizone capability but no zones specified"
-        zones_effect = enum_spec(None, MultiZoneEffectType, unpacking=True).normalise(
-            meta, zones_effect
-        )
+        zones_effect = enum_spec(MultiZoneEffectType, unpacking=True).normalise(meta, zones_effect)
         responders.append(ZonesResponder(zones=zones, zones_effect=zones_effect))
 
     if cap.has_matrix:
@@ -461,7 +459,7 @@ def default_responders(
         if not cap.has_chain:
             kw["chain_length"] = 1
 
-        kw["matrix_effect"] = enum_spec(None, TileEffectType, unpacking=True).normalise(
+        kw["matrix_effect"] = enum_spec(TileEffectType, unpacking=True).normalise(
             meta, matrix_effect
         )
 

@@ -14,13 +14,7 @@ from delfick_project.addons import addon_hook
 import logging
 
 
-@addon_hook(
-    extras=[
-        ("lifx.photons", "products"),
-        ("lifx.photons", "messages"),
-        ("lifx.photons", "control"),
-    ]
-)
+@addon_hook(extras=[("lifx.photons", "products"), ("lifx.photons", "control")])
 def __lifx__(collector, *args, **kwargs):
     pass
 
@@ -54,7 +48,7 @@ class Options(dictobj.Spec):
 
 
 @an_action(needs_target=True, special_reference=True)
-async def apply_themeold(collector, target, reference, artifact, **kwargs):
+async def apply_theme(collector, target, reference, artifact, **kwargs):
     """
     Apply a theme to specified device
 

@@ -119,36 +119,40 @@ class ATicker:
             raise StopAsyncIteration
 
         if self.last_tick is None:
-            self.change_after(self.every, set_new_every=False)
+            self.last_tick = time.time()
+            return self.iteration
 
+        self.change_after(self.every)
         await asyncio.wait([self.tick_fut, self.final_future], return_when=asyncio.FIRST_COMPLETED)
-        self.tick_fut.reset()
 
         if self.final_future.done():
             raise StopAsyncIteration
 
-        self.change_after(self.every, set_new_every=False)
+        self.tick_fut.reset()
+        self.last_tick = time.time()
         return self.iteration
 
     def change_after(self, every, *, set_new_every=True):
-        now = time.time()
-
-        def reset(current=None):
-            if current is None or self.last_tick[1] == current[1]:
-                self.tick_fut.reset()
-                self.last_tick = (time.time(), uuid.uuid1())
-                self.tick_fut.set_result(True)
-
-        if self.last_tick is None:
-            reset()
-            return
-
-        if set_new_every and every != self.every:
-            self.last_tick = (self.last_tick[0], uuid.uuid1())
+        if set_new_every:
             self.every = every
 
-        diff = every - (now - self.last_tick[0])
-        asyncio.get_event_loop().call_later(diff, reset, self.last_tick)
+        if self.last_tick is None:
+            self.last_tick = time.time()
+
+        current = self.last_tick
+        diff = every - (time.time() - current)
+
+        if diff == 0:
+            self.tick_fut.reset()
+            self.tick_fut.set_result(True)
+        else:
+
+            def reset():
+                if self.last_tick == current:
+                    self.tick_fut.reset()
+                    self.tick_fut.set_result(True)
+
+            asyncio.get_event_loop().call_later(diff, reset)
 
 
 async def tick(every, *, final_future=None, max_iterations=None, max_time=None):
@@ -478,7 +482,6 @@ class ResultStreamer:
 
             if self.final_future.done():
                 nxt.cancel()
-                await asyncio.wait([nxt])
                 return
 
             yield (await nxt)

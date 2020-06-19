@@ -5,8 +5,9 @@ from photons_protocol.packets import dictobj
 from photons_protocol.types import Type as T
 
 from delfick_project.errors_pytest import assertRaises
-from delfick_project.norms import BadSpecValue, Meta
+from delfick_project.norms import Meta
 from bitarray import bitarray
+import pytest
 import enum
 import json
 
@@ -17,17 +18,9 @@ def ba(val):
     return b
 
 
-def list_of_dicts(lst):
-    """
-    Helper to turn a list into dictionaries
-
-    This is because depending on how an object is created, strings can be
-    represented internally as either string or bitarray.
-
-    This behaviour is due to a performance optimisation I don't want to remove
-    so, I compare with normalised values instead
-    """
-    return [l.as_dict() for l in lst]
+def ba16(val):
+    b = ba(val)
+    return b + bitarray("0" * (16 - len(b)))
 
 
 describe "The multiple modifier":
@@ -36,10 +29,10 @@ describe "The multiple modifier":
         checker(thing)
 
         bts = thing.pack()
-        thing2 = type(thing).unpack(bts)
+        thing2 = type(thing).create(bts)
         checker(thing2)
 
-        thing3 = type(thing).normalise(Meta.empty(), json.loads(repr(thing)))
+        thing3 = type(thing).create(json.loads(repr(thing)))
         checker(thing3)
 
     it "allows multiple of raw types and structs":
@@ -72,7 +65,7 @@ describe "The multiple modifier":
 
         class Other(dictobj.PacketSpec):
             fields = [
-                ("one", T.BoolInt),
+                ("one", T.BoolInt.default(False)),
                 ("five", T.Bytes(16).multiple(2).default(lambda pkt: b"")),
             ]
 
@@ -95,9 +88,9 @@ describe "The multiple modifier":
         assert thing.two == [1, 2, 3]
         assert thing.three == ["on", "two", ""]
         assert thing.four == [
-            Other(one=False, five=[ba(b"1"), ba(b"t")]),
-            Other(one=True, five=[ba(b""), ba(b"")]),
-            Other(one=False, five=[ba(b""), ba(b"")]),
+            Other(one=False, five=[ba16(b"1"), ba16(b"t")]),
+            Other(one=True, five=[ba16(b""), ba16(b"")]),
+            Other(one=False, five=[ba16(b""), ba16(b"")]),
         ]
 
         thing = Thing()
@@ -105,9 +98,9 @@ describe "The multiple modifier":
         assert thing.two == [0, 0, 0]
         assert thing.three == ["", "", ""]
         assert thing.four == [
-            Other(one=False, five=[ba(b""), ba(b"")]),
-            Other(one=False, five=[ba(b""), ba(b"")]),
-            Other(one=False, five=[ba(b""), ba(b"")]),
+            Other(one=False, five=[ba16(b""), ba16(b"")]),
+            Other(one=False, five=[ba16(b""), ba16(b"")]),
+            Other(one=False, five=[ba16(b""), ba16(b"")]),
         ]
 
     it "allows replacing items in place":
@@ -119,7 +112,7 @@ describe "The multiple modifier":
 
         class Other(dictobj.PacketSpec):
             fields = [
-                ("one", T.BoolInt),
+                ("one", T.BoolInt.default(False)),
                 ("five", T.Bytes(16).multiple(2).default(lambda pkt: b"")),
             ]
 
@@ -165,6 +158,7 @@ describe "The multiple modifier":
 
         self.assertProperties(thing, test_replacement)
 
+    @pytest.mark.focus
     it "allows replacing items in place when from nothing":
 
         class E(enum.Enum):
@@ -174,7 +168,7 @@ describe "The multiple modifier":
 
         class Other(dictobj.PacketSpec):
             fields = [
-                ("one", T.BoolInt),
+                ("one", T.BoolInt.default(False)),
                 ("five", T.Bytes(16).multiple(2).default(lambda pkt: b"")),
             ]
 
@@ -221,7 +215,7 @@ describe "The multiple modifier":
             BLAH = 2
 
         class Other(dictobj.PacketSpec):
-            fields = [("one", T.BoolInt)]
+            fields = [("one", T.BoolInt.default(False))]
 
         class Thing(dictobj.PacketSpec):
             fields = [
@@ -241,14 +235,15 @@ describe "The multiple modifier":
 
         test_thing(thing)
 
-        with assertRaises(BadConversion, "Value is not a valid value of the enum"):
+        with assertRaises(BadConversion, "Value wasn't a valid enum value"):
             thing.one[-1] = 6
-        with assertRaises(BadSpecValue, "Expected an integer"):
+        with assertRaises(BadConversion, "Value must be an integer"):
             thing.two[0] = "asdf"
+
         with assertRaises(
-            BadSpecValue,
+            BadConversion,
             "BoolInts must be True, False, 0 or 1",
-            meta=Meta.empty().at("four").indexed_at(0).at("one"),
+            meta=Meta({"pkt": thing}, []).at("Thing").at("four").indexed_at(0).at("one"),
         ):
             thing.four[0] = {"one": "asdf"}
 
@@ -288,9 +283,9 @@ describe "The multiple modifier":
         def check(thing):
             assert thing.one == [E.MEH, E.BLAH, E.ZERO]
             expected = [
-                Other.empty_normalise(other=0, another="wat"),
-                Other.empty_normalise(other=1, another=""),
-                Other.empty_normalise(other=0, another="hello"),
+                Other.create(other=0, another="wat"),
+                Other.create(other=1, another=""),
+                Other.create(other=0, another="hello"),
             ]
             assert thing.two == expected
 
@@ -300,9 +295,9 @@ describe "The multiple modifier":
         def check2(thing):
             assert thing.one == [E.MEH, E.BLAH, E.ZERO]
             expected = [
-                Other.empty_normalise(other=0, another="wat"),
-                Other.empty_normalise(other=0, another="yeap"),
-                Other.empty_normalise(other=0, another="hello"),
+                Other.create(other=0, another="wat"),
+                Other.create(other=0, another="yeap"),
+                Other.create(other=0, another="hello"),
             ]
             assert thing.two == expected
 
@@ -328,9 +323,9 @@ describe "The multiple modifier":
 
         def check(thing):
             expected = [
-                Other.empty_normalise(other=0, another="wat"),
-                Other.empty_normalise(other=1, another=""),
-                Other.empty_normalise(other=0, another="hello"),
+                Other.create(other=0, another="wat"),
+                Other.create(other=1, another=""),
+                Other.create(other=0, another="hello"),
             ]
             assert thing.thing == expected
 
@@ -344,75 +339,6 @@ describe "The multiple modifier":
                 Other(other=1, another="yo"),
                 Other(other=0, another="hello"),
             ]
-            assert list_of_dicts(thing.thing) == list_of_dicts(expected)
+            assert thing.thing == expected
 
         self.assertProperties(thing, check2)
-
-    it "can determine class and number based off other fields":
-
-        class One(dictobj.PacketSpec):
-            fields = [("one", T.BoolInt.multiple(4).default(lambda pkt: False))]
-
-        class Two(dictobj.PacketSpec):
-            fields = [("two", T.String(32))]
-
-        def choose_kls(pkt):
-            if pkt.choice == "one":
-                return One
-            else:
-                return Two
-
-        class Chooser(dictobj.PacketSpec):
-            fields = [
-                ("choice", T.String(64)),
-                ("amount", T.Uint8),
-                ("val", T.Bytes(32).multiple(lambda pkt: pkt.amount, kls=choose_kls)),
-            ]
-
-        chooser = Chooser(
-            choice="one", amount=3, val=[{"one": [True, True, False, True]}, {"one": [False, True]}]
-        )
-
-        def check(chooser):
-            assert chooser.choice == "one"
-            assert chooser.amount == 3
-            assert chooser.val == [
-                One(one=[True, True, False, True]),
-                One(one=[False, True, False, False]),
-                One(one=[False, False, False, False]),
-            ]
-
-        self.assertProperties(chooser, check)
-
-        chooser = Chooser(choice="two", amount=2, val=[{"two": "wat"}, {"two": "1111"}])
-
-        def check(chooser):
-            assert chooser.choice == "two"
-            assert chooser.amount == 2
-            assert list_of_dicts(chooser.val) == list_of_dicts([Two(two="wat"), Two(two="1111")])
-
-        self.assertProperties(chooser, check)
-
-    it "can determine number based off other fields":
-
-        class Vals(dictobj.PacketSpec):
-            fields = [
-                ("amount", T.Uint8),
-                ("vals", T.Uint8.multiple(lambda pkt: pkt.amount).default(99)),
-            ]
-
-        vals = Vals(amount=3, vals=[1, 2])
-
-        def check(vals):
-            assert vals.amount == 3
-            assert vals.vals == [1, 2, 99]
-
-        self.assertProperties(vals, check)
-
-        vals = Vals(amount=5, vals=[1, 2, 1, 2, 3])
-
-        def check(vals):
-            assert vals.amount == 5
-            assert vals.vals == [1, 2, 1, 2, 3]
-
-        self.assertProperties(vals, check)
