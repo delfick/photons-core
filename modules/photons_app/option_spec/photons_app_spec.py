@@ -56,11 +56,11 @@ class PhotonsApp(dictobj.Spec):
 
     @hp.memoized_property
     def final_future(self):
-        return self.loop.create_future()
+        return hp.create_future(name="photons_app.final_future", loop=self.loop)
 
     @hp.memoized_property
     def graceful_final_future(self):
-        fut = self.loop.create_future()
+        fut = hp.create_future(name="photons_app.graceful_final_future", loop=self.loop)
         fut.setup = False
         return fut
 
@@ -95,7 +95,7 @@ class PhotonsApp(dictobj.Spec):
             raise BadOption("The options after -- wasn't valid json", **kwargs)
 
     def separate_final_future(self, sleep=0):
-        other_future = asyncio.Future()
+        other_future = hp.create_future(name="separate_final_future")
 
         def stop():
             other_future.cancel()

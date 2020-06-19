@@ -349,9 +349,7 @@ class FakeDevice:
                 await responder.shutdown(self)
 
         if self.write_tasks:
-            for t in self.write_tasks:
-                t.cancel()
-            await asyncio.wait(self.write_tasks)
+            await hp.cancel_and_wait(self.write_tasks)
 
     def set_intercept_got_message(self, interceptor):
         self.intercept_got_message = interceptor
@@ -452,7 +450,7 @@ class FakeDevice:
 
     def wait_for(self, source, kls):
         assert (source, kls) not in self.waiters
-        fut = asyncio.Future()
+        fut = hp.create_future(name="FakeDevice.wait_for")
         self.waiters[(source, kls)] = fut
         return fut
 

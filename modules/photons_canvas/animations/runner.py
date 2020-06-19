@@ -22,8 +22,9 @@ from contextlib import contextmanager
 
 @contextmanager
 def profile(ignore=True):
-    # from profiling.tracing import TracingProfiler
-    profiler = None  # if ignore else TracingProfiler()
+    from profiling.tracing import TracingProfiler
+
+    profiler = None if ignore else TracingProfiler()
     if profiler:
         try:
             with profiler:
@@ -123,7 +124,7 @@ class AnimationRunner:
             try:
                 await state.set_animation(animation, background)
 
-                with profile():
+                with profile(ignore=True):
                     async for messages in state.messages():
                         by_serial = defaultdict(list)
                         for msg in messages:
@@ -140,9 +141,7 @@ class AnimationRunner:
 
     async def collect_parts(self, ts):
         async for _ in hp.tick(self.run_options.rediscover_every, final_future=self.final_future):
-            with profile(ignore=True), hp.just_log_exceptions(
-                log, reraise=[asyncio.CancelledError]
-            ):
+            with profile(), hp.just_log_exceptions(log, reraise=[asyncio.CancelledError]):
                 serials = self.reference
                 if isinstance(serials, str):
                     serials = [serials]

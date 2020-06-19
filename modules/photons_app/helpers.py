@@ -1,14 +1,15 @@
 from photons_app.errors import PhotonsAppError
 
+from queue import Queue as NormalQueue, Empty as NormalEmpty
 from delfick_project.logging import lc
 from contextlib import contextmanager
-from queue import Queue, Empty
+from collections import deque
 from functools import wraps
 import threading
 import tempfile
 import asyncio
 import logging
-import uuid
+import secrets
 import time
 import sys
 import os
@@ -17,6 +18,8 @@ log = logging.getLogger("photons_app.helpers")
 
 # Make vim be quiet
 lc = lc
+
+wtf = {}
 
 if hasattr(asyncio, "exceptions"):
     InvalidStateError = asyncio.exceptions.InvalidStateError
@@ -28,6 +31,47 @@ class Nope:
     """Used to say there was no value"""
 
     pass
+
+
+async def all_futures(*futs):
+    if not futs:
+        return
+
+    waiter = create_future(name="all_futures.waiter")
+
+    def done(res):
+        if not waiter.done():
+            if all(f.done() for f in futs):
+                waiter.set_result(True)
+
+    for fut in futs:
+        fut.add_done_callback(done)
+
+    try:
+        await waiter
+    finally:
+        for fut in futs:
+            fut.remove_done_callback(done)
+
+
+async def first_future(*futs):
+    if not futs:
+        return
+
+    waiter = create_future(name="first_future.waiter")
+
+    def done(res):
+        if not waiter.done():
+            waiter.set_result(True)
+
+    for fut in futs:
+        fut.add_done_callback(done)
+
+    try:
+        await waiter
+    finally:
+        for fut in futs:
+            fut.remove_done_callback(done)
 
 
 class ATicker:
@@ -97,11 +141,12 @@ class ATicker:
         self.tick_fut = ResettableFuture()
         self.max_time = max_time
         self.last_tick = None
-        self.final_future = final_future or asyncio.Future()
+        self.final_future = final_future or create_future(name="ticker.final_future")
         self.max_iterations = max_iterations
 
         self.start = time.time()
         self.iteration = 0
+        self.diff = every
 
     def __aiter__(self):
         return self
@@ -119,40 +164,36 @@ class ATicker:
             raise StopAsyncIteration
 
         if self.last_tick is None:
-            self.last_tick = time.time()
-            return self.iteration
+            self.change_after(self.every, set_new_every=False)
 
-        self.change_after(self.every)
-        await asyncio.wait([self.tick_fut, self.final_future], return_when=asyncio.FIRST_COMPLETED)
+        await first_future(self.tick_fut, self.final_future)
+        self.tick_fut.reset()
 
         if self.final_future.done():
             raise StopAsyncIteration
 
-        self.tick_fut.reset()
-        self.last_tick = time.time()
+        self.change_after(self.every, set_new_every=False)
         return self.iteration
 
     def change_after(self, every, *, set_new_every=True):
-        if set_new_every:
-            self.every = every
+        now = time.time()
+
+        def reset(current=None):
+            if current is None or self.last_tick[1] == current[1]:
+                self.tick_fut.reset()
+                self.last_tick = (time.time(), secrets.token_urlsafe(16))
+                self.tick_fut.set_result(True)
 
         if self.last_tick is None:
-            self.last_tick = time.time()
+            reset()
+            return
 
-        current = self.last_tick
-        diff = every - (time.time() - current)
+        if set_new_every and every != self.every:
+            self.last_tick = (self.last_tick[0], secrets.token_urlsafe(16))
+            self.every = every
 
-        if diff == 0:
-            self.tick_fut.reset()
-            self.tick_fut.set_result(True)
-        else:
-
-            def reset():
-                if self.last_tick == current:
-                    self.tick_fut.reset()
-                    self.tick_fut.set_result(True)
-
-            asyncio.get_event_loop().call_later(diff, reset)
+        diff = self.diff = every - (now - self.last_tick[0])
+        asyncio.get_event_loop().call_later(diff, reset, self.last_tick)
 
 
 async def tick(every, *, final_future=None, max_iterations=None, max_time=None):
@@ -267,10 +308,11 @@ class TaskHolder:
                     t.cancel()
 
             if self.ts:
-                return_when = (
-                    asyncio.ALL_COMPLETED if self.final_future.done() else asyncio.FIRST_COMPLETED
-                )
-                await asyncio.wait([self.final_future, *self.ts], return_when=return_when)
+                if self.final_future.done():
+                    wait = all_futures
+                else:
+                    wait = first_future
+                await wait(self.final_future, *self.ts)
 
         if self.ts:
             await asyncio.wait(self.ts)
@@ -373,6 +415,9 @@ class ResultStreamer:
     class GeneratorComplete:
         pass
 
+    class FinishedTask:
+        pass
+
     class Result:
         """
         The object that the streamer will yield. This contains the ``value``
@@ -398,32 +443,40 @@ class ResultStreamer:
             status = "success" if self.successful else "failed"
             return f"<Result {status}: {self.value}: {self.context}>"
 
-    def __init__(self, final_future, *, error_catcher=None, exceptions_only_to_error_catcher=False):
+    def __init__(
+        self,
+        final_future,
+        *,
+        error_catcher=None,
+        exceptions_only_to_error_catcher=False,
+        debug=False,
+    ):
         self.final_future = ChildOfFuture(final_future)
         self.error_catcher = error_catcher
         self.exceptions_only_to_error_catcher = exceptions_only_to_error_catcher
+        self.debug = debug
 
         self.ts = []
         self.generators = []
 
-        self.queue = asyncio.Queue()
+        self.queue = Queue(final_future)
         self.stop_on_completion = False
 
     async def add_generator(self, gen, *, context=None, on_each=None, on_done=None):
         async def run():
             async for result in gen:
                 result = self.Result(result, context, True)
-                self.queue.put_nowait(result)
+                self.queue.append(result)
                 if on_each:
                     on_each(result)
             return self.GeneratorComplete
 
         task = await self.add_coroutine(run(), context=context, on_done=on_done)
+        task.gen = gen
 
         if self.final_future.done():
-            task.cancel()
-            await asyncio.wait([task])
-            await asyncio.wait([gen.aclose()])
+            await cancel_and_wait([task])
+            await first_future(gen.aclose())
             return task
 
         self.generators.append((task, gen))
@@ -438,8 +491,7 @@ class ResultStreamer:
 
     async def add_task(self, task, *, context=None, on_done=None):
         if self.final_future.done():
-            task.cancel()
-            await asyncio.wait([task])
+            await cancel_and_wait([task])
             return task
 
         def add_to_queue(res):
@@ -463,10 +515,12 @@ class ResultStreamer:
                     v = value if self.exceptions_only_to_error_catcher else result
                     add_error(self.error_catcher, v)
 
-                self.queue.put_nowait(result)
+                self.queue.append(result)
 
             if on_done:
                 on_done(result)
+
+            self.queue.append(self.FinishedTask)
 
         task.add_done_callback(add_to_queue)
         self.ts.append(task)
@@ -476,26 +530,24 @@ class ResultStreamer:
         self.stop_on_completion = True
 
     async def retrieve(self):
-        while True:
-            nxt = async_as_background(self.queue.get())
-            await asyncio.wait([nxt, self.final_future], return_when=asyncio.FIRST_COMPLETED)
-
-            if self.final_future.done():
-                nxt.cancel()
-                return
-
-            yield (await nxt)
+        async for nxt in self.queue.get_all():
+            if nxt is not self.FinishedTask:
+                yield nxt
 
             self.ts = [t for t in self.ts if not t.done()]
-            if self.stop_on_completion and not self.ts and self.queue.empty():
+            if self.stop_on_completion and not self.ts:
+                for nxt in self.queue.remaining():
+                    if nxt is not self.FinishedTask:
+                        yield nxt
+
                 return
 
             # Cleanup any finished generators
             new_gens = []
             for t, g in self.generators:
                 if t.done():
-                    await asyncio.wait([t])
-                    await asyncio.wait([g.aclose()])
+                    await first_future(t)
+                    await first_future(asyncio.ensure_future(g.aclose()))
                 else:
                     new_gens.append((t, g))
             self.generators = new_gens
@@ -513,14 +565,12 @@ class ResultStreamer:
         for t, g in self.generators:
             t.cancel()
             wait_for.append(t)
-            second_after.append(lambda: g.aclose())
+            second_after.append(lambda: asyncio.ensure_future(g.aclose()))
 
         if wait_for:
-            await asyncio.wait(wait_for)
+            await all_futures(*wait_for)
         if second_after:
-            await asyncio.wait([l() for l in second_after])
-
-        self.queue.put_nowait(None)
+            await all_futures(*[l() for l in second_after])
 
     async def __aenter__(self):
         return self
@@ -739,7 +789,7 @@ async def async_with_timeout(coroutine, timeout=10, timeout_error=None, silent=F
 
         await hp.async_with_timeout(my_coroutine(), timeout=20)
     """
-    f = asyncio.Future()
+    f = create_future(name="async_with_timeout")
     t = async_as_background(coroutine, silent=silent)
 
     def pass_result(res):
@@ -878,6 +928,122 @@ def reporter(res):
         else:
             res.result()
             return True
+
+
+class SyncQueue:
+    def __init__(self, final_future):
+        self.collection = NormalQueue()
+        self.final_future = final_future
+
+    def append(self, item):
+        self.collection.put(item)
+
+    async def get(self):
+        await self.waiter
+        if self.final_future.done():
+            self.final_future.remove_done_callback(self.stop_waiter)
+            yield self.Done
+            return
+
+        while self.collection:
+            yield self.collection.popleft()
+
+    async def get_all(self):
+        while True:
+            if self.final_future.done():
+                return
+
+            try:
+                nxt = self.queue.get(timeout=0.05)
+            except NormalEmpty:
+                continue
+            else:
+                if self.final_future.done():
+                    return
+
+                yield nxt
+
+
+class Queue:
+    class Done:
+        pass
+
+    def __init__(self, final_future):
+        self.collection = deque()
+        self.waiter = ResettableFuture()
+        self.final_future = final_future
+        self.final_future.add_done_callback(self.stop_waiter)
+
+    def stop_waiter(self, res):
+        self.waiter.reset()
+        self.waiter.set_result(True)
+
+    def append(self, item):
+        self.collection.append(item)
+        if not self.waiter.done():
+            self.waiter.set_result(True)
+
+    def remaining(self):
+        while self.collection:
+            yield self.collection.popleft()
+
+    async def get(self):
+        await self.waiter
+
+        if self.final_future.done():
+            self.final_future.remove_done_callback(self.stop_waiter)
+            yield self.Done
+            return
+
+        while self.collection:
+            yield self.collection.popleft()
+
+        if self.final_future.done():
+            yield self.Done
+
+        self.waiter.reset()
+
+    async def get_all(self):
+        while True:
+            async for nxt in self.get():
+                if nxt is self.Done:
+                    return
+                yield nxt
+
+
+def create_future(*, name=None, loop=None):
+    future = (loop or asyncio.get_event_loop()).create_future(ignore=True)
+    if name is not None:
+        future.name = name
+    return future
+
+
+async def cancel_and_wait(futs):
+    if not futs:
+        return
+
+    waiting = []
+    for fut in futs:
+        if not fut.done():
+            fut.cancel()
+            waiting.append(fut)
+
+    if not waiting:
+        return
+
+    waiter = create_future(name="cancel_and_wait")
+
+    def waited(res):
+        if not res.cancelled():
+            res.exception()
+
+        if all(f.done() for f in waiting) and not waiter.done():
+            waiter.set_result(True)
+
+    for f in waiting:
+        f.add_done_callback(waited)
+
+    await waiter
 
 
 def transfer_result(fut, errors_only=False, process=None):
@@ -1059,7 +1225,7 @@ class ResettableFuture(object):
         else:
             self.info = info
         self.creationists = []
-        self.reset_fut = asyncio.Future()
+        self.reset_fut = create_future(name="ResettableFuture")
 
     @property
     def _loop(self):
@@ -1070,7 +1236,10 @@ class ResettableFuture(object):
             if not self.reset_fut.done():
                 self.reset_fut.set_result(True)
         done_callbacks = getattr(self, "info", {}).get("done_callbacks", [])
-        self.info = {"fut": asyncio.Future(), "done_callbacks": done_callbacks}
+        self.info = {
+            "fut": create_future(name="ResettableFut.after_reset"),
+            "done_callbacks": done_callbacks,
+        }
         for cb in done_callbacks:
             self.info["fut"].add_done_callback(cb)
 
@@ -1135,16 +1304,15 @@ class ResettableFuture(object):
             if self.done() or self.cancelled():
                 return (yield from self.info["fut"])
 
-            waiter = asyncio.wait(
-                [self.info["fut"], self.reset_fut], return_when=asyncio.FIRST_COMPLETED
-            )
+            waiter = first_future(self.info["fut"], self.reset_fut)
+
             if hasattr(waiter, "__await__"):
                 yield from waiter.__await__()
             else:
                 yield from waiter
 
             if self.reset_fut.done():
-                self.reset_fut = asyncio.Future()
+                self.reset_fut = create_future(name="ResettableFuture.after_await")
 
     __iter__ = __await__
 
@@ -1163,7 +1331,7 @@ class ChildOfFuture(object):
     _asyncio_future_blocking = False
 
     def __init__(self, original_fut):
-        self.this_fut = asyncio.Future()
+        self.this_fut = create_future(name="ChildOfFuture.__init__")
         self.original_fut = original_fut
         self.done_callbacks = []
 
@@ -1226,7 +1394,7 @@ class ChildOfFuture(object):
         else:
             self.original_fut.cancel()
 
-    def cancel(self):
+    def cancel(self, res=None):
         self.this_fut.cancel()
 
     def ready(self):
@@ -1297,11 +1465,9 @@ class ChildOfFuture(object):
                     self.waiter = None
 
             if not getattr(self, "waiter", None):
-                self.waiter = asyncio.ensure_future(
-                    asyncio.wait(
-                        [self.original_fut, self.this_fut], return_when=asyncio.FIRST_COMPLETED
-                    )
-                )
+                self.waiter = first_future(self.original_fut, self.this_fut)
+                if hasattr(self.waiter, "__await__"):
+                    self.waiter = self.waiter.__await__()
 
             yield from self.waiter
 
@@ -1365,13 +1531,13 @@ class ThreadToAsyncQueue(object):
 
     def __init__(self, stop_fut, num_threads, onerror, *args, **kwargs):
         self.loop = asyncio.get_event_loop()
-        self.queue = Queue()
+        self.queue = SyncQueue(stop_fut)
         self.futures = {}
         self.onerror = onerror
         self.stop_fut = ChildOfFuture(stop_fut)
         self.num_threads = num_threads
 
-        self.result_queue = asyncio.Queue()
+        self.result_queue = Queue(self.stop_fut)
         self.setup(*args, **kwargs)
 
     def setup(self, *args, **kwargs):
@@ -1383,13 +1549,12 @@ class ThreadToAsyncQueue(object):
     async def finish(self):
         """Signal to the tasks to stop at the next available moment"""
         self.stop_fut.cancel()
-        await self.result_queue.put(None)
 
     def start(self, impl=None):
         """Start tasks to listen for requests made with the ``request`` method"""
         ready = []
         for thread_number, _ in enumerate(range(self.num_threads)):
-            fut = asyncio.Future()
+            fut = create_future(name="ThreadToAsyncQueue.ready_fut")
             ready.append(fut)
             thread = threading.Thread(target=self.listener, args=(thread_number, fut, impl))
             thread.start()
@@ -1423,19 +1588,15 @@ class ThreadToAsyncQueue(object):
 
             assert (await queue.request(action)) == "c"
         """
-        key = str(uuid.uuid1())
-        fut = asyncio.Future()
+        key = secrets.token_urlsafe(16)
+        fut = create_future(name="ThreadToAsyncQueue.request")
         self.futures[key] = fut
-        self.queue.put((key, func))
+        self.queue.append((key, func))
         return fut
 
     async def set_futures(self):
         """Get results from the result_queue and set that result on the appropriate future"""
-        while True:
-            res = await self.result_queue.get()
-            if self.stop_fut.finished():
-                break
-
+        async for res in self.result_queue.get_all():
             if not res:
                 continue
 
@@ -1478,7 +1639,7 @@ class ThreadToAsyncQueue(object):
             self.onerror(sys.exc_info())
 
         try:
-            self.loop.call_soon_threadsafe(self.result_queue.put_nowait, (key, result, exception))
+            self.loop.call_soon_threadsafe(self.result_queue.append, (key, result, exception))
         except RuntimeError:
             log.error(
                 PhotonsAppError(
@@ -1509,16 +1670,9 @@ class ThreadToAsyncQueue(object):
     def _listener(self, thread_number, impl, args):
         """Forever, with error catching, get nxt request of the queue and process"""
         while True:
-            if self.stop_fut.finished():
-                break
-
-            try:
-                nxt = self.queue.get(timeout=0.05)
-            except Empty:
-                continue
-            else:
-                if self.stop_fut.finished():
-                    break
+            for nxt in self.queue.get():
+                if nxt is Queue.Done:
+                    return
 
                 try:
                     args = self.create_args(thread_number, existing=args)

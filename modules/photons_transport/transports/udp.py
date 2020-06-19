@@ -16,12 +16,20 @@ class UDP(Socket):
         fut, Protocol = self.make_socket_protocol()
 
         loop = asyncio.get_event_loop()
-        loop.call_later(timeout, fut.cancel)
+
+        def canceler():
+            if not fut.done():
+                fut.cancel()
+
+        handle = loop.call_later(timeout, canceler)
 
         log.info(self.lc("Creating datagram endpoint", address=self.address))
         await loop.create_datagram_endpoint(Protocol, sock=sock)
 
-        return await fut
+        try:
+            return await fut
+        finally:
+            handle.cancel()
 
     async def write(self, transport, bts, original_message):
         transport.sendto(bts, self.address)

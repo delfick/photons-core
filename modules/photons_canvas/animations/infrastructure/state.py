@@ -151,7 +151,7 @@ class State:
         msgs = list(
             self.canvas.msgs(
                 layer,
-                onto=self.canvas,
+                onto=self.canvas.points,
                 duration=self.animation.duration,
                 acks=self.animation.retries,
                 randomize=self.animation.random_orientations,

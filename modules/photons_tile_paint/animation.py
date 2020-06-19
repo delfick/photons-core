@@ -285,11 +285,8 @@ class NoisyNetworkAnimateTask(AnimateTask):
         ts = []
         for g in self.tasks:
             for _, f in g.values():
-                f.cancel()
                 ts.append(f)
-
-        if ts:
-            await asyncio.wait(ts)
+        await hp.cancel_and_wait(ts)
 
 
 class Animation:

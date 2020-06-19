@@ -132,18 +132,13 @@ class Part:
         self.top = user_y_real
         self.bottom = user_y_real - self.height
 
-        del self.points
-
     @property
     def bounds(self):
         return (self.left, self.right), (self.top, self.bottom), (self.width, self.height)
 
-    @hp.memoized_property
+    @property
     def points(self):
-        points = []
-        for row in php.Points.rows(self.bounds):
-            points.extend(row)
-        return points
+        return php.Points.all_points(self.bounds)
 
     def reverse_orient(self, colors):
         o = reverse_orientation(self.orientation)
@@ -156,27 +151,13 @@ class Part:
 
         return reorient(colors, o)
 
-    def msgs(self, colors, *, acks=False, duration=1, randomize=False, force=False):
-        diff = False
-        if self.colors is None or force:
+    def msgs(self, colors, *, acks=False, duration=1, randomize=False, force=False, different=None):
+        if not different and self.colors is None or force:
             diff = True
+        elif different is not None:
+            diff = different
         else:
-            for c1, c2 in itertools.zip_longest(colors, self.colors):
-                if c1 is None and c2 is not None:
-                    diff = True
-                    break
-
-                if c2 is None and c1 is not None:
-                    diff = True
-                    break
-
-                if c1 is None and c2 is None:
-                    continue
-
-                for i in (0, 1, 2, 3):
-                    if abs(c1[i] - c2[i]) > 0.00009:
-                        diff = True
-                        break
+            diff = any(c1 != c2 for c1, c2 in itertools.zip_longest(colors, self.colors))
 
         if diff:
             self.sent = []

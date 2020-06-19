@@ -46,7 +46,10 @@ setup(
       , "lru-dict==1.1.6"
 
       # photons-protocol
-      , "bitarray == 1.0.1"
+      , "bitarray==1.0.1"
+    
+      # photons-canvas
+      , "kdtree==0.16"
       ]
 
     , extras_require =

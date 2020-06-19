@@ -40,7 +40,7 @@ class Canvas:
         self._update_bounds(self.points)
 
     def __bool__(self):
-        return bool(self._parts) or bool(self.points)
+        return bool(self.points or self._parts)
 
     def __call__(self, point, canvas):
         return self.points.get(point)
@@ -141,24 +141,25 @@ class Canvas:
 
     def msgs(self, layer, acks=False, duration=1, randomize=False, onto=None):
         msgs = []
-        cache = {}
 
-        for part in self.parts:
+        for part in self._parts:
             cs = []
-            for point in part.points:
-                c = cache.get(point)
+            different = onto is None or part.colors is None
 
-                if c is None:
-                    c = layer(point, self)
-
-                    if onto:
-                        onto[point] = c
-
-                    cache[point] = c
-
+            for point in php.Points.all_points(part.bounds):
+                c = layer(point, self)
                 cs.append(c)
 
-            for msg in part.msgs(cs, acks=acks, duration=duration, randomize=randomize):
+                if onto is not None:
+                    if not different:
+                        if point not in onto or onto[point] != c:
+                            different = True
+
+                    onto[point] = c
+
+            for msg in part.msgs(
+                cs, acks=acks, duration=duration, randomize=randomize, different=different
+            ):
                 msgs.append(msg)
 
         return msgs

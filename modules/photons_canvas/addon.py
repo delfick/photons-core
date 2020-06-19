@@ -15,13 +15,7 @@ log = logging.getLogger("photons_canvas.addons")
 __shortdesc__ = "Represent colors on devices on a plane"
 
 
-@addon_hook(
-    extras=[
-        ("lifx.photons", "products"),
-        ("lifx.photons", "messages"),
-        ("lifx.photons", "control"),
-    ]
-)
+@addon_hook(extras=[("lifx.photons", "control")])
 def __lifx__(collector, *args, **kwargs):
     return
     __import__("photons_canvas.animations.addon")
@@ -50,8 +44,12 @@ async def apply_theme(collector, target, reference, artifact, **kwargs):
     def errors(e):
         log.error(e)
 
+    import time
+
+    start = time.time()
     msg = ApplyTheme.msg(collector.photons_app.extra_as_json)
     await target.send(msg, reference, error_catcher=errors, message_timeout=2)
+    print(time.time() - start)
 
 
 @an_action(needs_target=True)
@@ -84,7 +82,7 @@ async def animate(collector, target, reference, artifact, **kwargs):
     if specific_animation:
         background = sb.NotSpecified
         layered = {"animations": [[artifact, background, options]], "animation_limit": 1}
-        run_options = MergedOptions.using(run_options, layered).as_dict()
+        run_options = MergedOptions.using(layered, run_options).as_dict()
 
     def errors(e):
         if not isinstance(e, PhotonsAppError):

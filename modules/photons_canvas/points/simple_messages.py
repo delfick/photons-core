@@ -9,7 +9,6 @@ This file contains a more manual implementation of the Set64 message that tries
 to be as efficient as possible to allow us to keep up with the animation.
 """
 from photons_messages import TileMessages, MultiZoneMessages
-from photons_protocol.packing import PacketPacking
 from photons_messages.fields import Color
 
 from delfick_project.norms import sb
@@ -22,7 +21,7 @@ ColorCache = LRU(0xFFFF)
 
 TargetCache = LRU(1000)
 
-seed_set64 = TileMessages.Set64.empty_normalise(
+seed_set64 = TileMessages.Set64.create(
     source=0,
     sequence=0,
     target="d073d5000000",
@@ -111,6 +110,21 @@ class Payload:
         return self._bts[rng.start + 36 : rng.stop + 36]
 
 
+class Fields:
+    def __init__(self, pkt):
+        self.pkt = pkt
+
+    def get(self, key, dflt):
+        got = getattr(self.pkt, key)
+        if got is sb.NotSpecified:
+            return dflt
+        return got
+
+    def is_not_empty(self, key):
+        got = getattr(self.pkt, key)
+        return got is not sb.NotSpecified
+
+
 class Set64:
     def __init__(self, *, bts=None, set_source=False, **kwargs):
         if bts:
@@ -121,6 +135,7 @@ class Set64:
         self.set_source = set_source
         self.payload = Payload(self._bts)
         self.update(kwargs)
+        self.fields = Fields(self)
 
     def update(self, values):
         for k, v in values.items():
@@ -134,8 +149,10 @@ class Set64:
     def simplify(self):
         return self
 
-    def clone(self):
-        return Set64(bts=bytearray(self._bts), set_source=self.set_source)
+    def clone(self, **kwargs):
+        clone = Set64(bts=bytearray(self._bts), set_source=self.set_source)
+        clone.update(kwargs)
+        return clone
 
     def tobytes(self, serial=None):
         return bytes(self._bts)
@@ -243,6 +260,15 @@ class Set64:
 
     @target.setter
     def target(self, serial):
+        if serial is None:
+            serial = "000000000000"
+        elif isinstance(serial, bytes):
+            if len(serial) == 8:
+                self[8:16] = serial
+                return
+
+            serial = binascii.hexlify(serial[:6]).decode()
+
         bts = TargetCache.get(serial)
         if not bts:
             bts = binascii.unhexlify(serial)[:6] + b"\x00\x00"
@@ -354,7 +380,7 @@ class Set64:
         for i in range(64):
             b = bitarray.bitarray(endian="little")
             b.frombytes(bytes(self.payload[10 + i * 8 : 18 + i * 8]))
-            colors.append(PacketPacking.unpack(Color, b))
+            colors.append(Color.create(b))
         return colors
 
     @colors.setter

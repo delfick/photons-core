@@ -68,7 +68,7 @@ class NetworkSession(Communication):
         discovery_options = self.transport_target.discovery_options
 
         if discovery_options.has_hardcoded_discovery:
-            log.info("Using hard coded discovery information")
+            log.debug("Using hard coded discovery information")
             return await discovery_options.discover(self.add_service)
 
         get_service = DiscoveryMessages.GetService(
@@ -78,7 +78,7 @@ class NetworkSession(Communication):
         def error_catcher(e):
             if isinstance(e, TimedOut):
                 return
-            log.exception(e)
+            log.exception(e, exc_info=(type(e), e, e.__traceback__))
 
         kwargs["no_retry"] = True
         kwargs["broadcast"] = kwargs.get("broadcast", True) or True
@@ -102,12 +102,10 @@ class NetworkSession(Communication):
 
         return list(found_now)
 
-    async def _search_retry_iterator(self, end_after, get_now=time.time):
+    def _search_retry_iterator(self, timeout, get_now=time.time):
         timeouts = [(0.6, 1.8), (1, 4)]
         retrier = RetryOptions(timeouts=timeouts)
-
-        async for info in retrier.iterator(end_after=end_after, get_now=get_now):
-            yield info
+        return retrier.tick(timeout, get_now=get_now)
 
     async def make_transport(self, serial, service, kwargs):
         if hasattr(service, "name") and service.name.startswith("RESERVED"):
