@@ -1,5 +1,0 @@
----
-
-documentation:
-  out: "{config_root}/res"
-  src: "{config_root}/start"
